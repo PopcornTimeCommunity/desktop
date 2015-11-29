@@ -10,7 +10,7 @@ Visit the project's website at <http://popcorntime.ml>.
 
 ## Getting Involved
 
-Want to report a bug, request a feature, contribute or translate Popcorn Time? Check out our in-depth guide to [Contributing to Popcorn Time](CONTRIBUTING.md). We need all the help we can get! You can also join in with our [community](README.md#community) to keep up-to-date and meet other Popcorn Timers.
+Want to report a bug, request a feature, contribute or translate Popcorn Time? We need all the help we can get! You can also join in with our [community](README.md#community) to keep up-to-date and meet other Popcorn Timers.
 
 ## Getting Started
 
@@ -40,7 +40,6 @@ If you encounter trouble with the above method, you can try:
 
 Optionally, you may simply run `./make_popcorn.sh` if you are on a linux or mac based operating system.
 
-Full instructions & troubleshooting tips can be found in the [Contributing Guide](CONTRIBUTING.md)
 
 <a name="community"></a>
 ## Community
