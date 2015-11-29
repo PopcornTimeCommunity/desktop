@@ -1,10 +1,10 @@
-# [Popcorn Time](https://git.popcorntime.io/popcorntime/desktop/tree/master) [![Build Status](http://ci.popcorntime.io/job/Popcorn-Desktop/badge/icon)](http://ci.popcorntime.io/job/Popcorn-Desktop/)
+# [Popcorn Time CE](https://github.com/PopcornTimeCE/popcorntimece)
 
 Allow any computer user to watch movies easily streaming from torrents, without any particular knowledge.
 
-![Popcorn Time](http://i.imgur.com/EoO0bc0.gif)
+![Popcorn Time](http://popcorntime.ml/wp-content/uploads/2015/11/poppy-ce-256.png)
 
-Visit the project's website at <https://popcorntime.io>.
+Visit the project's website at <http://popcorntime.ml>.
 
 ***
 
@@ -18,7 +18,7 @@ If you're comfortable getting up and running from a `git clone`, this method is 
 
 If you clone the GitLab repository, you will need to build a number of assets using grunt.
 
-The [master](https://git.popcorntime.io/popcorntime/desktop/tree/master) branch which contains the latest release.
+The [master](https://github.com/PopcornTimeCE/popcorntimece) branch which contains the latest release.
 
 #### Quickstart:
 
@@ -45,12 +45,10 @@ Full instructions & troubleshooting tips can be found in the [Contributing Guide
 <a name="community"></a>
 ## Community
 
-Keep track of Popcorn Time development and community activity.
+Keep track of Popcorn Time CE development and community activity.
 
-* Follow Popcorn Time on [Twitter](https://twitter.com/popcorntimetv), [Facebook](https://www.facebook.com/PopcornTimeTv) and [Google+](https://plus.google.com/+Getpopcorntime).
-* Read and subscribe to the [The Official Popcorn Time Blog](https://blog.popcorntime.io).
-* Join in discussions on the [Popcorn Time Forum](https://discuss.popcorntime.io)
-* Connect with us on IRC at `#popcorntime` on freenode ([web access](http://webchat.freenode.net/?channels=popcorntime))
+* Join in discussions on the [Popcorn Time CE Forum](http://discuss.popcorntime.ml)
+* Visit the [website](http://popcorntime.ml)
 
 
 ## Versioning
@@ -81,6 +79,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 ***
 
-If you want to contact us : [hello@popcorntime.io](mailto:hello@popcorntime.io)
+If you want to contact us : [hello@popcorntime.ml](mailto:hello@popcorntime.ml) or [use the form](http://popcorntime.ml/contact/) on our website.
  
-Copyright (c) 2015 Popcorn Time Foundation - Released under the [GPL v3 license](LICENSE.txt).
+Copyright (c) 2015 Popcorn Time CE - Released under the [GPL v3 license](LICENSE.txt).
