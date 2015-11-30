@@ -48,7 +48,7 @@
                     $('.changelog-text').html(contents.replace(/\n/g, '<br />'));
                     $('.changelog-overlay').show();
                 } else {
-                    gui.Shell.openExternal('https://git.popcorntime.io/popcorntime/desktop/blob/master/CHANGELOG.md');
+                    gui.Shell.openExternal('https://github.com/PopcornTimeCE/popcorntimece/blob/master/CHANGELOG.md');
                 }
             });
         },

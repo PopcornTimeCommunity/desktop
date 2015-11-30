@@ -2,7 +2,7 @@
     'use strict';
 
     var PT_id = 13, //ID of project (got with gitlab.projects.all). 13 is for 'popcorntime/desktop'
-        PT_url = 'https://git.popcorntime.io/popcorntime/desktop/issues/', //Url of 'issues' of the above project
+        PT_url = 'https://github.com/PopcornTimeCE/popcorntimece/issues', //Url of 'issues' of the above project
         token;
 
     var Issue = Backbone.Marionette.ItemView.extend({

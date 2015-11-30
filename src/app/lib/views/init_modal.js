@@ -29,7 +29,7 @@
 
             fixer = setTimeout(function () {
                 self.ui.waitingblock.show();
-            }, 7000);
+            }, 10000);
         },
 
         onDestroy: function () {

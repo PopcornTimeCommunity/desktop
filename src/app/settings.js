@@ -108,16 +108,12 @@ Settings.tvAPI = [{
 }*/];
 
 Settings.ytsAPI = [{
+    uri: 'https://yts.ag/api',
+    strictSSL: true
+}, {
     uri: 'http://api.torrentsapi.com/',
     strictSSL: false
 }/*, {
-    uri: 'https://cloudflare.com/',
-    headers: {
-        'Host': 'xor.image.yt',
-        'User-Agent': 'Mozilla/5.0 (Linux) AppleWebkit/534.30 (KHTML, like Gecko) PT/3.8.0'
-    },
-    strictSSL: true
-}, {
     uri: 'http://cloudflare.com/',
     headers: {
         'Host': 'xor.image.yt',

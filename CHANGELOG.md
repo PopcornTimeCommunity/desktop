@@ -1,3 +1,18 @@
+## 0.3.9 Beta - The one with CE - 30 November 2015
+
+Bug Fixes:
+
+- Added secondary tvapi, eztv
+- fixed episode/season mixup (mitjacotic | #1)
+- Updated naming
+- Updated icons
+- various improvements
+- verified some missing dependencies we lost with .io
+- updated some ui stuff
+- changed loading help link on init to wait a bit longer
+
+new api coming soon
+
 ## 0.3.8 Beta - There's nothing on TV - 09 July 2015
 
 BugFixes: 
