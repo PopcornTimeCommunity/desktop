@@ -96,6 +96,9 @@ Settings.vpnPassword = '';
 Settings.tvAPI = [{
     url: 'https://popcornwvnbg7jev.onion.to/',
     strictSSL: true
+}, {
+    uri: 'https://popcorntime.ws/api/eztv/',
+    strictSSL: true
 }/*, {
     url: 'https://api.popcorntime.io/',
     strictSSL: true
