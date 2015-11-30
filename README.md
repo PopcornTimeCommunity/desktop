@@ -1,6 +1,6 @@
 # [Popcorn Time CE](https://github.com/PopcornTimeCE/popcorntimece)
 
-Allow any computer user to watch movies easily streaming from torrents, without any particular knowledge.
+Allow anyone to easily watch their favorite movies, shows, and anime.
 
 ![Popcorn Time](http://popcorntime.ml/wp-content/uploads/2015/11/poppy-ce-256.png)
 
@@ -75,6 +75,10 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  
 You should have received a copy of the GNU General Public License along with this program.  If not, see http://www.gnu.org/licenses/ .
+
+***
+
+This project is not illegal, nor does it violate **any** DMCA laws. The use of this project, however, may be illegal in your area. Check your local laws and regulations regarding the use of torrents to watch potentially copyrighted content. The maintainers of this project do not condone the use of this project for anything illegal, in any state, region, country, or planet. Please use at your own risk.
 
 ***
 
