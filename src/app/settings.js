@@ -97,28 +97,15 @@ Settings.tvAPI = [{
     url: 'https://popcornwvnbg7jev.onion.to/',
     strictSSL: true
 }, {
-    uri: 'https://popcorntime.ws/api/eztv/',
+    uri: 'https://popcorntime.ws/api/eztv/', //tracker is not responding
     strictSSL: true
-}/*, {
-    url: 'https://api.popcorntime.io/',
-    strictSSL: true
-}, {
-    url: 'http://tv.ytspt.re/',
-    strictSSL: false
-}*/];
+}];
 
 Settings.ytsAPI = [{
-    uri: 'https://yts.ag/api',
+    uri: 'https://yts.ag/',
     strictSSL: true
-}, {
-    uri: 'http://api.torrentsapi.com/',
-    strictSSL: false
-}/*, {
-    uri: 'http://cloudflare.com/',
-    headers: {
-        'Host': 'xor.image.yt',
-        'User-Agent': 'Mozilla/5.0 (Linux) AppleWebkit/534.30 (KHTML, like Gecko) PT/3.8.0'
-    },
+}/*,{
+    uri: 'http://api.torrentsapi.com/', //tracker will not work with current yts.js settings
     strictSSL: false
 }*/];
 

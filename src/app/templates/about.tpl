@@ -25,7 +25,8 @@
 
         <div class="icons_social">
             <a href='http://popcorntime.ml' data-toggle="tooltip" data-placement="top" title="popcorntime.io" class='links site_icon'></span></a>
-            <a href='http://twitter.com/PopcornTimeTV' data-toggle="tooltip" data-placement="top" title="twitter.com/PopcornTimeTV" class='links twitter_icon'></span></a>
+            <a href='http://discuss.popcorntime.ml' data-toggle="tooltip" data-placement="top" title="discuss.popcorntime.ml" class='links forum_icon'></span></a>
+            <a href='http://git.popcorntime.ml' data-toggle="tooltip" data-placement="top" title="git.popcorntime.ml" class='links stash_icon'></span></a>
         </div>
 
         <div class="last-line">

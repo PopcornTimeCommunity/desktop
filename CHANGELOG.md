@@ -3,7 +3,8 @@
 Bug Fixes:
 
 - Added secondary tvapi, eztv
-- fixed episode/season mixup (mitjacotic | #1)
+- changed movie api to yts.ag (don't listen to those .is guys)
+- fixed episode/season mixup (mitjacotic | issue #1)
 - Updated naming
 - Updated icons
 - various improvements

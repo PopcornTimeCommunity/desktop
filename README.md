@@ -6,6 +6,8 @@ Allow anyone to easily watch their favorite movies, shows, and anime.
 
 Visit the project's website at <http://popcorntime.ml>.
 
+This project would absolutely **not** be possible without the original developer's hard work into making Popcorn Time what it is today. All credit should go to them, we're just trying to help the community :)
+
 ***
 
 ## Getting Involved
