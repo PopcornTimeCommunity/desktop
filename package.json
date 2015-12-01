@@ -11,6 +11,9 @@
     "version": "0.3.9-11",
     "node-remote": "client.vpn.ht",
 "releaseName": "The one with CE",
+    "scripts": {
+        "start": "node_modules/.bin/nw ."
+    },
     "window": {
         "title": "Popcorn Time CE",
         "icon": "src/app/images/icon.png",
@@ -78,6 +81,7 @@
         "grunt-node-webkit-builder": "0.1.x",
         "grunt-shell": "^1.1.2",
         "load-grunt-tasks": "3.2.0",
+        "nw": "^0.12.3",
         "nw-gyp": "^0.12.4",
         "stylus": "0.50.0"
     }
