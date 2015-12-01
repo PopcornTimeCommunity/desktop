@@ -1,0 +1,55 @@
+{
+  "name": "peerflix",
+  "description": "Streaming torrent client for Node.js",
+  "version": "0.29.2",
+  "author": {
+    "name": "Mathias Buus",
+    "url": "@mafintosh"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/mafintosh/peerflix",
+  "main": "index.js",
+  "bugs": {
+    "url": "https://github.com/mafintosh/peerflix/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mafintosh/peerflix.git"
+  },
+  "bin": {
+    "peerflix": "./app.js"
+  },
+  "dependencies": {
+    "airplay-js": "^0.2.5",
+    "clivas": "^0.1.4",
+    "inquirer": "^0.8.0",
+    "keypress": "^0.2.1",
+    "mime": "^1.2.11",
+    "network-address": "0.0.5",
+    "numeral": "^1.5.3",
+    "open": "0.0.5",
+    "optimist": "^0.6.1",
+    "pump": "^0.3.1",
+    "range-parser": "^1.0.0",
+    "rc": "^0.4.0",
+    "read-torrent": "^1.1.0",
+    "torrent-stream": "^0.21.1",
+    "windows-no-runnable": "~0.0.6",
+    "xtend": "^4.0.0"
+  },
+  "devDependencies": {
+    "standard": "^2.2.3"
+  },
+  "optionalDependencies": {
+    "airplay-js": "^0.2.5"
+  },
+  "scripts": {
+    "test": "standard"
+  },
+  "readme": "# peerflix\n\nStreaming torrent client for Node.js\n\n```\nnpm install -g peerflix\n```\n\n[![build status](http://img.shields.io/travis/mafintosh/peerflix.svg?style=flat)](http://travis-ci.org/mafintosh/peerflix)\n\n## Usage\n\nPeerflix can be used with a magnet link or a torrent file.\nTo stream a video with its magnet link use the following command.\n\n```\npeerflix \"magnet:?xt=urn:btih:ef330b39f4801d25b4245212e75a38634bfc856e\" --vlc\n```\n\nRemember to put `\"` around your magnet link since they usually contain `&`.\n`peerflix` will print a terminal interface. The first line contains an address to a http server. The `--vlc` flag ensures vlc is opened when the torrent is ready to stream.\n\n![peerflix](https://raw.github.com/mafintosh/peerflix/master/screenshot.png)\n\nTo stream music with a torrent file use the following command.\n\n```\npeerflix \"http://some-torrent/music.torrent\" -a --vlc\n```\n\nThe `-a` flag ensures that all files in the music repository are played with vlc.\nOtherwise if the torrent contains multiple files, `peerflix` will choose the biggest one.\nTo get a full list of available options run peerflix with the help flag.\n\n```\npeerflix --help\n```\n\nExamples of usage of could be\n\n```\npeerflix magnet-link --vlc -- --fullscreen # will pass --fullscreen to vlc\npeerflix magnet-link --mplayer --subtitles subtitle-file.srt # play in mplayer with subtitles\npeerflix magnet-link --connection 200 # set max connection to 200\n```\n\n\n## Programmatic usage\n\nIf you want to build your own app using streaming bittorent in Node you should checkout [torrent-stream](https://github.com/mafintosh/torrent-stream)\n\n## Chromebook users\n\nChromebooks are set to refuse all incoming connections by default - to change this:  \n\n```\nsudo iptables -P INPUT ACCEPT\n```\n\n## Chromecast\n\nIf you wanna use peerflix on your chromecast checkout [peercast](https://github.com/mafintosh/peercast)\nor [castnow](https://github.com/xat/castnow)\n\n## License\n\nMIT\n",
+  "readmeFilename": "README.md",
+  "_id": "peerflix@0.29.2",
+  "_shasum": "a2468ae55cbf96eb88a4b25bfc0212ca4f67b151",
+  "_resolved": "git+https://git.popcorntime.io/mirrors/peerflix.git#f30988cdc587e325a91e8877dd9a3561596bf08d",
+  "_from": "peerflix@git+https://git.popcorntime.io/mirrors/peerflix.git"
+}

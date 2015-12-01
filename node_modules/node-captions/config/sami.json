@@ -1,0 +1,25 @@
+{
+    "header": [
+        "<SAMI>",
+        "<HEAD>",
+        "<TITLE>{cid}</TITLE>",
+        "",
+        "<SAMIParam>",
+          "Metrics {time:ms;}",
+          "Spec {MSFT:1.0;}",
+        "</SAMIParam>",
+        "",
+        "<STYLE TYPE=\"text/css\">",
+        "<!--",
+        "P { font-famil: Arial; font-weght: normal; color: white; background-color: black; text-align: center; }",
+        ".ENUSCC { name: English; lang: EN-US; SAMIType: CC; }",
+        "-->",
+        "</STYLE>",
+        "</HEAD>",
+        "<BODY>"],
+    "lineTemplate": "<SYNC Start={startTime}><P Class=ENUSCC>{text}",
+    "footer": [
+        "</BODY>",
+        "</SAMI>"]
+}
+

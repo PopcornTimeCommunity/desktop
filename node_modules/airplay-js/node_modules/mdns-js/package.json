@@ -1,0 +1,57 @@
+{
+  "name": "mdns-js",
+  "version": "0.3.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kmpm/node-mdns-js.git"
+  },
+  "description": "JavaScript/NodeJS mDNS discovery implementation",
+  "keywords": [
+    "mdns",
+    "dns-sd",
+    "zeroconf"
+  ],
+  "engines": {
+    "node": "^0.10.3 || ^0.12.0"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "debug": "^2.1.1",
+    "mdns-js-packet": "0.1.x",
+    "semver": "^4.3.1"
+  },
+  "devDependencies": {
+    "code": "^1.3.0",
+    "joi": "^5.1.0",
+    "jscs": "^1.11.1",
+    "jshint": "^2.6.0",
+    "lab": "^5.2.1"
+  },
+  "scripts": {
+    "test": "lab --flat --coverage",
+    "lint": "jshint lib test/*.js examples index.js && jscs lib test/*.js examples index.js",
+    "doc": "jsdoc -d .\\doc index.js lib"
+  },
+  "author": {
+    "name": "Peter Magnusson",
+    "email": "peter@birchroad.net"
+  },
+  "contributors": [
+    {
+      "name": "James Sigurðarson",
+      "email": "jamiees2@gmail.com",
+      "url": "http://jamessigurdarson.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/kmpm/node-mdns-js/issues"
+  },
+  "homepage": "https://github.com/kmpm/node-mdns-js",
+  "readme": "mDNS-js\n==========\n\nPure JavaScript/NodeJS mDNS discovery implementation.\nIt's definitely not a full implementation at the current\nstate and it will NOT work in the browser. \n\nThe starting inspiration came from\nhttps://github.com/GoogleChrome/chrome-app-samples/tree/master/mdns-browser\nbut adapted for node. It's not much left of that now though.\n\nInstall by\n\n    npm install mdns-js\n\n[![Build Status](https://travis-ci.org/kmpm/node-mdns-js.svg?branch=master)](https://travis-ci.org/kmpm/node-mdns-js)\n\nFuture\n------\nIt would be great to have a full implementation of mDSN + DNS-SD in pure JS but\nprogress will be slow unless someone is willing to pitch in with\npull requests, specifications for wanted functions etc.\nAlso, as you should avoid to have multiple mDNS stacks on a system this\nmight clash with stuff like avahi and bonjour.\n\n\nexample\n-------\n\n```javascript\nvar mdns = require('mdns-js');\n//if you have another mdns daemon running, like avahi or bonjour, uncomment following line\n//mdns.excludeInterface('0.0.0.0');\n\nvar browser = mdns.createBrowser();\n\nbrowser.on('ready', function () {\n    browser.discover(); \n});\n\nbrowser.on('update', function (data) {\n    console.log('data:', data);\n});\n```\n\nReporting issues\n----------------\nPlease report any issues at https://github.com/kmpm/node-mdns-js/issues\n\nBut please check if there is a similar issue already reported and\n__make a note of which OS__ and OS version you are running.\nThere is some issues that turn up only on Windows 8.1 but not in \nWindows 7 for example. And there are differences between Mac and \nWindows so... __please__...\n\nAnother important thing to know if there is another mdns service\nrunning on the same machine. This would be for example Bonjour and Avahi.\n\n\nDebugging\n---------\nThis library is using the [debug](https://github.com/visionmedia/debug) \nmodule from TJ Holowaychuk and can be used like this.\n\n```bash\nDEBUG=mdns:* node examples/simple.js\n```\n\nThis will spit out LOTS of information that might be useful.\nIf you have some issues with something where you might want\nto communicate the contents of a packet (ie create an issue on github)\nyou could limit the debug information to just that.\n\n```bash\nDEBUG=mdns:browser:packet node examples/simple.js\n```\n\nContributing\n------------\nPull-request will be gladly accepted.\n\nIf possible any api should be as close match to the api of node-mdns but\nbe pragmatic. Look at issue #5.\n\nPlease run any existing tests with\n\n    npm test\n\nand preferably add more tests.\n\n\nBefore creating a pull-request please run \n\n    npm run lint \n\nThis will run jshint as well as jscs that will do some basic syntax\nand code style checks.\nFix any issues befor committing and creating a pull-request.\n\nLook at the .jshintrc and .jscs.json for the details.\n\n\nLicense\n=======\nApache 2.0. See LICENSE file.\n\n\n\nReferences\n==========\n\n* https://github.com/GoogleChrome/chrome-app-samples/tree/master/samples/mdns-browser\n* http://en.wikipedia.org/wiki/Multicast_DNS\n* http://en.wikipedia.org/wiki/Zero_configuration_networking#Service_discovery\n* RFC 6762 - mDNS - http://tools.ietf.org/html/rfc6762\n* RFC 6763 - DNS Based Service Discovery (DNS-SD) - http://tools.ietf.org/html/rfc6763\n* http://www.tcpipguide.com/free/t_DNSMessageHeaderandQuestionSectionFormat.htm\n\n\nContributors\n============\n\n* James Sigurðarson, @jamiees2\n* Stefan Sauer, @ensonic\n",
+  "readmeFilename": "README.md",
+  "_id": "mdns-js@0.3.1",
+  "_shasum": "990626b8a4068d09142469bba67e49afac90aaab",
+  "_resolved": "git+https://git.popcorntime.io/mirrors/mdns-js.git#e64f0a234496326113b2d200bc730b2b793810cf",
+  "_from": "mdns-js@git+https://git.popcorntime.io/mirrors/mdns-js.git"
+}
