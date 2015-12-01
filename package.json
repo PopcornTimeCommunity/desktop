@@ -12,9 +12,7 @@
     "node-remote": "client.vpn.ht",
 "releaseName": "The one with CE",
     "scripts": {
-        "postinstall": "node_modules/.bin/bower install --config.interactive=false && grunt setup",
-        "postupdate": "node_modules/.bin/bower update --config.interactive=false && grunt setup",
-        "test": "grunt --verbose"
+        "start": "node_modules/.bin/nw ."
     },
     "window": {
         "title": "Popcorn Time CE",
@@ -83,6 +81,7 @@
         "grunt-node-webkit-builder": "0.1.x",
         "grunt-shell": "^1.1.2",
         "load-grunt-tasks": "3.2.0",
+        "nw": "^0.12.3",
         "nw-gyp": "^0.12.4",
         "stylus": "0.50.0"
     }
