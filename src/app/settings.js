@@ -94,10 +94,10 @@ Settings.vpnUsername = '';
 Settings.vpnPassword = '';
 
 Settings.tvAPI = [{
-    url: 'https://popcornwvnbg7jev.onion.to/',
+    url: 'https://popcorntime.ws/api/eztv/',
     strictSSL: true
-}, {
-    uri: 'https://popcorntime.ws/api/eztv/', //tracker is not responding
+},{
+    url: 'https://popcornwvnbg7jev.onion.to/',
     strictSSL: true
 }];
 
