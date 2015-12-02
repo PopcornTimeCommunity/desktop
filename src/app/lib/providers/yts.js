@@ -19,24 +19,24 @@
     };
 
     var format = function (data) {
-        var results = _.chain(data.movies)/*
+        var results = _.chain(data.movies)
             .filter(function (movie) {
                 // Filter any 3D only movies
                 return _.any(movie.torrents, function (torrent) {
                     return torrent.quality !== '3D';
                 });
-            })*/.map(function (movie) {
+            }).map(function (movie) {
                 return {
                     type: 'movie',
                     imdb_id: movie.imdb_code,
-                    title: movie.title,
+                    title: movie.title_english,
                     year: movie.year,
                     genre: movie.genres,
                     rating: movie.rating,
                     runtime: movie.runtime,
                     image: movie.medium_cover_image,
-                    cover: movie.medium_cover_image, //movie.large_cover_image,
-                    backdrop: movie.background_image,
+                    cover: movie.medium_cover_image,
+                    backdrop: movie.background_image_original,
                     synopsis: movie.description_full,
                     trailer: 'https://www.youtube.com/watch?v=' + movie.yt_trailer_code || false,
                     certification: movie.mpa_rating,
@@ -44,7 +44,7 @@
                         if (torrent.quality !== '3D') {
                             torrents[torrent.quality] = {
                                 url: torrent.url,
-                                magnet: 'magnet:?xt=urn:btih:' + torrent.hash +  '&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337',
+                                magnet: 'magnet:?xt=urn:btih:' + torrent.hash + '&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337',
                                 size: torrent.size_bytes,
                                 filesize: torrent.size,
                                 seed: torrent.seeds,
@@ -58,7 +58,7 @@
 
         return {
             results: Common.sanitize(results),
-            hasMore: true //data.movie_count > data.page_number * data.limit
+            hasMore: data.movie_count > data.page_number * data.limit
         };
     };
 
@@ -87,14 +87,14 @@
 
         if (filters.sorter && filters.sorter !== 'popularity') {
             switch (filters.sorter) {
-            case 'last added':
-                params.sort_by = 'date_added';
-                break;
-            case 'trending':
-                params.sort_by = 'trending_score';
-                break;
-            default:
-                params.sort_by = filters.sorter;
+                case 'last added':
+                    params.sort_by = 'date_added';
+                    break;
+                case 'trending':
+                    params.sort_by = 'trending_score';
+                    break;
+                default:
+                    params.sort_by = filters.sorter;
             }
         }
 
@@ -111,24 +111,20 @@
         function get(index) {
             var options = {
                 uri: Settings.ytsAPI[index].uri + 'api/v2/list_movies.json',
-                //uri: 'https://yts.ag/api/v2/list_movies.json',
                 qs: params,
                 json: true,
                 timeout: 10000
             };
-            //var req = jQuery.extend(true, {}, Settings.ytsAPI[index], options);
-            var req = jQuery.extend(true, {}, 'https://yts.ag/', options);
-            win.info('Request to YTS', req);
+            var req = jQuery.extend(true, {}, Settings.ytsAPI[index], options);
             request(req, function (err, res, data) {
                 if (err || res.statusCode >= 400 || (data && !data.data)) {
-                    win.warn('YTS API endpoint \'%s\' failed.', 'https://yts.ag/');
-                    return defer.reject(err || 'Status Code is above 400');
-                    // if (index + 1 >= Settings.ytsAPI.length) {
-                    //     return defer.reject(err || 'Status Code is above 400');
-                    // } else {
-                    //     get(index + 1);
-                    // }
-                    //return;
+                    win.warn('YTS API endpoint \'%s\' failed.', Settings.ytsAPI[index].uri);
+                    if (index + 1 >= Settings.ytsAPI.length) {
+                        return defer.reject(err || 'Status Code is above 400');
+                    } else {
+                        get(index + 1);
+                    }
+                    return;
                 } else if (!data || data.status === 'error') {
                     err = data ? data.status_message : 'No data returned';
                     return defer.reject(err);
