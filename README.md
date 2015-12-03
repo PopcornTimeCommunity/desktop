@@ -23,7 +23,7 @@ If you clone the GitLab repository, you will need to build a number of assets us
 The [master](https://github.com/PopcornTimeCE/popcorntimece) branch which contains the latest release.
 
 #### Quickstart:
-(warning: may not be working due to outdated dependencies listed in package.json. [issue #3](https://github.com/PopcornTimeCE/desktop/issues/3))
+(warning: may not be working due to outdated dependencies listed in package.json. [issue #8](https://github.com/PopcornTimeCE/desktop/issues/8))
 
 1. `npm install -g grunt-cli bower`
 1. `npm install`
