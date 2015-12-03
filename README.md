@@ -23,26 +23,17 @@ If you clone the GitLab repository, you will need to build a number of assets us
 The [master](https://github.com/PopcornTimeCE/popcorntimece) branch which contains the latest release.
 
 #### Quickstart:
-(warning: may not be working due to outdated dependencies listed in package.json. [issue #8](https://github.com/PopcornTimeCE/desktop/issues/8))
 
-1. `npm install -g grunt-cli bower`
+### Running
+
 1. `npm install`
-1. `grunt build`
-1. `grunt start`
+1. `npm start`
 
-If you encounter trouble with the above method, you can try:
+### Building
 
-1. `npm install -g bower grunt-cli` (Linux: you may need to run with `sudo`)
-1. `cd desktop`
 1. `npm install`
-1. `bower install`
-1. `grunt lang`
-1. `grunt nodewebkit`
-1. `grunt css`
-1. `grunt start`
-
-Optionally, you may simply run `./make_popcorn.sh` if you are on a linux or mac based operating system.
-
+1. `npm run build:YOUR_OS` For example: `npm run build:osx64` (osx32, osx64, win32, win64, linux32 or linux64)
+1. The executables should be in the newly created build/ directory
 
 <a name="community"></a>
 ## Community
