@@ -2,7 +2,7 @@
     'use strict';
 
     var request = require('request'),
-        URI = require('URIjs'),
+        URI = require('urijs'),
         Q = require('q'),
         _ = require('underscore'),
         inherits = require('util').inherits,

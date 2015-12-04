@@ -33,7 +33,7 @@
     "position": "center"
   },
   "dependencies": {
-    "URIjs": "^1.15.0",
+    "urijs": "^1.17.0",
     "adm-zip": "0.4.7",
     "airplay-js": "git+https://github.com/feross/node-airplay-js.git",
     "async": "0.9.0",
