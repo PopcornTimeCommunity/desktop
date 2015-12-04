@@ -1,10 +1,10 @@
 {
   "name": "Popcorn-Time-CE",
   "homepage": "http://popcorntime.ml",
-  "bugs": "https://github.com/PopcornTimeCE/popcorntimece/issues",
+  "bugs": "https://github.com/PopcornTimeCE/desktop/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PopcornTimeCE/popcorntimece.git"
+    "url": "https://github.com/PopcornTimeCE/desktop.git"
   },
   "license": "GPL-3.0",
   "main": "app://host/src/app/index.html",
