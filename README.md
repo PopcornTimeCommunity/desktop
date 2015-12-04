@@ -2,7 +2,7 @@
 
 Allow anyone to easily watch their favorite movies, shows, and anime.
 
-![Popcorn Time](http://popcorntime.ml/wp-content/uploads/2015/11/poppy-ce-256.png)
+![Popcorn Time](src/app/images/icon.png)
 
 Visit the project's website at <http://popcorntime.ml>.
 
@@ -20,7 +20,7 @@ If you're comfortable getting up and running from a `git clone`, this method is 
 
 If you clone the GitLab repository, you will need to build a number of assets using grunt.
 
-The [master](https://github.com/PopcornTimeCE/popcorntimece) branch which contains the latest release.
+The [master](https://github.com/PopcornTimeCE/desktop/tree/master) branch which contains the latest release.
 
 #### Quickstart:
 
