@@ -32,7 +32,7 @@ function getCurrentPlatform() {
 }
 
 gulp.task('build', ['clean'], function() {
-    nw.build().then(function() {
+    return nw.build().then(function() {
         console.log('Successfully built!')
     }).catch(function(error) {
         console.log(error);
