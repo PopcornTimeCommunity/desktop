@@ -12,14 +12,7 @@
   "node-remote": "client.vpn.ht",
   "releaseName": "The one with CE",
   "scripts": {
-    "start": "node_modules/.bin/nw .",
-    "build": "node_modules/.bin/nwbuild -v 0.12.3 .",
-    "build:osx32": "node_modules/.bin/nwbuild -v 0.12.3 -p osx32 .",
-    "build:osx64": "node_modules/.bin/nwbuild -v 0.12.3 -p osx64 .",
-    "build:linux32": "node_modules/.bin/nwbuild -v 0.12.3 -p linux32 .",
-    "build:linux64": "node_modules/.bin/nwbuild -v 0.12.3 -p linux64 .",
-    "build:win32": "node_modules/.bin/nwbuild -v 0.12.3 -p win32 .",
-    "build:win64": "node_modules/.bin/nwbuild -v 0.12.3 -p win64 ."
+    "start": "node_modules/.bin/nw ."
   },
   "window": {
     "title": "Popcorn Time CE",
@@ -74,8 +67,11 @@
     "xmlbuilder": "^2.6.2"
   },
   "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
     "nw": "^0.12.3",
     "nw-builder": "^2.0.2",
-    "nw-gyp": "^0.12.4"
+    "nw-gyp": "^0.12.4",
+    "yargs": "^3.31.0"
   }
 }

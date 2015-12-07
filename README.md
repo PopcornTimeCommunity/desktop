@@ -32,9 +32,9 @@ The [master](https://github.com/PopcornTimeCE/desktop/tree/master) branch which 
 ### Building
 
 1. `npm install`
-1. `npm run build:YOUR_OS` For example: `npm run build:osx64` (osx32, osx64, win32, win64, linux32 or linux64)
-1. The executables should be in the newly created build/ directory
-
+1. `gulp build` **OR** `node_modules/.bin/gulp build` depending whether you have gulp installed globally or not. You can also build for different platforms by passing them with the `-p` argument as a comma-seperated list (For example: `gulp build -p osx32,win32`
+1. There should be a `build/` directory containing the built files 
+ 
 <a name="community"></a>
 ## Community
 
