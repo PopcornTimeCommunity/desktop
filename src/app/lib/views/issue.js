@@ -56,7 +56,7 @@
         searchGitLab: function (keyword) {
 
             var gitlab = require('gitlab')({
-                url: 'https://git.popcorntime.io/',
+                url: 'https://git.popcorntime.ml/',
                 token: token || 'sb1SeWoyoAWrGPTuQcNE' //public reporter token
             });
             var issue_desc,
@@ -147,7 +147,7 @@
             this.isReporting = true;
 
             var gitlab = require('gitlab')({
-                url: 'https://git.popcorntime.io/',
+                url: 'https://git.popcorntime.ml/',
                 token: token //Private token
             });
             var issue_id = false;
@@ -204,7 +204,7 @@
                 password = $('#issue-pw').val();
 
             var gitlab = require('gitlab')({
-                url: 'https://git.popcorntime.io/',
+                url: 'https://git.popcorntime.ml/',
                 token: 'sb1SeWoyoAWrGPTuQcNE' //public reporter token
             });
 

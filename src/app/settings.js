@@ -116,7 +116,7 @@ Settings.updateEndpoint = {
         url: 'https://popcorntime.re/',
         fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
     }, {
-        url: 'https://popcorntime.io/',
+        url: 'https://popcorntime.ml/',
         fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C'
     }, {
         url: 'https://popcorntime.cc/',

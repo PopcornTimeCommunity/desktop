@@ -131,7 +131,7 @@
                 url: 'https://eztvapi.re/',
                 strictSSL: true
             }, {
-                url: 'https://api.popcorntime.io/',
+                url: 'https://api.popcorntime.ml/',
                 strictSSL: true
             }, {
                 url: 'http://tv.ytspt.re/',
