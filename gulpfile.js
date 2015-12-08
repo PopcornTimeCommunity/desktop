@@ -9,7 +9,7 @@ var nw = new NwBuilder({
     files: './**',
     version: '0.12.3',
     platforms: argv.p ? argv.p.split(',') : [getCurrentPlatform()]
-});
+}).on('log', console.log);
 
 /**
  * @return {string} nw-builder compatible platform string
@@ -35,7 +35,7 @@ gulp.task('build', ['clean'], function() {
     return nw.build().then(function() {
         console.log('Successfully built!')
     }).catch(function(error) {
-        console.log(error);
+        console.error(error);
     });
 });
 
