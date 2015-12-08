@@ -35,7 +35,7 @@ gulp.task('build', ['clean'], function() {
     return nw.build().then(function() {
         console.log('Successfully built!')
     }).catch(function(error) {
-        console.log(error);
+        console.error(error);
     });
 });
 
