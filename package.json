@@ -61,7 +61,7 @@
     "strike-api": "0.2.0",
     "tar": "^1.0.3",
     "temp": "^0.8.1",
-    "torrent-tracker-health": "^0.1.4",
+    "torrent-tracker-health": "git+https://github.com/PopcornTimeCE/torrent-tracker-health.git",
     "underscore": "^1.8.3",
     "upnp-mediarenderer-client": "^1.2.1",
     "xmlbuilder": "^2.6.2"
