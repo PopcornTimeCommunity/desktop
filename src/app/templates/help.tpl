@@ -44,7 +44,7 @@
                     <br><br>
 
                 <b>B) <%= i18n.__("Second method") %></b><br>
-                    <%= i18n.__("You can create an account on our %s repository, and click on %s.", '<a class="links" href="https://git.popcorntime.io/users/sign_up">GitLab</a>', '"Issues"') %>
+                    <%= i18n.__("You can create an account on our %s repository, and click on %s.", '<a class="links" href="https://git.popcorntime.ml/users/sign_up">GitLab</a>', '"Issues"') %>
                         <li><%= i18n.__("Use the %s issue filter to search and check if the issue has already been reported or is already fixed.", 'GitLab') %></li>
                         <li><%= i18n.__("Include a screenshot if relevant - Is your issue about a design feature or a bug?") %></li>
                     <br>
