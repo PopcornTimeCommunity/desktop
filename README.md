@@ -40,7 +40,8 @@ The [master](https://github.com/PopcornTimeCE/desktop/tree/master) branch which 
 
 
 1. `npm install`
-1. `gulp build` **OR** `node_modules/.bin/gulp build` depending whether you have gulp installed globally or not. You can also build for different platforms by passing them with the `-p` argument as a comma-seperated list (For example: `gulp build -p osx32,win32`
+1. `gulp build` **OR** `node_modules/.bin/gulp build` depending whether you have gulp installed globally or not. 
+  2. You can also build for different platforms by passing them with the `-p` argument as a comma-seperated list (For example: `gulp build -p osx64,win32`
 1. There should be a `build/` directory containing the built files 
  
 <a name="community"></a>
