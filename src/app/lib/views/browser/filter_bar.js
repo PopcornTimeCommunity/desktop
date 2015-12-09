@@ -76,20 +76,9 @@
                 $('#filterbar-torrent-collection').addClass('active');
                 break;
             }
-
-            if (Settings.rememberFilters) {
-                try {
-                    this.fixFilter();
-                } catch (e) {
-
-                }
-
-            } else {
-                $('.sorters .dropdown-menu a:nth(0)').addClass('active');
-                $('.genres .dropdown-menu a:nth(0)').addClass('active');
-                $('.types .dropdown-menu a:nth(0)').addClass('active');
-            }
-
+            $('.sorters .dropdown-menu a:nth(0)').addClass('active');
+            $('.genres .dropdown-menu a:nth(0)').addClass('active');
+            $('.types .dropdown-menu a:nth(0)').addClass('active');
         },
         rightclick_search: function (e) {
             e.stopPropagation();
@@ -139,7 +128,6 @@
                 activetab = AdvSettings.get('startScreen');
             }
 
-
             if (typeof App.currentview === 'undefined') {
 
                 switch (activetab) {
@@ -185,31 +173,12 @@
 
             // update VPN icon with cached status
             App.VPNClient.setVPNStatusCached();
-
-            if (Settings.rememberFilters) {
-                try {
-                    this.fixFilter();
-                } catch (e) {}
-            }
-
-
         },
 
         focusSearch: function () {
             this.$('.search input').focus();
         },
-        fixFilter: function () {
 
-            $('.genres .active').removeClass('active');
-            $('.sorters .active').removeClass('active');
-
-            var genre = $('.genres .value').data('value');
-            var sorter = $('.sorters .value').data('value');
-
-            $('.genres li').find('[data-value="' + genre + '"]').addClass('active');
-            $('.sorters li').find('[data-value="' + sorter + '"]').addClass('active');
-
-        },
         search: function (e) {
             App.vent.trigger('about:close');
             App.vent.trigger('torrentCollection:close');
@@ -222,7 +191,6 @@
             });
 
             this.$('.genres .active').removeClass('active');
-
             $($('.genres li a')[0]).addClass('active');
             this.ui.genreValue.text(i18n.__('All'));
 
@@ -271,7 +239,6 @@
             } else {
                 this.model.set('order', -1);
             }
-
             this.ui.sorterValue.text(i18n.__(sorter.capitalizeEach()));
 
             this.model.set({
@@ -302,9 +269,7 @@
             $(e.target).addClass('active');
 
             var genre = $(e.target).attr('data-value');
-
-
-            this.ui.genreValue.text(i18n.__(genre.capitalizeEach()));
+            this.ui.genreValue.text(i18n.__(genre));
 
             this.model.set({
                 keyword: '',
