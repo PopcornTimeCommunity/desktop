@@ -12,7 +12,7 @@
   "node-remote": "client.vpn.ht",
   "releaseName": "The one with CE",
   "scripts": {
-    "start": "node_modules/.bin/nw ."
+    "start": "gulp run"
   },
   "window": {
     "title": "Popcorn Time CE",
@@ -69,7 +69,6 @@
   "devDependencies": {
     "del": "^2.2.0",
     "gulp": "^3.9.0",
-    "nw": "^0.12.3",
     "nw-builder": "^2.0.2",
     "nw-gyp": "^0.12.4",
     "yargs": "^3.31.0"

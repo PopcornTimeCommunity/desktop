@@ -5,36 +5,22 @@ var argv = require('yargs')
     .alias('p', 'platforms')
     .argv;
 var del = require('del');
+var detectCurrentPlatform = require('nw-builder/lib/detectCurrentPlatform.js');
 var nw = new NwBuilder({
-    files: './**',
+    files: ['./src/**', './node_modules/**', './package.json'],
     version: '0.12.3',
-    platforms: argv.p ? argv.p.split(',') : [getCurrentPlatform()]
+    platforms: argv.p ? argv.p.split(',') : [detectCurrentPlatform()]
 }).on('log', console.log);
 
-/**
- * @return {string} nw-builder compatible platform string
- */
-function getCurrentPlatform() {
-    switch(os.platform() + os.arch()) {
-        case 'win32ia32':
-            return 'win32';
-        case 'win32x64':
-            return 'win64';
-        case 'darwinia32':
-            return 'osx32';
-        case 'darwinx64':
-            return 'osx64';
-        case 'linuxia32':
-            return 'linux32';
-        case 'linuxx64':
-            return 'linux64';
-    }
-}
+gulp.task('run', function() {
+    nw.options.files = './**';
+    return nw.run().catch(function(error) {
+        console.error(error);
+    });
+});
 
 gulp.task('build', ['clean'], function() {
-    return nw.build().then(function() {
-        console.log('Successfully built!')
-    }).catch(function(error) {
+    return nw.build().catch(function(error) {
         console.error(error);
     });
 });
