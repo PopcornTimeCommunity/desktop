@@ -13,6 +13,7 @@ var nw = new NwBuilder({
 }).on('log', console.log);
 
 gulp.task('run', function() {
+    nw.options.files = './**';
     return nw.run().catch(function(error) {
         console.error(error);
     });
