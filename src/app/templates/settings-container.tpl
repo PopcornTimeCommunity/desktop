@@ -93,6 +93,11 @@
             </span>
 
             <span class="advanced">
+                <input class="settings-checkbox" name="rememberFilters" id="cb7" type="checkbox" <%=(Settings.rememberFilters? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb7"><%= i18n.__("Remember Filters") %></label>
+            </span>
+
+            <span class="advanced">
                 <div class="dropdown watchedCovers">
                     <p><%= i18n.__("Watched Items") %></p>
                         <%
@@ -290,7 +295,7 @@
     </section>
 
     <section id="trakt-tv">
-        <div class="title"><%= i18n.__("Trakt.tv") %></div>
+        <div class="title">Trakt.tv</div>
         <div class="content">
             <div class="trakt-options<%= App.Trakt.authenticated ? " authenticated" : "" %>">
                 <% if(App.Trakt.authenticated) { %>
