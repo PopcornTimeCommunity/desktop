@@ -31,6 +31,12 @@ function getCurrentPlatform() {
     }
 }
 
+gulp.task('run', function() {
+    return nw.run().catch(function(error) {
+        console.error(error);
+    });
+});
+
 gulp.task('build', ['clean'], function() {
     return nw.build().then(function() {
         console.log('Successfully built!')
