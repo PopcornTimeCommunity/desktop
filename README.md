@@ -24,12 +24,21 @@ The [master](https://github.com/PopcornTimeCE/desktop/tree/master) branch which 
 
 #### Quickstart:
 
+### Requirements
+
+1. You must have git installed
+2. You must have npm installed
+
 ### Running
+*Runs the app without building, useful for testing*
+
 
 1. `npm install`
 1. `npm start`
 
 ### Building
+*Builds the app for a packaged, runnable app*
+
 
 1. `npm install`
 1. `gulp build` **OR** `node_modules/.bin/gulp build` depending whether you have gulp installed globally or not. You can also build for different platforms by passing them with the `-p` argument as a comma-seperated list (For example: `gulp build -p osx32,win32`
