@@ -19,9 +19,7 @@ gulp.task('run', function() {
 });
 
 gulp.task('build', ['clean'], function() {
-    return nw.build().then(function() {
-        console.log('Successfully built!')
-    }).catch(function(error) {
+    return nw.build().catch(function(error) {
         console.error(error);
     });
 });
