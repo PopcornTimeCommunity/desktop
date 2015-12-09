@@ -18,25 +18,24 @@ Want to report a bug, request a feature, contribute or translate Popcorn Time? W
 
 If you're comfortable getting up and running from a `git clone`, this method is for you.
 
-If you clone the GitLab repository, you will need to build a number of assets using grunt.
+If you clone the GitLab repository, you will need to build a number of assets with npm.
 
 The [master](https://github.com/PopcornTimeCE/desktop/tree/master) branch which contains the latest release.
 
-#### Quickstart:
 
-### Requirements
+#### Requirements
 
 1. You must have git installed
 2. You must have npm installed
 
-### Running
+#### Running
 *Runs the app without building, useful for testing*
 
 
 1. `npm install`
 1. `npm start`
 
-### Building
+#### Building
 *Builds the app for a packaged, runnable app*
 
 
