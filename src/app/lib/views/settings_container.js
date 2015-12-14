@@ -128,7 +128,7 @@
 
         resetTVShowAPI: function () {
             var value = [{
-                url: 'https://eztvapi.re/',
+                url: 'https://popcorntime.ws/api/eztv/',
                 strictSSL: true
             }, {
                 url: 'https://api.popcorntime.ml/',
