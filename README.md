@@ -1,4 +1,4 @@
-# [Popcorn Time CE](https://github.com/PopcornTime-CE.com/PopcornTimeCE/desktop)
+# [Popcorn Time CE](https://github.com/PopcornTimeCE/desktop)
 
 Allow anyone to easily watch their favorite movies, shows, and anime.
 
