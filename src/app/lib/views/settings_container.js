@@ -1,723 +1,539 @@
-(function (App) {
-    'use strict';
-    var clipboard = gui.Clipboard.get(),
-        AdmZip = require('adm-zip'),
-        fdialogs = require('node-webkit-fdialogs'),
-        waitComplete,
-        oldTmpLocation,
-        that;
-
-    var Settings = Backbone.Marionette.ItemView.extend({
-        template: '#settings-container-tpl',
-        className: 'settings-container-contain',
-
-        ui: {
-            success_alert: '.success_alert',
-            fakeTempDir: '#faketmpLocation',
-            tempDir: '#tmpLocation'
-        },
-
-        events: {
-            'click .keyboard': 'showKeyboard',
-            'click .help': 'showHelp',
-            'click .close-icon': 'closeSettings',
-            'change select,input': 'saveSetting',
-            'contextmenu input': 'rightclick_field',
-            'click .flush-bookmarks': 'flushBookmarks',
-            'click .flush-databases': 'flushAllDatabase',
-            'click .flush-subtitles': 'flushAllSubtitles',
-            'click #faketmpLocation': 'showCacheDirectoryDialog',
-            'click .default-settings': 'resetSettings',
-            'click .open-tmp-folder': 'openTmpFolder',
-            'click .open-database-folder': 'openDatabaseFolder',
-            'click .export-database': 'exportDatabase',
-            'click .import-database': 'importDatabase',
-            'click #authTrakt': 'connectTrakt',
-            'click #unauthTrakt': 'disconnectTrakt',
-            'click #connect-with-tvst': 'connectWithTvst',
-            'click #disconnect-tvst': 'disconnectTvst',
-            'click .reset-tvAPI': 'resetTVShowAPI',
-            'change #tmpLocation': 'updateCacheDirectory',
-            'click #syncTrakt': 'syncTrakt',
-            'click .qr-code': 'generateQRcode',
-            'click #qrcode-overlay': 'closeModal',
-            'click #qrcode-close': 'closeModal'
-        },
-
-        onShow: function () {
-            that = this;
-            this.render();
-
-            AdvSettings.set('ipAddress', this.getIPAddress());
-
-            $('.filter-bar').hide();
-            $('#movie-detail').hide();
-            $('#header').addClass('header-shadow');
-            $('.tooltipped').tooltip({
-                delay: {
-                    'show': 800,
-                    'hide': 100
-                }
-            });
-
-            Mousetrap.bind('backspace', function (e) {
-                App.vent.trigger('settings:close');
-            });
-        },
-
-        onRender: function () {
-            if (App.settings.showAdvancedSettings) {
-                $('.advanced').css('display', 'flex');
-            }
-            oldTmpLocation = $('#faketmpLocation').val();
-        },
-
-        rightclick_field: function (e) {
-            e.preventDefault();
-            var menu = new this.context_Menu(i18n.__('Cut'), i18n.__('Copy'), i18n.__('Paste'), e.target.id);
-            menu.popup(e.originalEvent.x, e.originalEvent.y);
-        },
-
-        context_Menu: function (cutLabel, copyLabel, pasteLabel, field) {
-            var gui = require('nw.gui'),
-                menu = new gui.Menu(),
-
-                cut = new gui.MenuItem({
-                    label: cutLabel || 'Cut',
-                    click: function () {
-                        document.execCommand('cut');
-                    }
-                }),
-
-                copy = new gui.MenuItem({
-                    label: copyLabel || 'Copy',
-                    click: function () {
-                        document.execCommand('copy');
-                    }
-                }),
-
-                paste = new gui.MenuItem({
-                    label: pasteLabel || 'Paste',
-                    click: function () {
-                        var text = clipboard.get('text');
-                        $('#' + field).val(text);
-                    }
-                });
-
-            menu.append(cut);
-            menu.append(copy);
-            menu.append(paste);
-
-            return menu;
-        },
-
-        onDestroy: function () {
-            Mousetrap.bind('backspace', function (e) {
-                App.vent.trigger('show:closeDetail');
-                App.vent.trigger('movie:closeDetail');
-            });
-            $('.filter-bar').show();
-            $('#header').removeClass('header-shadow');
-            $('#movie-detail').show();
-            clearInterval(waitComplete);
-        },
-
-        closeSettings: function () {
-            App.vent.trigger('settings:close');
-        },
-
-        resetTVShowAPI: function () {
-            var value = [{
-                url: 'https://popcorntime.ws/api/eztv/',
-                strictSSL: true
-            }, {
-                url: 'https://api.popcorntime.ml/',
-                strictSSL: true
-            }, {
-                url: 'http://tv.ytspt.re/',
-                strictSSL: false
-            }];
-            App.settings['tvAPI'] = value;
-            //save to db
-            App.db.writeSetting({
-                key: 'tvAPI',
-                value: value
-            }).then(function () {
-                that.ui.success_alert.show().delay(3000).fadeOut(400);
-            });
-
-            that.syncSetting('tvAPI', value);
-        },
-
-        generateQRcode: function () {
-            var qrcodecanvus = document.getElementById('qrcode'),
-                QRCodeInfo = {
-                    ip: AdvSettings.get('ipAddress'),
-                    port: $('#httpApiPort').val(),
-                    user: $('#httpApiUsername').val(),
-                    pass: $('#httpApiPassword').val()
-                };
-            $('#qrcode').qrcode({
-                'text': JSON.stringify(QRCodeInfo)
-            });
-            $('#qrcode-modal, #qrcode-overlay').fadeIn(500);
-        },
-
-        closeModal: function () {
-            $('#qrcode-modal, #qrcode-overlay').fadeOut(500);
-        },
-
-        showHelp: function () {
-            App.vent.trigger('help:toggle');
-        },
-
-        showKeyboard: function () {
-            App.vent.trigger('keyboard:toggle');
-        },
-
-        saveSetting: function (e) {
-            var value = false,
-                apiDataChanged = false,
-                tmpLocationChanged = false,
-                field = $(e.currentTarget),
-                data = {};
-
-            switch (field.attr('name')) {
-            case 'httpApiPort':
-                apiDataChanged = true;
-                value = parseInt(field.val());
-                break;
-            case 'tvAPI':
-                value = field.val();
-                if (value.substr(-1) !== '/') {
-                    value += '/';
-                }
-                if (value.substr(0, 8) !== 'https://' && value.substr(0, 7) !== 'http://') {
-                    value = 'http://' + value;
-                }
-                value = [{
-                    url: value,
-                    strictSSL: value.substr(0, 8) === 'https://'
-                }];
-                break;
-            case 'subtitle_size':
-            case 'tv_detail_jump_to':
-            case 'subtitle_language':
-            case 'subtitle_decoration':
-            case 'movies_quality':
-            case 'subtitle_font':
-            case 'start_screen':
-                if ($('option:selected', field).val() === 'Last Open') {
-                    AdvSettings.set('lastTab', App.currentview);
-                }
-                /* falls through */
-            case 'watchedCovers':
-            case 'theme':
-                value = $('option:selected', field).val();
-                break;
-            case 'language':
-                value = $('option:selected', field).val();
-                i18n.setLocale(value);
-                break;
-            case 'moviesShowQuality':
-            case 'deleteTmpOnClose':
-            case 'coversShowRating':
-            case 'translateSynopsis':
-            case 'showAdvancedSettings':
-            case 'alwaysOnTop':
-            case 'traktSyncOnStart':
-            case 'traktPlayback':
-            case 'playNextEpisodeAuto':
-            case 'automaticUpdating':
-            case 'events':
-            case 'alwaysFullscreen':
-            case 'minimizeToTray':
-            case 'bigPicture':
-            case 'activateTorrentCollection':
-            case 'activateWatchlist':
-            case 'activateRandomize':
-                value = field.is(':checked');
-                break;
-            case 'httpApiUsername':
-            case 'httpApiPassword':
-                apiDataChanged = true;
-                value = field.val();
-                break;
-            case 'connectionLimit':
-            case 'dhtLimit':
-            case 'streamPort':
-            case 'subtitle_color':
-                value = field.val();
-                break;
-            case 'tmpLocation':
-                tmpLocationChanged = true;
-                value = path.join(field.val(), 'Popcorn-Time');
-                break;
-            case 'activateVpn':
-                $('.vpn-connect').toggle();
-                value = field.is(':checked');
-                break;
-            default:
-                win.warn('Setting not defined: ' + field.attr('name'));
-            }
-            win.info('Setting changed: ' + field.attr('name') + ' - ' + value);
-
-
-            // update active session
-            App.settings[field.attr('name')] = value;
-
-            if (apiDataChanged) {
-                App.vent.trigger('initHttpApi');
-            }
-
-            // move tmp folder safely
-            if (tmpLocationChanged) {
-                that.moveTmpLocation(value);
-            }
-
-            //save to db
-            App.db.writeSetting({
-                key: field.attr('name'),
-                value: value
-            }).then(function () {
-                that.ui.success_alert.show().delay(3000).fadeOut(400);
-            });
-
-            that.syncSetting(field.attr('name'), value);
-        },
-
-        syncSetting: function (setting, value) {
-            switch (setting) {
-            case 'coversShowRating':
-                if (value) {
-                    $('.rating').show();
-                } else {
-                    $('.rating').hide();
-                }
-                break;
-            case 'moviesShowQuality':
-                if (value) {
-                    $('.quality').show();
-                } else {
-                    $('.quality').hide();
-                }
-                break;
-            case 'showAdvancedSettings':
-                if (value) {
-                    $('.advanced').css('display', 'flex');
-                } else {
-                    $('.advanced').css('display', 'none');
-                }
-                break;
-            case 'language':
-            case 'watchedCovers':
-                App.vent.trigger('movies:list');
-                App.vent.trigger('settings:show');
-                break;
-            case 'alwaysOnTop':
-                win.setAlwaysOnTop(value);
-                break;
-            case 'theme':
-                $('link#theme').attr('href', 'themes/' + value + '.css');
-                App.vent.trigger('updatePostersSizeStylesheet');
-                break;
-            case 'start_screen':
-                AdvSettings.set('startScreen', value);
-                break;
-            case 'events':
-                if ($('.events').css('display') === 'none') {
-                    $('.events').css('display', 'block');
-                } else {
-                    $('.events').css('display', 'none');
-                }
-                break;
-            case 'activateTorrentCollection':
-                if ($('#torrent_col').css('display') === 'none') {
-                    $('#torrent_col').css('display', 'block');
-                } else {
-                    $('#torrent_col').css('display', 'none');
-                    App.vent.trigger('torrentCollection:close');
-                }
-                break;
-            case 'activateRandomize':
-            case 'activateWatchlist':
-                App.vent.trigger('movies:list');
-                App.vent.trigger('settings:show');
-                break;
-            case 'movies_quality':
-            case 'translateSynopsis':
-                App.Providers.delete('Yts');
-                App.vent.trigger('movies:list');
-                App.vent.trigger('settings:show');
-                break;
-            case 'tvAPI':
-                App.Providers.delete('TVApi');
-                App.vent.trigger('movies:list');
-                App.vent.trigger('settings:show');
-                break;
-            case 'bigPicture':
-                if (!ScreenResolution.SD) {
-                    if (App.settings.bigPicture) {
-                        win.maximize();
-                        AdvSettings.set('noBigPicture', win.zoomLevel);
-                        var zoom = ScreenResolution.HD ? 2 : 3;
-                        win.zoomLevel = zoom;
-                    } else {
-                        win.zoomLevel = AdvSettings.get('noBigPicture') || 0;
-                    }
-                } else {
-                    AdvSettings.set('bigPicture', false);
-                    win.info('Setting changed: bigPicture - true');
-                    $('input#bigPicture.settings-checkbox').attr('checked', false);
-                    $('.notification_alert').show().text(i18n.__('Big Picture Mode is unavailable on your current screen resolution')).delay(2500).fadeOut(400);
-                }
-                break;
-            default:
-            }
-        },
-
-        connectTrakt: function (e) {
-            if (AdvSettings.get('traktTokenRefresh') !== '') {
-                return;
-            }
-
-            $('#authTrakt > i').css('visibility', 'hidden');
-            $('.loading-spinner').show();
-
-            App.Trakt.oauth.authenticate()
-                .then(function (valid) {
-                    if (valid) {
-                        $('.loading-spinner').hide();
-                        that.render();
-                    } else {
-                        $('.loading-spinner').hide();
-                        $('#authTrakt > i').css('visibility', 'visible');
-                    }
-                }).catch(function (err) {
-                    win.debug('Trakt', err);
-                    $('#authTrakt > i').css('visibility', 'visible');
-                    $('.loading-spinner').hide();
-                });
-        },
-
-        disconnectTrakt: function (e) {
-            App.settings['traktToken'] = '';
-            App.settings['traktTokenRefresh'] = '';
-            App.settings['traktTokenTTL'] = '';
-            App.Trakt.authenticated = false;
-
-            App.db.writeSetting({
-                key: 'traktToken',
-                value: ''
-            }).then(function () {
-                return App.db.writeSetting({
-                    key: 'traktTokenRefresh',
-                    value: ''
-                });
-            }).then(function () {
-                return App.db.writeSetting({
-                    key: 'traktTokenTTL',
-                    value: ''
-                });
-            }).then(function () {
-                that.ui.success_alert.show().delay(3000).fadeOut(400);
-            });
-
-            _.defer(function () {
-                App.Trakt = App.Providers.get('Trakttv');
-                that.render();
-            });
-        },
-
-        connectWithTvst: function () {
-            var self = this;
-
-            $('#connect-with-tvst > i').css('visibility', 'hidden');
-            $('.tvst-loading-spinner').show();
-
-            App.vent.on('system:tvstAuthenticated', function () {
-                window.loginWindow.close();
-                $('.tvst-loading-spinner').hide();
-                self.render();
-            });
-            App.TVShowTime.authenticate(function (activateUri) {
-                var gui = require('nw.gui');
-                gui.App.addOriginAccessWhitelistEntry(activateUri, 'app', 'host', true);
-                window.loginWindow = gui.Window.open(activateUri, {
-                    position: 'center',
-                    focus: true,
-                    title: 'TVShow Time',
-                    icon: 'src/app/images/icon.png',
-                    toolbar: false,
-                    resizable: false,
-                    width: 600,
-                    height: 600
-                });
-
-                window.loginWindow.on('closed', function () {
-                    $('.tvst-loading-spinner').hide();
-                    $('#connect-with-tvst > i').css('visibility', 'visible');
-                });
-
-            });
-        },
-
-        disconnectTvst: function () {
-            var self = this;
-            App.TVShowTime.disconnect(function () {
-                self.render();
-            });
-        },
-
-        flushBookmarks: function (e) {
-            var btn = $(e.currentTarget);
-
-            if (!this.areYouSure(btn, i18n.__('Flushing bookmarks...'))) {
-                return;
-            }
-
-            this.alertMessageWait(i18n.__('We are flushing your database'));
-
-            Database.deleteBookmarks()
-                .then(function () {
-                    that.alertMessageSuccess(true);
-                });
-        },
-
-        resetSettings: function (e) {
-            var btn = $(e.currentTarget);
-
-            if (!this.areYouSure(btn, i18n.__('Resetting...'))) {
-                return;
-            }
-
-            this.alertMessageWait(i18n.__('We are resetting the settings'));
-
-            Database.resetSettings()
-                .then(function () {
-                    AdvSettings.set('disclaimerAccepted', 1);
-                    that.alertMessageSuccess(true);
-                });
-        },
-
-        flushAllDatabase: function (e) {
-            var btn = $(e.currentTarget);
-
-            if (!this.areYouSure(btn, i18n.__('Flushing...'))) {
-                return;
-            }
-
-            this.alertMessageWait(i18n.__('We are flushing your databases'));
-
-            Database.deleteDatabases()
-                .then(function () {
-                    deleteCookies();
-                    that.alertMessageSuccess(true);
-                });
-        },
-
-        flushAllSubtitles: function (e) {
-            var btn = $(e.currentTarget);
-
-            if (!this.areYouSure(btn, i18n.__('Flushing...'))) {
-                return;
-            }
-
-            this.alertMessageWait(i18n.__('We are flushing your subtitle cache'));
-
-            var cache = new App.Cache('subtitle');
-            cache.flushTable()
-                .then(function () {
-
-                    that.alertMessageSuccess(false, btn, i18n.__('Flush subtitles cache'), i18n.__('Subtitle cache deleted'));
-
-                });
-        },
-
-        restartApplication: function () {
-            App.vent.trigger('restartPopcornTime');
-        },
-
-        showCacheDirectoryDialog: function () {
-            this.ui.tempDir.click();
-        },
-
-        openTmpFolder: function () {
-            win.debug('Opening: ' + App.settings['tmpLocation']);
-            gui.Shell.openItem(App.settings['tmpLocation']);
-        },
-
-        moveTmpLocation: function (location) {
-            if (!fs.existsSync(location)) {
-                fs.mkdir(location);
-            }
-            if (App.settings['deleteTmpOnClose']) {
-                deleteFolder(oldTmpLocation);
-            } else {
-                $('.notification_alert').show().text(i18n.__('You should save the content of the old directory, then delete it')).delay(5000).fadeOut(400);
-                gui.Shell.openItem(oldTmpLocation);
-            }
-        },
-
-        openDatabaseFolder: function () {
-            win.debug('Opening: ' + App.settings['databaseLocation']);
-            gui.Shell.openItem(App.settings['databaseLocation']);
-        },
-
-        exportDatabase: function (e) {
-            var zip = new AdmZip();
-            var btn = $(e.currentTarget);
-            var databaseFiles = fs.readdirSync(App.settings['databaseLocation']);
-
-            databaseFiles.forEach(function (entry) {
-                zip.addLocalFile(App.settings['databaseLocation'] + '/' + entry);
-            });
-
-            fdialogs.saveFile(zip.toBuffer(), function (err, path) {
-                that.alertMessageWait(i18n.__('Exporting Database...'));
-                win.info('Database exported to:', path);
-                that.alertMessageSuccess(false, btn, i18n.__('Export Database'), i18n.__('Database Successfully Exported'));
-            });
-
-        },
-
-        importDatabase: function () {
-            fdialogs.readFile(function (err, content, path) {
-                that.alertMessageWait(i18n.__('Importing Database...'));
-                try {
-                    var zip = new AdmZip(content);
-                    zip.extractAllTo(App.settings['databaseLocation'] + '/', /*overwrite*/ true);
-                    that.alertMessageSuccess(true);
-                } catch (err) {
-                    that.alertMessageFailed(i18n.__('Invalid PCT Database File Selected'));
-                    win.warn('Failed to Import Database');
-                }
-            });
-        },
-
-        updateCacheDirectory: function (e) {
-            var field = $('#tmpLocation');
-            this.ui.fakeTempDir.val = field.val();
-            this.render();
-        },
-
-        areYouSure: function (btn, waitDesc) {
-            if (!btn.hasClass('confirm')) {
-                btn.addClass('confirm warning').css('width', btn.css('width')).text(i18n.__('Are you sure?'));
-                return false;
-            }
-            btn.text(waitDesc).addClass('disabled').prop('disabled', true);
-            return true;
-        },
-
-        alertMessageWait: function (waitDesc) {
-            App.vent.trigger('notification:show', new App.Model.Notification({
-                title: i18n.__('Please wait') + '...',
-                body: waitDesc + '.',
-                type: 'danger'
-            }));
-        },
-
-        alertMessageSuccess: function (btnRestart, btn, btnText, successDesc) {
-            var notificationModel = new App.Model.Notification({
-                title: i18n.__('Success'),
-                body: successDesc,
-                type: 'success'
-            });
-
-            if (btnRestart) {
-                notificationModel.set('showRestart', true);
-                notificationModel.set('body', i18n.__('Please restart your application'));
-            } else {
-                // Hide notification after 3 seconds
-                setTimeout(function () {
-                    btn.text(btnText).removeClass('confirm warning disabled').prop('disabled', false);
-                    App.vent.trigger('notification:close');
-                }, 3000);
-            }
-
-            // Open the notification
-            App.vent.trigger('notification:show', notificationModel);
-        },
-
-        alertMessageFailed: function (errorDesc) {
-            App.vent.trigger('notification:show', new App.Model.Notification({
-                title: i18n.__('Error'),
-                body: errorDesc + '.',
-                type: 'danger'
-            }));
-
-            // Hide notification after 5 seconds
-            setTimeout(function () {
-                App.vent.trigger('notification:close');
-            }, 5000);
-        },
-
-        syncTrakt: function () {
-            var oldHTML = document.getElementById('syncTrakt').innerHTML;
-            $('#syncTrakt')
-                .text(i18n.__('Syncing...'))
-                .addClass('disabled')
-                .prop('disabled', true);
-
-            Database.deleteWatched(); // Reset before sync
-
-            App.Trakt.syncTrakt.all()
-                .then(function () {
-                    App.Providers.get('Watchlist').fetchWatchlist();
-                })
-                .then(function () {
-                    $('#syncTrakt')
-                        .text(i18n.__('Done'))
-                        .removeClass('disabled')
-                        .addClass('ok')
-                        .delay(3000)
-                        .queue(function () {
-                            $('#syncTrakt')
-                                .removeClass('ok')
-                                .prop('disabled', false);
-                            document.getElementById('syncTrakt').innerHTML = oldHTML;
-                            $('#syncTrakt').dequeue();
-                        });
-                })
-                .catch(function (err) {
-                    win.error('App.Trakt.syncTrakt.all()', err);
-                    $('#syncTrakt')
-                        .text(i18n.__('Error'))
-                        .removeClass('disabled')
-                        .addClass('warning')
-                        .delay(3000)
-                        .queue(function () {
-                            $('#syncTrakt')
-                                .removeClass('warning')
-                                .prop('disabled', false);
-                            document.getElementById('syncTrakt').innerHTML = oldHTML;
-                            $('#syncTrakt').dequeue();
-                        });
-                });
-        },
-
-        getIPAddress: function () {
-            var ip, alias = 0;
-            var ifaces = require('os').networkInterfaces();
-            for (var dev in ifaces) {
-                ifaces[dev].forEach(function (details) {
-                    if (details.family === 'IPv4') {
-                        if (!/(loopback|vmware|internal|hamachi|vboxnet)/gi.test(dev + (alias ? ':' + alias : ''))) {
-                            if (details.address.substring(0, 8) === '192.168.' ||
-                                details.address.substring(0, 7) === '172.16.' ||
-                                details.address.substring(0, 5) === '10.0.'
-                            ) {
-                                ip = details.address;
-                                ++alias;
+<div class="settings-container">
+    <div class="fa fa-times close-icon"></div>
+    <div class="success_alert" style="display:none"><%= i18n.__("Saved") %>&nbsp;<span id="checkmark-notify"><div id="stem-notify"></div><div id="kick-notify"></div></span></div>
+
+    <section id="title">
+        <div class="title"><%= i18n.__("Settings") %></div>
+        <div class="content">
+            <span>
+                <i class="fa fa-keyboard-o keyboard tooltipped" data-toggle="tooltip" data-placement="bottom" title="<%= i18n.__("Keyboard Shortcuts") %>"></i>
+                <i class="fa fa-question-circle help tooltipped" data-toggle="tooltip" data-placement="bottom" title="<%= i18n.__("Help Section") %>"></i>
+                <input id="show-advanced-settings" class="settings-checkbox" name="showAdvancedSettings" type="checkbox" <%=(Settings.showAdvancedSettings? "checked":"")%>>
+                <label class="settings-label" for="show-advanced-settings"><%= i18n.__("Show advanced settings") %></label>
+            </span>
+        </div>
+    </section>
+
+    <section id="user-interface">
+        <div class="content"><div class="title"><%= i18n.__("User Interface") %></div>
+            <span>
+                <div class="dropdown subtitles-language">
+                    <p><%= i18n.__("Default Language") %></p>
+                    <%
+                        var langs = "";
+                        for(var key in App.Localization.allTranslations) {
+                                key = App.Localization.allTranslations[key];
+                                if (App.Localization.langcodes[key] !== undefined) {
+                                langs += "<option "+(Settings.language == key? "selected='selected'":"")+" value='"+key+"'>"+
+                                            App.Localization.langcodes[key].nativeName+"</option>";
                             }
                         }
-                    }
-                });
-            }
-            return ip;
-        }
-    });
+                    %>
+                    <select name="language"><%=langs%></select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>
 
-    App.View.Settings = Settings;
-})(window.App);
+            <span class="advanced">
+                <div class="dropdown pct-theme">
+                    <p><%= i18n.__("Theme") %></p>
+                    <%
+                        var themes = "";
+                        var theme_files = fs.readdirSync('./src/app/themes/');
+                        for (var i in theme_files) {
+                            if (theme_files[i].indexOf('_theme') > -1) {
+                                themes += "<option " + (Settings.theme == theme_files[i].slice(0, -4)? "selected='selected'" : "") + " value='" + theme_files[i].slice(0, -4) + "'>" +
+                                theme_files[i].slice(0, -10).split('_').join(' '); + "</option>";
+                            }
+                            if (theme_files[i] === 'third_party') {
+                                var third_party_files = fs.readdirSync('./src/app/themes/third_party');
+                                for (var k in third_party_files) {
+                                    if (third_party_files[k].indexOf('_theme') > -1) {
+                                        themes += "<option " + (Settings.theme == 'third_party\/' + third_party_files[k].slice(0, -4)? "selected='selected'" : "") + " value='" + 'third_party\/' + third_party_files[k].slice(0, -4) + "'>" +
+                                        third_party_files[k].slice(0, -10).split('_').join(' '); + "</option>";
+                                    }
+                                }
+                            }
+                        }
+                    %>
+                    <select name="theme"><%=themes%></select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>
+
+            <span class="advanced">
+                <div class="dropdown start-screen">
+                    <p><%= i18n.__("Start Screen") %></p>
+                        <%
+                            var arr_screens = ["Movies","TV Series","Favorites","Anime", "Watchlist", "Last Open"];
+
+                            var selct_start_screen = "";
+                            for(var key in arr_screens) {
+                                selct_start_screen += "<option "+(Settings.start_screen == arr_screens[key]? "selected='selected'":"")+" value='"+arr_screens[key]+"'>"+i18n.__(arr_screens[key])+"</option>";
+                            }
+                        %>
+                    <select name="start_screen"><%=selct_start_screen%></select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>
+
+            <span class="advanced">
+                <input class="settings-checkbox" name="translateSynopsis" id="translateSynopsis" type="checkbox" <%=(Settings.translateSynopsis? "checked='checked'":"")%>>
+                <label class="settings-label" for="translateSynopsis"><%= i18n.__("Translate Synopsis") %></label>
+            </span>
+            <span class="advanced">
+                <input class="settings-checkbox" name="coversShowRating" id="cb3" type="checkbox" <%=(Settings.coversShowRating? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb3"><%= i18n.__("Show rating over covers") %></label>
+            </span>
+
+            <span class="advanced">
+                <input class="settings-checkbox" name="alwaysOnTop" id="cb4" type="checkbox" <%=(Settings.alwaysOnTop? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb4"><%= i18n.__("Always On Top") %></label>
+            </span>
+
+            <span class="advanced">
+                <div class="dropdown watchedCovers">
+                    <p><%= i18n.__("Watched Items") %></p>
+                        <%
+                            var watch_type = {
+                                "none": "Show",
+                                "fade": "Fade",
+                                "hide": "Hide"
+                            };
+
+                            var select_watched_cover = "";
+                            for(var key in watch_type) {
+                                select_watched_cover += "<option "+(Settings.watchedCovers == key? "selected='selected'":"")+" value='"+key+"'>"+i18n.__(watch_type[key])+"</option>";
+                            }
+                        %>
+                    <select name="watchedCovers"><%=select_watched_cover%></select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>
+
+        </div>
+    </section>
+
+    <section id="subtitles">
+        <div class="content"><div class="title"><%= i18n.__("Subtitles") %></div>
+            <span>
+                <div class="dropdown subtitles-language-default">
+                    <p><%= i18n.__("Default Subtitle") %></p>
+                    <%
+                        var sub_langs = "<option "+(Settings.subtitle_language == "none"? "selected='selected'":"")+" value='none'>" +
+                                            i18n.__("Disabled") + "</option>";
+
+                        for(var key in App.Localization.langcodes) {
+                            if (App.Localization.langcodes[key].subtitle !== undefined && App.Localization.langcodes[key].subtitle == true) {
+                                sub_langs += "<option "+(Settings.subtitle_language == key? "selected='selected'":"")+" value='"+key+"'>"+
+                                                App.Localization.langcodes[key].nativeName+"</option>";
+                            }
+                        }
+                    %>
+                    <select name="subtitle_language"><%=sub_langs%></select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>
+
+            <span class="advanced">
+                <div class="dropdown subtitles-font">
+                    <p><%= i18n.__("Font") %></p>
+                    <%
+                        var arr_fonts = [
+                            {name:"AljazeeraMedExtOf", id:"aljazeera"},
+                            {name:"Deja Vu Sans", id:"dejavusans"},
+                            {name:"Droid Sans", id:"droidsans"},
+                            {name:"Comic Sans MS", id:"comic"},
+                            {name:"Georgia", id:"georgia"},
+                            {name:"Geneva", id:"geneva"},
+                            {name:"Helvetica", id:"helvetica"},
+                            {name:"Khalid Art", id:"khalid"},
+                            {name:"Lato", id:"lato"},
+                            {name:"Montserrat", id:"montserrat"},
+                            {name:"OpenDyslexic", id:"opendyslexic"},
+                            {name:"Open Sans", id:"opensans"},
+                            {name:"PT Sans",id:"pts"},
+                            {name:"Tahoma", id:"tahoma"},
+                            {name:"Trebuchet MS", id:"trebuc"},
+                            {name:"Roboto",id:"roboto"},
+                            {name:"Ubuntu", id:"ubuntu"},
+                            {name:"Verdana", id:"verdana"},
+                        ];
+
+                        var font_folder = path.resolve({
+                            win32:  "/Windows/fonts",
+                            darwin: "/Library/Fonts",
+                            linux:  "/usr/share/fonts"
+                        }[process.platform]);
+
+                        var files = [];
+                        var recursive = function (dir) {
+                            if (fs.statSync(dir).isDirectory()) {
+                                fs.readdirSync(dir).forEach(function (name) {
+                                    var newdir = path.join(dir, name);
+                                    recursive(newdir);
+                                });
+                            } else {
+                                files.push(dir);
+                            }
+                        };
+                        try {
+                            recursive(font_folder);
+                        } catch (e) {}
+                        var avail_fonts = ["Arial"];
+
+                        for (var i in arr_fonts) {
+                            for (var key in files) {
+                                var found = files[key].toLowerCase();
+                                var toFind = arr_fonts[i].id;
+                                if (found.indexOf(toFind) != -1) {
+                                    avail_fonts.push(arr_fonts[i].name);
+                                    break;
+                                }
+                            }
+                        }
+
+                        var sub_fonts = "";
+                        for (var key in avail_fonts) {
+                            sub_fonts += "<option "+(Settings.subtitle_font == avail_fonts[key]+",Arial"? "selected='selected'":"")+" value='"+avail_fonts[key]+",Arial'>"+avail_fonts[key]+"</option>";
+                        }
+                    %>
+                    <select name="subtitle_font"><%=sub_fonts%></select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>
+
+            <span class="advanced">
+                <div class="dropdown subtitles-decoration">
+                    <p><%= i18n.__("Decoration") %></p>
+                    <%
+                        var arr_deco = ["None", "Outline", "Opaque Background"];
+
+                        var sub_deco = "";
+                        for(var key in arr_deco) {
+                            sub_deco += "<option "+(Settings.subtitle_decoration == arr_deco[key]? "selected='selected'":"")+" value='"+arr_deco[key]+"'>"+i18n.__(arr_deco[key])+"</option>";
+                        }
+                    %>
+                    <select name="subtitle_decoration"><%=sub_deco%></select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>
+
+            <span class="advanced">
+                <div class="dropdown subtitles-size">
+                    <p><%= i18n.__("Size") %></p>
+                    <%
+                        var arr_sizes = ["20px","22px","24px","26px","28px","30px","32px","34px","36px","38px","40px","42px","44px","46px","48px","50px","52px","54px","56px","58px","60px"];
+
+                        var sub_sizes = "";
+                        for(var key in arr_sizes) {
+                            sub_sizes += "<option "+(Settings.subtitle_size == arr_sizes[key]? "selected='selected'":"")+" value='"+arr_sizes[key]+"'>"+arr_sizes[key]+"</option>";
+                        }
+                    %>
+                    <select name="subtitle_size"><%=sub_sizes%></select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>
+
+            <span class="advanced">
+                <div class="subtitles-custom">
+                    <p><%= i18n.__("Color") %></p>
+                    <input class="colorsub" id="subtitles_color" type="color" size="7" name="subtitle_color" value="<%=Settings.subtitle_color%>" list="subs_colors">
+                        <datalist id="subs_colors">
+                            <option>#ffffff</option>
+                            <option>#ffff00</option>
+                            <option>#ff0000</option>
+                            <option>#ff00ff</option>
+                            <option>#00ffff</option>
+                            <option>#00ff00</option>
+                        </datalist>
+                </div>
+            </span>
+
+        </div>
+    </section>
+
+    <section id="quality">
+        <div class="content"><div class="title"><%= i18n.__("Quality") %></div>
+	    <!--not working-->
+            <!--<span class="advanced">
+                <div class="dropdown movies-quality">
+                    <p><%= i18n.__("Only list movies in") %></p>
+                    <select name="movies_quality">
+                        <option <%=(Settings.movies_quality == "all"? "selected='selected'":"") %> value="all"><%= i18n.__("All") %></option>
+                        <option <%=(Settings.movies_quality == "1080p"? "selected='selected'":"") %> value="1080p">1080p</option>
+                        <option <%=(Settings.movies_quality == "720p"? "selected='selected'":"") %> value="720p">720p</option>
+                    </select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>-->
+            <span>
+                <input class="settings-checkbox" name="moviesShowQuality" id="cb1" type="checkbox" <%=(Settings.moviesShowQuality? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb1"><%= i18n.__("Show movie quality on list") %></label>
+            </span>
+	    <!--<span>
+                <input class="settings-checkbox" name="moviesShowGooglecloud" id="cb7" type="checkbox" <%=(Settings.moviesShowGooglecloud? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb7"><%= i18n.__("Show Google Cloud on list") %></label>
+            </span>-->
+        </div>
+    </section>
+
+    <section id="playback">
+        <div class="content"><div class="title"><%= i18n.__("Playback") %></div>
+            <span>
+                <input class="settings-checkbox" name="alwaysFullscreen" id="alwaysFullscreen" type="checkbox" <%=(Settings.alwaysFullscreen? "checked='checked'":"")%>>
+                <label class="settings-label" for="alwaysFullscreen"><%= i18n.__("Always start playing in fullscreen") %></label>
+            </span>
+            <span class="advanced">
+                <input class="settings-checkbox" name="playNextEpisodeAuto" id="playNextEpisodeAuto" type="checkbox" <%=(Settings.playNextEpisodeAuto? "checked='checked'":"")%>>
+                <label class="settings-label" for="playNextEpisodeAuto"><%= i18n.__("Play next episode automatically") %></label>
+            </span>
+        </div>
+    </section>
+
+
+    <section id="features">
+        <div class="content"><div class="title"><%= i18n.__("Features") %></div>
+            <span>
+                <input class="settings-checkbox" name="activateTorrentCollection" id="activateTorrentCollection" type="checkbox" <%=(Settings.activateTorrentCollection? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateTorrentCollection"><%= i18n.__("Torrent Collection") %> - search on KAT, drop Magnet and .torrent</label>
+            </span>
+            <!--<span>
+                <input class="settings-checkbox" name="activateFavorites" id="activateFavorites" type="checkbox" <%=(Settings.activateFavorites? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateFavorites"><%= i18n.__("Favorites") %></label>
+            </span>-->
+	    <span class="advanced">
+                <input class="settings-checkbox" name="activateWatchlist" id="activateWatchlist" type="checkbox" <%=(Settings.activateWatchlist? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateWatchlist"><%= i18n.__("Watchlist") %></label>
+            </span>
+            <!--<span class="advanced">
+                <input class="settings-checkbox" name="activateVpn" id="activateVpn" type="checkbox" <%=(Settings.activateVpn? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateVpn"><%= i18n.__("VPN") %></label>
+            </span>
+            <span class="advanced">
+                <input class="settings-checkbox" name="activateRandomize" id="activateRandomize" type="checkbox" <%=(Settings.activateRandomize? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateRandomize"><%= i18n.__("Randomize Button for Movies") %></label>
+            </span>-->
+        </div>
+    </section>
+
+
+    <section id="connection">
+        <div class="content"><div class="title"><%= i18n.__("Connection") %></div>
+	    <span>
+                <p><%= i18n.__("Movie API Endpoint") %></p>
+                    <input id="ytsAPI" type="text" size="50" name="ytsAPI" value="<%=Settings.ytsAPI[0].url%>">
+                    <% if (Settings.ytsAPI.length <= 1) { %>
+                    &nbsp;&nbsp;<i class="reset-ytsAPI fa fa-undo tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__('Reset to Default Settings') %>"></i>
+                    <% } %>
+            </span>
+            <span class="advanced">
+                <p><%= i18n.__("TV Show API Endpoint") %></p>
+                    <input id="tvAPI" type="text" size="50" name="tvAPI" value="<%=Settings.tvAPI[0].url%>">
+                    <% if (Settings.tvAPI.length <= 1) { %>
+                    &nbsp;&nbsp;<i class="reset-tvAPI fa fa-undo tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__('Reset to Default Settings') %>"></i>
+                    <% } %>
+            </span>
+            <span class="advanced">
+                <p><%= i18n.__("Connection Limit") %></p>
+                <input id="connectionLimit" type="text" size="20" name="connectionLimit" value="<%=Settings.connectionLimit%>"/>
+            </span>
+            <span class="advanced">
+                <p><%= i18n.__("DHT Limit") %></p>
+                <input type="text" id="dhtLimit" size="20" name="dhtLimit" value="<%=Settings.dhtLimit%>"/>
+            </span>
+            <span class="advanced">
+                <p><%= i18n.__("Port to stream on") %></p>
+                <input id="streamPort" type="text" size="20" name="streamPort" value="<%=Settings.streamPort%>"/>&nbsp;&nbsp;<em><%= i18n.__("0 = Random") %></em>
+            </span>
+            <span id="overallRatio" class="advanced">
+                <p><%= i18n.__("Overall Ratio") %></p>
+                <% var overallRatio = function () {
+                    var ratio = (Settings.totalUploaded / Settings.totalDownloaded).toFixed(2);
+                    isNaN(ratio) ? ratio = i18n.__("None") : ratio;
+                    return ratio;
+                   }
+                %>
+                <input type="text" size="20" name="overallRatio" value="<%= overallRatio() %>">&nbsp;&nbsp;<em><%= Common.fileSize(Settings.totalDownloaded) %><i class="fa fa-arrow-circle-down"></i><%= Common.fileSize(Settings.totalUploaded) %><i class="fa fa-arrow-circle-up"></i></em>
+            </span>
+        </div>
+    </section>
+
+    <section id="cache" class="advanced">
+        <div class="content"><div class="title"><%= i18n.__("Cache Directory") %></div>
+            <span>
+                <p><%= i18n.__("Cache Directory") %></p>
+                <input type="text" placeholder="<%= i18n.__("Cache Directory") %>" id="faketmpLocation" value="<%= Settings.tmpLocation %>" readonly="readonly" size="65" />
+                <i class="open-tmp-folder fa fa-folder-open-o tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__("Open Cache Directory") %>"></i>
+                <input type="file" name="tmpLocation" id="tmpLocation" nwdirectory style="display: none;" nwworkingdir="<%= Settings.tmpLocation %>" />
+            </span>
+            <span>
+                <input class="settings-checkbox" name="deleteTmpOnClose" id="cb2" type="checkbox" <%=(Settings.deleteTmpOnClose? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb2"><%= i18n.__("Clear Tmp Folder after closing app?") %></label>
+            </span>
+        </div>
+    </section>
+
+    <section id="database" class="advanced">
+        <div class="content"><div class="title"><%= i18n.__("Database") %></div>
+            <span>
+                <p><%= i18n.__("Database Directory") %></p>
+                <input type="text" placeholder="<%= i18n.__("Database Directory") %>" id="fakedatabaseLocation" value="<%= Settings.databaseLocation %>" readonly="readonly" size="65" />
+                <i class="open-database-folder fa fa-folder-open-o tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__("Open Database Directory") %>"></i>
+                <input type="file" name="fakedatabaseLocation" id="fakedatabaseLocation" nwdirectory style="display: none;" nwworkingdir="<%= Settings.databaseLocation %>" />
+            </span>
+            <div class="btns advanced database">
+                <div class="btn-settings database import-database">
+                    <i class="fa fa-level-down">&nbsp;&nbsp;</i>
+                    <%= i18n.__("Import Database") %>
+                </div>
+                <div class="btn-settings database export-database">
+                    <i class="fa fa-level-up">&nbsp;&nbsp;</i>
+                    <%= i18n.__("Export Database") %>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="trakt-tv" class="advanced">
+        <div class="content"><div class="title"><%= i18n.__("Trakt.tv") %></div>
+            <div class="trakt-options<%= App.Trakt.authenticated ? " authenticated" : "" %>">
+                <% if(App.Trakt.authenticated) { %>
+                    <span>
+                        <%= i18n.__("You are currently connected to %s", "Trakt.tv") %>.
+                        <a id="unauthTrakt" class="unauthtext" href="#"><%= i18n.__("Disconnect account") %></a>
+                    </span>
+                    <span>
+                        <input class="settings-checkbox" name="traktSyncOnStart" id="traktSyncOnStart" type="checkbox" <%=(Settings.traktSyncOnStart? "checked='checked'":"")%>>
+                        <label class="settings-label" for="traktSyncOnStart"><%= i18n.__("Automatically Sync on Start") %></label>
+                    </span>
+                    <span>
+                        <input class="settings-checkbox" name="traktPlayback" id="traktPlayback" type="checkbox" <%=(Settings.traktPlayback? "checked='checked'":"")%>>
+                        <label class="settings-label" for="traktPlayback"><%= i18n.__("Resume Playback") %></label>
+                    </span>
+                    <span class="advanced">
+                        <div class="btn-settings syncTrakt" id="syncTrakt">
+                            <i class="fa fa-refresh">&nbsp;&nbsp;</i>
+                            <%= i18n.__("Sync With Trakt") %>
+                        </div>
+                    </span>
+                <% } else { %>
+                    <span>
+                        <%= i18n.__("Connect to %s to automatically 'scrobble' episodes you watch in %s", "Trakt.tv", "Popcorn Time") %>
+                    </span>
+                    <span>
+                        <div class="btn-settings syncTrakt" id="authTrakt">
+                            <i class="fa fa-user-plus">&nbsp;&nbsp;</i>
+                            <%= i18n.__("Connect To %s", "Trakt") %>
+                        </div>
+                        <div class="loading-spinner" style="display: none"></div>
+                    </span>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+	<section id="tvshowtime" class="advanced">
+		<div class="content"><div class="title">TVShow Time</div>
+			<div class="tvshowtime-options <%= App.TVShowTime.authenticated ? " authenticated" : "" %>">
+				<% if(App.TVShowTime.authenticated) { %>
+                    <span>
+                        <%= i18n.__("You are currently connected to %s", "TVShow Time") %>.
+                        <a id="disconnect-tvst" class="unauthtext" href="#"><%= i18n.__("Disconnect account") %></a>
+                    </span>
+				<% } else { %>
+                    <span>
+                        <div class="btn-settings" id="connect-with-tvst">
+                            <i class="fa fa-user-plus">&nbsp;&nbsp;</i>
+                            <%= i18n.__("Connect To %s", "TVShow Time") %>
+                        </div>
+                        <div class="tvst-loading-spinner" style="display: none"></div>
+                    </span>
+				<% } %>
+			</div>
+		</div>
+	</section>
+
+    <section id="remote-control" class="advanced">
+        <div class="content"><div class="title"><%= i18n.__("Remote Control") %></div>
+            <span>
+                <p><%= i18n.__("Local IP Address") %></p>
+                <input type="text" id="settingsIpAddr" value="<%= Settings.ipAddress %>" readonly="readonly" size="20" />
+            </span>
+            <span>
+                <p><%= i18n.__("HTTP API Port") %></p>
+                <input id="httpApiPort" type="number" size="5" name="httpApiPort" value="<%=Settings.httpApiPort%>">
+            </span>
+            <span>
+                <p><%= i18n.__("HTTP API Username") %></p>
+                <input id="httpApiUsername" type="text" size="50" name="httpApiUsername" value="<%=Settings.httpApiUsername%>">
+            </span>
+            <span>
+                <p><%= i18n.__("HTTP API Password") %></p>
+                <input id="httpApiPassword" type="text" size="50" name="httpApiPassword" value="<%=Settings.httpApiPassword%>">
+            </span>
+            <div class="btns advanced database">
+                <div class="btn-settings database qr-code">
+                    <i class="fa fa-qrcode">&nbsp;&nbsp;</i>
+                    <%= i18n.__("Generate Pairing QR code") %>
+                </div>
+            </div>
+            <div id="qrcode-overlay"></div>
+            <div id="qrcode-modal">
+                <span class="fa-stack fa-1x" id="qrcode-close">
+                    <i class="fa fa-circle-thin fa-stack-2x" style="margin-top: -2px;"></i>
+                    <i class="fa fa-times fa-stack-1x" style="margin-top: -2px;"></i>
+                </span>
+                <canvas id="qrcode" width="200" height="200"></canvas>
+            </div><!-- /.modal -->
+        </div>
+    </section>
+
+
+    <section id="miscellaneous">
+        <div class="content"><div class="title"><%= i18n.__("Miscellaneous") %></div>
+            <span class="advanced">
+                <div class="dropdown tv_detail_jump_to">
+                    <p><%= i18n.__("When Opening TV Series Detail Jump To") %></p>
+                        <%
+                            var tv_detail_jump_to = {
+                                "firstUnwatched": "First Unwatched Episode",
+                                "next": "Next Episode In Series"
+                            };
+
+                            var selected_tv_detail_jump = "";
+                            for(var key in tv_detail_jump_to) {
+                                selected_tv_detail_jump += "<option "+(Settings.tv_detail_jump_to == key? "selected='selected'":"")+" value='"+key+"'>"+i18n.__(tv_detail_jump_to[key])+"</option>";
+                            }
+                        %>
+                    <select name="tv_detail_jump_to"><%=selected_tv_detail_jump%></select>
+                    <div class="dropdown-arrow"></div>
+                </div>
+            </span>
+            <span class="advanced">
+                <input class="settings-checkbox" name="automaticUpdating" id="cb5" type="checkbox" <%=(Settings.automaticUpdating? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb5"><%= i18n.__("Activate automatic updating") %></label>
+            </span>
+            <span class="advanced">
+                <input class="settings-checkbox" name="events" id="cb6" type="checkbox" <%=(Settings.events? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb6"><%= i18n.__("Celebrate various events") %></label>
+            </span>
+            <span class="advanced">
+                <input class="settings-checkbox" name="minimizeToTray" id="minimizeToTray" type="checkbox" <%=(Settings.minimizeToTray? "checked='checked'":"")%>>
+                <label class="settings-label" for="minimizeToTray"><%= i18n.__("Minimize to Tray") %></label>
+            </span>
+            <span>
+                <input class="settings-checkbox" name="bigPicture" id="bigPicture" type="checkbox" <%=(Settings.bigPicture? "checked='checked'":"")%>>
+                <label class="settings-label" for="bigPicture"><%= i18n.__("Big Picture Mode") %></label>
+            </span>
+        </div>
+    </section>
+    <div class="btns">
+        <div class="btn-settings flush-bookmarks advanced"><%= i18n.__("Flush bookmarks database") %></div>
+        <div class="btn-settings flush-subtitles advanced"><%= i18n.__("Flush subtitles cache") %></div>
+        <div class="btn-settings flush-databases"><%= i18n.__("Flush all databases") %></div>
+        <div class="btn-settings default-settings"><%= i18n.__("Reset to Default Settings") %></div>
+    </div>
+
+</div>
