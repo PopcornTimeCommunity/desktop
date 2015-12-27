@@ -2,7 +2,7 @@
     'use strict';
 
     var Config = {
-        title: 'Popcorn Time',
+        title: 'Popcorn Time CE',
         platform: process.platform,
         genres: [
             'All',
@@ -32,12 +32,17 @@
         ],
 
         sorters: [
-            'popularity',
-            'trending',
+            //'trending',
             'last added',
+	    	'last added & google cloud',
+	    //'popularity',
             'year',
-            'title',
-            'rating'
+            //'title',
+            'rating',
+	    	'views',
+		'downloads',
+		'likes',
+		
         ],
 
         sorters_tv: [
