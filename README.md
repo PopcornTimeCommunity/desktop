@@ -8,9 +8,9 @@ Visit the project's website at <http://popcorntime.ag>.
 
 This project would absolutely **not** be possible without the original developer's hard work into making Popcorn Time what it is today. All credit should go to them, we're just trying to help the community :)
 
-# What is Popcorn Time Cloud Edition?
+# What is the Google Cloud Player?
 
-Popcorn Time Cloud Edition (aka Community Edition) or simply Popcorn Time CE is a revolutionary new way to exchange movies with the power of Google Cloud. Think of CE as a cloud torrent in which the cloud system uploads the file to the Cloud with many copies and different links. Every viewer gets a unique link to the cloud source, where he/she can watch the movie.
+Google Cloud (Cloud “Torrent”) is a revolutionary new way to exchange movies with the power of Google's Infrastructure. Think of Google Cloud as a cloud torrent in which the cloud system uploads the file to the Cloud with many copies and different links. Every viewer gets a unique link to the cloud source, where he/she can watch the movie.
 
 Those unique links have also the ability to expire at any time, so it's not possible to correctly identify the source file, as takedown notice suggests. This prevents the files from being removed by DCMA bots and has many distinct advantages. 
 
@@ -26,19 +26,19 @@ ISP Monitor Traffic | Nearly Impossible (SSL) | Very Likely (built-in VPN is slo
 Seeder (Upload Bandwidth) | Initial Upload Only | Seed While Watching
 Download Bandwidth | No Restrictions | Limited by Seeders
 Leecher Impact | No Impact | Direct Impact
-Selection | 263,000+ mirrors | YIFY Releases
+Selection | 263,000+ mirrors | [YIFY Releases](http://yify.is)
 TV Shows | Coming Soon! | Most
 Subtitles | Yes | Yes
 Mobile Downloading | Yes | Yes
 Mobile Streaming | Yes | Yes
 Android App | Coming Soon! | Yes
-Change Playback Quality | Coming Soon! | No
+Change Playback Quality | Coming Soon! | Yes
 Xbox/Playstation Compatible | Yes | No
 Software Requirements | None Needed | Windows/Mac/Linux
 Chromecast Support | Coming Soon! | Yes
 Advertising | None | None
 Bloat/File Advertising | None | Often
-Release Updates | Usually 1 day late | YIFY-dependent
+Release Updates | Usually 1 day late | [YIFY-dependent](http://yify.is/index.php/movie/yifi_filter)
 
 &nbsp;
 
@@ -51,6 +51,17 @@ Release Updates | Usually 1 day late | YIFY-dependent
 * Linux 32-bit [PopcornTimeCEYIFY-32.tar.xz  ](http://www92.zippyshare.com/v/PkEB1dm7/file.html)  
 
 * Linux 64-bit [PopcornTimeCEYIFY-64.tar.xz](http://www92.zippyshare.com/v/kaEgF1Qv/file.html)  
+
+Official Downlod Sites:
+
+* http://popcorntime.ag
+
+* http://popcorn-time.is
+
+* http://yify.is/index.php/blog/view/54
+
+* http://video2k.is/index.php/blog/view/55
+
 
 &nbsp;
 
@@ -108,15 +119,18 @@ It was originally created as a proof of concept, but it became a large project a
 
 *New Features:* 
 
-- Google Cloud Player (possibly bad quality but very fast speed, no ISP monitor & unlimited download bandwidth)
+- Google Cloud Player (possibly bad quality but very fast speed, no ISP monitor & unlimited download bandwidth)  
+http://imgur.com/S8jszul
 - Subtitles for Google Cloud Player
 - Interrupting movie (on Google Cloud Player) and watch again with last view 
 - Show Google Cloud icon on list
 - Added an option to disable Coogle Cloud icon in settings
 - Save choosen player (also for Google Cloud Player)
-- Option to change movie API endpoint in settings (forget the YIFY API patcher *it's useless*)
+- Option to change movie API endpoint in settings (forget the YIFY API patcher *it's useless*)  
+http://imgur.com/gallery/uzjZDB3
 - Get Provider info in movie details (more control over sources)
-- Sort by Last Added & Google Cloud
+- Sort by Last Added & Google Cloud  
+http://imgur.com/xmzJ1Ax
 - Sort by Views
 - Sort by Downloads
 - Sort by Likes
