@@ -1,6 +1,6 @@
 {
   "name": "Popcorn-Time-CE",
-  "homepage": "http://popcorntime.ml",
+  "homepage": "http://popcorntime.ag",
   "bugs": "https://github.com/PopcornTime-CE/desktop/issues",
   "repository": {
     "type": "git",
@@ -8,9 +8,9 @@
   },
   "license": "GPL-3.0",
   "main": "app://host/src/app/index.html",
-  "version": "0.3.10-11",
+  "version": "0.3.9",
   "node-remote": "client.vpn.ht",
-  "releaseName": "The one with CE",
+  "releaseName": "Merry Christmas Eve ♡ I love y'all so much",
   "scripts": {
     "start": "gulp run"
   },
@@ -61,7 +61,7 @@
     "strike-api": "0.2.0",
     "tar": "^1.0.3",
     "temp": "^0.8.1",
-    "torrent-tracker-health": "git+https://github.com/PTCE-Public/torrent-tracker-health.git",
+    "torrent-tracker-health": "git+https://github.com/PopcornTime-CE/torrent-tracker-health.git",
     "underscore": "^1.8.3",
     "upnp-mediarenderer-client": "^1.2.1",
     "xmlbuilder": "^2.6.2"
