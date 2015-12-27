@@ -1,10 +1,10 @@
 {
   "name": "Popcorn-Time-CE",
   "homepage": "http://popcorntime.ml",
-  "bugs": "https://github.com/PopcornTime-CE/desktop/issues",
+  "bugs": "https://github.com/PopcornTimeCE/desktop/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PopcornTime-CE/desktop.git"
+    "url": "https://github.com/PopcornTimeCE/desktop.git"
   },
   "license": "GPL-3.0",
   "main": "app://host/src/app/index.html",
@@ -36,7 +36,7 @@
     "iconv-lite": "^0.4.7",
     "jschardet": "1.1.1",
     "json-rpc2": "^0.8.1",
-    "kat-api": "git+https://github.com/PopcornTime-CE/kat-api.git",
+    "kat-api": "git+https://github.com/PopcornTimeCE/kat-api.git",
     "markdown": "~0.5.0",
     "memoizee": "^0.3.8",
     "mkdirp": "*",
@@ -61,7 +61,7 @@
     "strike-api": "0.2.0",
     "tar": "^1.0.3",
     "temp": "^0.8.1",
-    "torrent-tracker-health": "git+https://github.com/PTCE-Public/torrent-tracker-health.git",
+    "torrent-tracker-health": "git+https://github.com/PopcornTimeCE/torrent-tracker-health.git",
     "underscore": "^1.8.3",
     "upnp-mediarenderer-client": "^1.2.1",
     "xmlbuilder": "^2.6.2"
