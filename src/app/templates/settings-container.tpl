@@ -15,8 +15,7 @@
     </section>
 
     <section id="user-interface">
-        <div class="title"><%= i18n.__("User Interface") %></div>
-        <div class="content">
+        <div class="content"><div class="title"><%= i18n.__("User Interface") %></div>
             <span>
                 <div class="dropdown subtitles-language">
                     <p><%= i18n.__("Default Language") %></p>
@@ -35,7 +34,7 @@
                 </div>
             </span>
 
-            <span>
+            <span class="advanced">
                 <div class="dropdown pct-theme">
                     <p><%= i18n.__("Theme") %></p>
                     <%
@@ -116,8 +115,7 @@
     </section>
 
     <section id="subtitles">
-        <div class="title"><%= i18n.__("Subtitles") %></div>
-        <div class="content">
+        <div class="content"><div class="title"><%= i18n.__("Subtitles") %></div>
             <span>
                 <div class="dropdown subtitles-language-default">
                     <p><%= i18n.__("Default Subtitle") %></p>
@@ -221,7 +219,7 @@
                 </div>
             </span>
 
-            <span>
+            <span class="advanced">
                 <div class="dropdown subtitles-size">
                     <p><%= i18n.__("Size") %></p>
                     <%
@@ -255,10 +253,10 @@
         </div>
     </section>
 
-    <section id="quality" class="advanced">
-        <div class="title"><%= i18n.__("Quality") %></div>
-        <div class="content">
-            <span>
+    <section id="quality">
+        <div class="content"><div class="title"><%= i18n.__("Quality") %></div>
+	    <!--not working-->
+            <!--<span class="advanced">
                 <div class="dropdown movies-quality">
                     <p><%= i18n.__("Only list movies in") %></p>
                     <select name="movies_quality">
@@ -268,30 +266,138 @@
                     </select>
                     <div class="dropdown-arrow"></div>
                 </div>
-            </span>
+            </span>-->
             <span>
                 <input class="settings-checkbox" name="moviesShowQuality" id="cb1" type="checkbox" <%=(Settings.moviesShowQuality? "checked='checked'":"")%>>
                 <label class="settings-label" for="cb1"><%= i18n.__("Show movie quality on list") %></label>
             </span>
+	    <!--<span>
+                <input class="settings-checkbox" name="moviesShowGooglecloud" id="cb7" type="checkbox" <%=(Settings.moviesShowGooglecloud? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb7"><%= i18n.__("Show Google Cloud on list") %></label>
+            </span>-->
         </div>
     </section>
+
     <section id="playback">
-        <div class="title"><%= i18n.__("Playback") %></div>
-        <div class="content">
-            <span class="advanced">
+        <div class="content"><div class="title"><%= i18n.__("Playback") %></div>
+            <span>
                 <input class="settings-checkbox" name="alwaysFullscreen" id="alwaysFullscreen" type="checkbox" <%=(Settings.alwaysFullscreen? "checked='checked'":"")%>>
                 <label class="settings-label" for="alwaysFullscreen"><%= i18n.__("Always start playing in fullscreen") %></label>
             </span>
-            <span>
+            <span class="advanced">
                 <input class="settings-checkbox" name="playNextEpisodeAuto" id="playNextEpisodeAuto" type="checkbox" <%=(Settings.playNextEpisodeAuto? "checked='checked'":"")%>>
                 <label class="settings-label" for="playNextEpisodeAuto"><%= i18n.__("Play next episode automatically") %></label>
             </span>
         </div>
     </section>
 
-    <section id="trakt-tv">
-        <div class="title"><%= i18n.__("Trakt.tv") %></div>
-        <div class="content">
+
+    <section id="features">
+        <div class="content"><div class="title"><%= i18n.__("Features") %></div>
+            <span>
+                <input class="settings-checkbox" name="activateTorrentCollection" id="activateTorrentCollection" type="checkbox" <%=(Settings.activateTorrentCollection? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateTorrentCollection"><%= i18n.__("Torrent Collection") %> - search on KAT, drop Magnet and .torrent</label>
+            </span>
+            <!--<span>
+                <input class="settings-checkbox" name="activateFavorites" id="activateFavorites" type="checkbox" <%=(Settings.activateFavorites? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateFavorites"><%= i18n.__("Favorites") %></label>
+            </span>-->
+	    <span class="advanced">
+                <input class="settings-checkbox" name="activateWatchlist" id="activateWatchlist" type="checkbox" <%=(Settings.activateWatchlist? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateWatchlist"><%= i18n.__("Watchlist") %></label>
+            </span>
+            <!--<span class="advanced">
+                <input class="settings-checkbox" name="activateVpn" id="activateVpn" type="checkbox" <%=(Settings.activateVpn? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateVpn"><%= i18n.__("VPN") %></label>
+            </span>
+            <span class="advanced">
+                <input class="settings-checkbox" name="activateRandomize" id="activateRandomize" type="checkbox" <%=(Settings.activateRandomize? "checked='checked'":"")%>>
+                <label class="settings-label" for="activateRandomize"><%= i18n.__("Randomize Button for Movies") %></label>
+            </span>-->
+        </div>
+    </section>
+
+
+    <section id="connection">
+        <div class="content"><div class="title"><%= i18n.__("Connection") %></div>
+	    <span>
+                <p><%= i18n.__("Movie API Endpoint") %></p>
+                    <input id="ytsAPI" type="text" size="50" name="ytsAPI" value="<%=Settings.ytsAPI[0].url%>">
+                    <% if (Settings.ytsAPI.length <= 1) { %>
+                    &nbsp;&nbsp;<i class="reset-ytsAPI fa fa-undo tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__('Reset to Default Settings') %>"></i>
+                    <% } %>
+            </span>
+            <span class="advanced">
+                <p><%= i18n.__("TV Show API Endpoint") %></p>
+                    <input id="tvAPI" type="text" size="50" name="tvAPI" value="<%=Settings.tvAPI[0].url%>">
+                    <% if (Settings.tvAPI.length <= 1) { %>
+                    &nbsp;&nbsp;<i class="reset-tvAPI fa fa-undo tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__('Reset to Default Settings') %>"></i>
+                    <% } %>
+            </span>
+            <span class="advanced">
+                <p><%= i18n.__("Connection Limit") %></p>
+                <input id="connectionLimit" type="text" size="20" name="connectionLimit" value="<%=Settings.connectionLimit%>"/>
+            </span>
+            <span class="advanced">
+                <p><%= i18n.__("DHT Limit") %></p>
+                <input type="text" id="dhtLimit" size="20" name="dhtLimit" value="<%=Settings.dhtLimit%>"/>
+            </span>
+            <span class="advanced">
+                <p><%= i18n.__("Port to stream on") %></p>
+                <input id="streamPort" type="text" size="20" name="streamPort" value="<%=Settings.streamPort%>"/>&nbsp;&nbsp;<em><%= i18n.__("0 = Random") %></em>
+            </span>
+            <span id="overallRatio" class="advanced">
+                <p><%= i18n.__("Overall Ratio") %></p>
+                <% var overallRatio = function () {
+                    var ratio = (Settings.totalUploaded / Settings.totalDownloaded).toFixed(2);
+                    isNaN(ratio) ? ratio = i18n.__("None") : ratio;
+                    return ratio;
+                   }
+                %>
+                <input type="text" size="20" name="overallRatio" value="<%= overallRatio() %>">&nbsp;&nbsp;<em><%= Common.fileSize(Settings.totalDownloaded) %><i class="fa fa-arrow-circle-down"></i><%= Common.fileSize(Settings.totalUploaded) %><i class="fa fa-arrow-circle-up"></i></em>
+            </span>
+        </div>
+    </section>
+
+    <section id="cache" class="advanced">
+        <div class="content"><div class="title"><%= i18n.__("Cache Directory") %></div>
+            <span>
+                <p><%= i18n.__("Cache Directory") %></p>
+                <input type="text" placeholder="<%= i18n.__("Cache Directory") %>" id="faketmpLocation" value="<%= Settings.tmpLocation %>" readonly="readonly" size="65" />
+                <i class="open-tmp-folder fa fa-folder-open-o tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__("Open Cache Directory") %>"></i>
+                <input type="file" name="tmpLocation" id="tmpLocation" nwdirectory style="display: none;" nwworkingdir="<%= Settings.tmpLocation %>" />
+            </span>
+            <span>
+                <input class="settings-checkbox" name="deleteTmpOnClose" id="cb2" type="checkbox" <%=(Settings.deleteTmpOnClose? "checked='checked'":"")%>>
+                <label class="settings-label" for="cb2"><%= i18n.__("Clear Tmp Folder after closing app?") %></label>
+            </span>
+        </div>
+    </section>
+
+    <section id="database" class="advanced">
+        <div class="content"><div class="title"><%= i18n.__("Database") %></div>
+            <span>
+                <p><%= i18n.__("Database Directory") %></p>
+                <input type="text" placeholder="<%= i18n.__("Database Directory") %>" id="fakedatabaseLocation" value="<%= Settings.databaseLocation %>" readonly="readonly" size="65" />
+                <i class="open-database-folder fa fa-folder-open-o tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__("Open Database Directory") %>"></i>
+                <input type="file" name="fakedatabaseLocation" id="fakedatabaseLocation" nwdirectory style="display: none;" nwworkingdir="<%= Settings.databaseLocation %>" />
+            </span>
+            <div class="btns advanced database">
+                <div class="btn-settings database import-database">
+                    <i class="fa fa-level-down">&nbsp;&nbsp;</i>
+                    <%= i18n.__("Import Database") %>
+                </div>
+                <div class="btn-settings database export-database">
+                    <i class="fa fa-level-up">&nbsp;&nbsp;</i>
+                    <%= i18n.__("Export Database") %>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="trakt-tv" class="advanced">
+        <div class="content"><div class="title"><%= i18n.__("Trakt.tv") %></div>
             <div class="trakt-options<%= App.Trakt.authenticated ? " authenticated" : "" %>">
                 <% if(App.Trakt.authenticated) { %>
                     <span>
@@ -328,9 +434,8 @@
         </div>
     </section>
 
-	<section id="tvshowtime">
-		<div class="title">TVShow Time</div>
-		<div class="content">
+	<section id="tvshowtime" class="advanced">
+		<div class="content"><div class="title">TVShow Time</div>
 			<div class="tvshowtime-options <%= App.TVShowTime.authenticated ? " authenticated" : "" %>">
 				<% if(App.TVShowTime.authenticated) { %>
                     <span>
@@ -350,31 +455,8 @@
 		</div>
 	</section>
 
-    <section id="features">
-        <div class="title"><%= i18n.__("Features") %></div>
-        <div class="content">
-            <span>
-                <input class="settings-checkbox" name="activateTorrentCollection" id="activateTorrentCollection" type="checkbox" <%=(Settings.activateTorrentCollection? "checked='checked'":"")%>>
-                <label class="settings-label" for="activateTorrentCollection"><%= i18n.__("Torrent Collection") %></label>
-            </span>
-            <span>
-                <input class="settings-checkbox" name="activateWatchlist" id="activateWatchlist" type="checkbox" <%=(Settings.activateWatchlist? "checked='checked'":"")%>>
-                <label class="settings-label" for="activateWatchlist"><%= i18n.__("Watchlist") %></label>
-            </span>
-            <span>
-                <input class="settings-checkbox" name="activateVpn" id="activateVpn" type="checkbox" <%=(Settings.activateVpn? "checked='checked'":"")%>>
-                <label class="settings-label" for="activateVpn"><%= i18n.__("VPN") %></label>
-            </span>
-            <span>
-                <input class="settings-checkbox" name="activateRandomize" id="activateRandomize" type="checkbox" <%=(Settings.activateRandomize? "checked='checked'":"")%>>
-                <label class="settings-label" for="activateRandomize"><%= i18n.__("Randomize Button for Movies") %></label>
-            </span>
-        </div>
-    </section>
-
     <section id="remote-control" class="advanced">
-        <div class="title"><%= i18n.__("Remote Control") %></div>
-        <div class="content">
+        <div class="content"><div class="title"><%= i18n.__("Remote Control") %></div>
             <span>
                 <p><%= i18n.__("Local IP Address") %></p>
                 <input type="text" id="settingsIpAddr" value="<%= Settings.ipAddress %>" readonly="readonly" size="20" />
@@ -408,82 +490,10 @@
         </div>
     </section>
 
-    <section id="connection" class="advanced">
-        <div class="title"><%= i18n.__("Connection") %></div>
-        <div class="content">
-            <span>
-                <p><%= i18n.__("TV Show API Endpoint") %></p>
-                    <input id="tvAPI" type="text" size="50" name="tvAPI" value="<%=Settings.tvAPI[0].url%>">
-                    <% if (Settings.tvAPI.length <= 1) { %>
-                    &nbsp;&nbsp;<i class="reset-tvAPI fa fa-undo tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__('Reset to Default Settings') %>"></i>
-                    <% } %>
-            </span>
-            <span>
-                <p><%= i18n.__("Connection Limit") %></p>
-                <input id="connectionLimit" type="text" size="20" name="connectionLimit" value="<%=Settings.connectionLimit%>"/>
-            </span>
-            <span>
-                <p><%= i18n.__("DHT Limit") %></p>
-                <input type="text" id="dhtLimit" size="20" name="dhtLimit" value="<%=Settings.dhtLimit%>"/>
-            </span>
-            <span>
-                <p><%= i18n.__("Port to stream on") %></p>
-                <input id="streamPort" type="text" size="20" name="streamPort" value="<%=Settings.streamPort%>"/>&nbsp;&nbsp;<em><%= i18n.__("0 = Random") %></em>
-            </span>
-            <span id="overallRatio">
-                <p><%= i18n.__("Overall Ratio") %></p>
-                <% var overallRatio = function () {
-                    var ratio = (Settings.totalUploaded / Settings.totalDownloaded).toFixed(2);
-                    isNaN(ratio) ? ratio = i18n.__("None") : ratio;
-                    return ratio;
-                   }
-                %>
-                <input type="text" size="20" name="overallRatio" value="<%= overallRatio() %>">&nbsp;&nbsp;<em><%= Common.fileSize(Settings.totalDownloaded) %><i class="fa fa-arrow-circle-down"></i><%= Common.fileSize(Settings.totalUploaded) %><i class="fa fa-arrow-circle-up"></i></em>
-            </span>
-        </div>
-    </section>
 
-    <section id="cache" class="advanced">
-        <div class="title"><%= i18n.__("Cache Directory") %></div>
-        <div class="content">
-            <span>
-                <p><%= i18n.__("Cache Directory") %></p>
-                <input type="text" placeholder="<%= i18n.__("Cache Directory") %>" id="faketmpLocation" value="<%= Settings.tmpLocation %>" readonly="readonly" size="65" />
-                <i class="open-tmp-folder fa fa-folder-open-o tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__("Open Cache Directory") %>"></i>
-                <input type="file" name="tmpLocation" id="tmpLocation" nwdirectory style="display: none;" nwworkingdir="<%= Settings.tmpLocation %>" />
-            </span>
-            <span>
-                <input class="settings-checkbox" name="deleteTmpOnClose" id="cb2" type="checkbox" <%=(Settings.deleteTmpOnClose? "checked='checked'":"")%>>
-                <label class="settings-label" for="cb2"><%= i18n.__("Clear Tmp Folder after closing app?") %></label>
-            </span>
-        </div>
-    </section>
-
-    <section id="database" class="advanced">
-        <div class="title"><%= i18n.__("Database") %></div>
-        <div class="content">
-            <span>
-                <p><%= i18n.__("Database Directory") %></p>
-                <input type="text" placeholder="<%= i18n.__("Database Directory") %>" id="fakedatabaseLocation" value="<%= Settings.databaseLocation %>" readonly="readonly" size="65" />
-                <i class="open-database-folder fa fa-folder-open-o tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__("Open Database Directory") %>"></i>
-                <input type="file" name="fakedatabaseLocation" id="fakedatabaseLocation" nwdirectory style="display: none;" nwworkingdir="<%= Settings.databaseLocation %>" />
-            </span>
-            <div class="btns advanced database">
-                <div class="btn-settings database import-database">
-                    <i class="fa fa-level-down">&nbsp;&nbsp;</i>
-                    <%= i18n.__("Import Database") %>
-                </div>
-                <div class="btn-settings database export-database">
-                    <i class="fa fa-level-up">&nbsp;&nbsp;</i>
-                    <%= i18n.__("Export Database") %>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="miscellaneous" class="advanced">
-        <div class="title"><%= i18n.__("Miscellaneous") %></div>
-        <div class="content">
-            <span >
+    <section id="miscellaneous">
+        <div class="content"><div class="title"><%= i18n.__("Miscellaneous") %></div>
+            <span class="advanced">
                 <div class="dropdown tv_detail_jump_to">
                     <p><%= i18n.__("When Opening TV Series Detail Jump To") %></p>
                         <%
@@ -501,15 +511,15 @@
                     <div class="dropdown-arrow"></div>
                 </div>
             </span>
-            <span>
+            <span class="advanced">
                 <input class="settings-checkbox" name="automaticUpdating" id="cb5" type="checkbox" <%=(Settings.automaticUpdating? "checked='checked'":"")%>>
                 <label class="settings-label" for="cb5"><%= i18n.__("Activate automatic updating") %></label>
             </span>
-            <span>
+            <span class="advanced">
                 <input class="settings-checkbox" name="events" id="cb6" type="checkbox" <%=(Settings.events? "checked='checked'":"")%>>
                 <label class="settings-label" for="cb6"><%= i18n.__("Celebrate various events") %></label>
             </span>
-            <span>
+            <span class="advanced">
                 <input class="settings-checkbox" name="minimizeToTray" id="minimizeToTray" type="checkbox" <%=(Settings.minimizeToTray? "checked='checked'":"")%>>
                 <label class="settings-label" for="minimizeToTray"><%= i18n.__("Minimize to Tray") %></label>
             </span>
