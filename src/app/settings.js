@@ -30,18 +30,19 @@ Settings.chosenPlayer = 'local';
 // Advanced UI
 Settings.alwaysOnTop = false;
 Settings.theme = 'Official_-_Dark_theme';
-Settings.ratingStars = true; //trigger on click in details
+Settings.ratingStars = false; //trigger on click in details
 Settings.startScreen = 'Movies';
 Settings.lastTab = '';
 
 // Quality
 Settings.shows_default_quality = '720p';
-Settings.movies_default_quality = '1080p';
-Settings.moviesShowQuality = false;
+Settings.movies_default_quality = '720p';
+Settings.moviesShowQuality = true;
 Settings.movies_quality = 'all';
+//Settings.moviesShowGooglecloud = true;
 
 // Subtitles
-Settings.subtitle_language = 'none';
+Settings.subtitle_language = 'en';
 Settings.subtitle_size = '28px';
 Settings.subtitle_color = '#ffffff';
 Settings.subtitle_decoration = 'Outline';
@@ -69,19 +70,20 @@ Settings.tvstAccessToken = '';
 Settings.connectionLimit = 100;
 Settings.dhtLimit = 500;
 Settings.streamPort = 0; // 0 = Random
-Settings.tmpLocation = path.join(os.tmpDir(), 'Popcorn-Time-CE-cache');
+Settings.tmpLocation = path.join(os.tmpDir(), 'Popcorn-Time');
 Settings.databaseLocation = path.join(data_path, 'data');
 Settings.deleteTmpOnClose = true;
 Settings.automaticUpdating = true;
-Settings.events = true;
+Settings.events = false;
 Settings.minimizeToTray = false;
 Settings.bigPicture = false;
 
 // Features
-Settings.activateTorrentCollection = true;
-Settings.activateWatchlist = true;
-Settings.activateVpn = true;
-Settings.activateRandomize = true;
+Settings.activateTorrentCollection = false;
+Settings.activateWatchlist = false;
+//Settings.activateFavorites = true;
+Settings.activateVpn = false;
+Settings.activateRandomize = false;
 Settings.onlineSearchEngine = 'KAT';
 
 // Ratio
@@ -102,29 +104,22 @@ Settings.tvAPI = [{
 }];
 
 Settings.ytsAPI = [{
-    uri: 'https://yts.ag/',
+    url: 'http://yify.is/index.php/',
     strictSSL: true
-}/*,{
-    uri: 'http://api.torrentsapi.com/', //tracker will not work with current yts.js settings
-    strictSSL: false
-}*/];
+},{
+    url: 'https://yts.ag/',
+    strictSSL: true
+}];
 
 Settings.updateEndpoint = {
-    url: 'https://popcorntime.re/',
+    url: 'https://popcornbxexxf3bu.onion.to/',
     index: 0,
     proxies: [{
-        url: 'https://popcorntime.re/',
-        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
+        url: 'https://popcornqbt6ktnfs.onion.to/',
+        //fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
     }, {
-        url: 'https://popcorntime.ml/',
-        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C'
-    }, {
-        url: 'https://popcorntime.cc/',
-        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C'
-    }, {
-        url: 'https://its.pt/',
-        ssl: false,
-        fingerprint: /301/
+        url: 'https://popcornd6v5duho3.onion.to/',
+        //fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
     }]
 };
 
@@ -198,18 +193,18 @@ var AdvSettings = {
         }
 
         switch (process.platform) {
-        case 'darwin':
-            AdvSettings.set('os', 'mac');
-            break;
-        case 'win32':
-            AdvSettings.set('os', 'windows');
-            break;
-        case 'linux':
-            AdvSettings.set('os', 'linux');
-            break;
-        default:
-            AdvSettings.set('os', 'unknown');
-            break;
+            case 'darwin':
+                AdvSettings.set('os', 'mac');
+                break;
+            case 'win32':
+                AdvSettings.set('os', 'windows');
+                break;
+            case 'linux':
+                AdvSettings.set('os', 'linux');
+                break;
+            default:
+                AdvSettings.set('os', 'unknown');
+                break;
         }
 
         return Q();
