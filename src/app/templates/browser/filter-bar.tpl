@@ -1,6 +1,6 @@
 <ul class="nav nav-hor left">
-    <li class="source active showMovies providerinfo" data-toggle="tooltip" data-placement="top" title="YTS.ag"><%= i18n.__("Movies") %></li>
-    <li class="source showShows providerinfo" data-toggle="tooltip" data-placement="top" id="TVApi" title="TV API"><%= i18n.__("TV Series") %></li>
+    <li class="source active showMovies providerinfo" data-toggle="tooltip" data-placement="top" title="YIFY.is"><%= i18n.__("Movies") %></li>
+    <li class="source showShows providerinfo" data-toggle="tooltip" data-placement="top" id="TVApi" title="TV API - None"><%= i18n.__("TV Series") %></li>
         <li class="source showAnime providerinfo" data-toggle="tooltip" data-placement="top" title="Haruhichan"><%= i18n.__("Anime") %></li>
 </ul>
 <ul id="nav-filters" class="nav nav-hor filters">
@@ -105,4 +105,5 @@
     <li>
         <i id="filterbar-settings" class="fa fa-cog settings tooltipped" data-toggle="tooltip" data-placement="left" title="<%= i18n.__("Settings") %>"></i>
     </li>
+
 </ul>
