@@ -34,10 +34,19 @@
 
 <p class="title" title="<%= title %>"><%= title %></p>
 <p class="year">
+
+	<% if (typeof item_data !== 'undefined' || typeof num_seasons !== 'undefined') {%>
+	<%}else if (typeof torrents !== 'undefined') { %>
+		<% if (google_video !== false) {%>
+        	<img class="seasons quality" <% if(Settings.moviesShowQuality){ %> style="display:block; float:left; margin-right:3px;" <% } %> src="images/icons/googlecloud-favicon.png" width="15" title="Google Cloud" alt="Google Cloud" />
+    	<%} %>
+	<%} %>	
+
     <% if (typeof year !== 'undefined') {%>
         <%= year %>
     <%} %>
 </p>
+
 
 <% if (typeof item_data !== 'undefined') {%>
         <p class="seasons data">
