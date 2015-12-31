@@ -52,7 +52,7 @@ Release Updates | Usually 1 day late | [YIFY-dependent](http://yify.is/index.php
 
 * Linux 64-bit [PopcornTimeCEYIFY-64.tar.xz](http://www92.zippyshare.com/v/kaEgF1Qv/file.html)  
 
-Official Downlod Sites:
+Official Download Sites:
 
 * http://popcorntime.ag
 
