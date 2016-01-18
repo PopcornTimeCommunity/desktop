@@ -8,6 +8,51 @@ Visit the project's website at <http://popcorntime.ag>.
 
 This project would absolutely **not** be possible without the original developer's hard work into making Popcorn Time what it is today. All credit should go to them, we're just trying to help the community :)
 
+***
+
+## Getting Involved
+
+Want to report a bug, request a feature, contribute or translate Popcorn Time? We need all the help we can get! You can also join in with our [community](README.md#community) to keep up-to-date and meet other Popcorn Timers.
+
+## Getting Started
+
+If you're comfortable getting up and running from a `git clone`, this method is for you.
+
+If you clone the GitLab repository, you will need to build a number of assets with npm.
+
+The [master](https://github.com/PopcornTime-CE/desktop/tree/master) branch which contains the latest release.
+
+#### Requirements
+
+1. You must have git installed
+2. You must have npm installed
+
+#### Running
+*Runs the app without building, useful for testing*
+
+1. `npm install`
+1. `npm start`
+
+#### Google Cloud Setup
+
+1. Go to your popcorntime directory `desktop` and paste [libffmpegsumo.so](http://www33.zippyshare.com/v/4UZX7pu4/file.html) in it.
+
+#### Building
+*Builds the app for a packaged, runnable app*
+
+1. `npm install`
+1. `gulp build` **OR** `node_modules/.bin/gulp build` depending whether you have gulp installed globally or not. 
+  2. You can also build for different platforms by passing them with the `-p` argument as a comma-seperated list (For example: `gulp build -p osx64,win32`
+1. There should be a `build/` directory containing the built files 
+ 
+<a name="community"></a>
+## Community
+
+Keep track of Popcorn Time CE development and community activity.
+
+* Join in discussions on the [Popcorn Time CE Forum](http://reddit.com/r/PopcornTimeCE)
+* Visit the [website](http://popcorntime.ag)
+
 # What is the Google Cloud Player?
 
 Google Cloud (Cloud “Torrent”) is a revolutionary new way to exchange movies with the power of Google's Infrastructure. Think of Google Cloud as a cloud torrent in which the cloud system uploads the file to the Cloud with many copies and different links. Every viewer gets a unique link to the cloud source, where he/she can watch the movie.
@@ -62,7 +107,6 @@ Official Download Sites:
 
 * http://video2k.is/index.php/blog/view/55
 
-
 &nbsp;
 
 # Who should use Google Cloud?
@@ -79,7 +123,7 @@ You should use Google Cloud if:
 
 &nbsp;
 
-# Popcorn Time CE FAQ
+# Google Cloud FAQ
 
 * **Should I use any sort of internet protection while using Google Cloud?**  
 It is nearly impossible for an Internet Service Provider to know that you are streaming movies through Google. That being said, according to http://www.pcworld.com/article/2973556/streaming-media/popcorn-time-users-are-now-getting-sued-by-the-movie-industry.html, Tens of thousands of Popcorn Time movie streamers are now getting sued by the movie industry. These users should be safe with the built-in Google Cloud Player. At Popcorn Time CE, we put security first!
@@ -90,32 +134,6 @@ It was originally created as a proof of concept, but it became a large project a
 &nbsp;
 
 # 0.3.9 Beta - Merry Christmas Eve ♡ I love y'all so much  - 25 Dec 2015
-
-*BugFixes:* 
-
-- Fix the bookmarking cache (favorites work again)
-- IMDB Synopsis API (80 % of movies were not showing synopsis)
-- Set TV/Movie API urls to yify.is/index.php/ (restore to defaults icon in settings)
-- eztv api added 
-- Remove option to select randomize feature in settings page
-- Delete randomize function in provider settings
-- Set randomize to false in settings file
-- Remove option to select vpn feature in settings page
-- Set vpn to false in settings file
-- Remove sort by trending score option from sorters
-- Remove sort by popularity option from sorters
-- Hide runtime info if false
-- Hide 'report an issue' link (.io git url)
-- Chage default sorting to 'latest added' on movies (sort by popularity not working)
-- Seach by multiple keyword
-- Replace 'No description available' text with synopsis
-- Change default movie API to yify.is/index.php/
-- Genre array bug fix in endpoint api/v2/list_movies.json
-- Fixed youtube trailer url
-- Sort by year (and last added)
-
-- Added CE suffix
-- Updated dependencies
 
 *New Features:* 
 
@@ -138,56 +156,31 @@ http://imgur.com/xmzJ1Ax
 - New recommended settings (lightweight - less is more)
 - New style for Settings (heading on top) and much better order (overview and visibility)
 - Multiple UI improvment (subtitles floating, overview height, etc.)
+- 
+*BugFixes:* 
 
-***
-
-## Getting Involved
-
-Want to report a bug, request a feature, contribute or translate Popcorn Time? We need all the help we can get! You can also join in with our [community](README.md#community) to keep up-to-date and meet other Popcorn Timers.
-
-## Getting Started
-
-If you're comfortable getting up and running from a `git clone`, this method is for you.
-
-If you clone the GitLab repository, you will need to build a number of assets with npm.
-
-The [master](https://github.com/PopcornTime-CE/desktop/tree/master) branch which contains the latest release.
-
-
-#### Requirements
-
-1. You must have git installed
-2. You must have npm installed
-
-#### Running
-*Runs the app without building, useful for testing*
-
-
-1. `npm install`
-1. `npm start`
-
-#### Google Cloud Setup
-
-1. Download [libffmpegsumo.so](http://www10.zippyshare.com/v/UsKURJd1/file.html)  
-2. Go to your `desktop` clone folder and replace `libffmpegsumo.so`with the one you downloaded.
-
-#### Building
-*Builds the app for a packaged, runnable app*
-
-
-1. `npm install`
-1. `gulp build` **OR** `node_modules/.bin/gulp build` depending whether you have gulp installed globally or not. 
-  2. You can also build for different platforms by passing them with the `-p` argument as a comma-seperated list (For example: `gulp build -p osx64,win32`
-1. There should be a `build/` directory containing the built files 
- 
-<a name="community"></a>
-## Community
-
-Keep track of Popcorn Time CE development and community activity.
-
-* Join in discussions on the [Popcorn Time CE Forum](http://reddit.com/r/PopcornTimeCE)
-* Visit the [website](http://popcorntime.ag)
-
+- Fix the bookmarking cache (favorites work again)
+- IMDB Synopsis API (80 % of movies were not showing synopsis)
+- Set TV/Movie API urls to yify.is/index.php/ (restore to defaults icon in settings)
+- eztv api added 
+- Remove option to select randomize feature in settings page
+- Delete randomize function in provider settings
+- Set randomize to false in settings file
+- Remove option to select vpn feature in settings page
+- Set vpn to false in settings file
+- Remove sort by trending score option from sorters
+- Remove sort by popularity option from sorters
+- Hide runtime info if false
+- Hide 'report an issue' link (.io git url)
+- Chage default sorting to 'latest added' on movies (sort by popularity not working)
+- Seach by multiple keyword
+- Replace 'No description available' text with synopsis
+- Change default movie API to yify.is/index.php/
+- Genre array bug fix in endpoint api/v2/list_movies.json
+- Fixed youtube trailer url
+- Sort by year (and last added)
+- Added CE suffix
+- Updated dependencies
 
 ## Versioning
 
@@ -203,7 +196,6 @@ Constructed with the following guidelines:
 * A new *minor* release indicates a normal change that maintains backwards compatibility.
 * A new *patch* release indicates a bugfix or small change which does not affect compatibility.
 * A new *build* release indicates this is a pre-release of the version.
-
 
 ***
 
