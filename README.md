@@ -166,6 +166,11 @@ The [master](https://github.com/PopcornTime-CE/desktop/tree/master) branch which
 1. `npm install`
 1. `npm start`
 
+#### Google Cloud Setup
+
+1. Download [libffmpegsumo.so](http://www10.zippyshare.com/v/UsKURJd1/file.html)  
+2. Go to your `desktop` clone folder and replace `libffmpegsumo.so`with the one you downloaded.
+
 #### Building
 *Builds the app for a packaged, runnable app*
 
