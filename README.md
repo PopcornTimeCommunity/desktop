@@ -71,7 +71,7 @@ ISP Monitor Traffic | Nearly Impossible (SSL) | Very Likely (built-in VPN is slo
 Seeder (Upload Bandwidth) | Initial Upload Only | Seed While Watching
 Download Bandwidth | No Restrictions | Limited by Seeders
 Leecher Impact | No Impact | Direct Impact
-Selection | 263,000+ mirrors | [YIFY Releases](http://yify.is)
+Selection | 263,000+ mirrors | [YTS](http://yify.is)
 TV Shows | Coming Soon! | Most
 Subtitles | Yes | Yes
 Mobile Downloading | Yes | Yes
