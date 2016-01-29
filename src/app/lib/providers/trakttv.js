@@ -585,8 +585,8 @@
     };
 
     TraktTv.prototype.resizeImage = function (imageUrl, size) {
-        if (imageUrl === undefined) {
-            return imageUrl;
+        if (imageUrl === undefined || imageUrl === null) {
+            return 'images/posterholder.png'.toString();
         }
 
         var uri = URI(imageUrl),
@@ -633,11 +633,7 @@
             }
         }
 
-        if (imageUrl === undefined) {
-            return 'images/posterholder.png'.toString();
-        } else {
-            return uri.filename(file + '.' + ext).toString();
-        }
+        return uri.filename(file + '.' + ext).toString();
     };
 
     function onShowWatched(show, channel) {
