@@ -2846,9 +2846,14 @@ body,
   width: 65vw;
   padding-right: 4vw;
 }
-/*.movie-detail .content-box .meta-container {
+/*
+.movie-detail .content-box .meta-container {
   height: calc(100% - 70px);
 }*/
+.movie-detail .content-box .meta-container {
+  /*be carefull - dependent on .movie-detail .content-box .bottom-container*/
+  height: calc(100% - 110px);
+}
 .movie-detail .content-box .meta-container .title {
   color: #fff;
   position: relative;
