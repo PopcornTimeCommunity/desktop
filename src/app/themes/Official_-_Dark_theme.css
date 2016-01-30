@@ -1602,7 +1602,7 @@ body,
 }
 .icon-begin {
   display: block;
-  margin: -7px auto;
+  margin: 0px auto;
   height: calc(58%);
   max-height: 256px;
 }
@@ -2085,7 +2085,7 @@ body,
   height: 28px;
   position: absolute;
   top: -6px;
-  left: calc(50% + 52px);
+  left: calc(50% + 64px);
   display: none;
 }
 .events.img-newyear {
@@ -5766,8 +5766,8 @@ body,
   position: relative;
 /* overlay styles, all needed */
 }
-/*.settings-container-contain .settings-container section .title {
-  padding-bottom: 26px;
+.settings-container-contain .settings-container section .title {
+  padding-top: 26px;
   color: #2d75df;
   font-family: 'Open Sans', sans-serif;
   font-size: 17px;
@@ -5775,7 +5775,7 @@ body,
   margin-right: 30px;
   position: relative;
   border-right: 1px solid #3a3b3e;
-}*/
+}
 .settings-container-contain .settings-container section .content {
   position: relative;
   padding-top: 30px;
