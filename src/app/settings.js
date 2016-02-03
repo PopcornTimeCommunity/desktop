@@ -99,6 +99,9 @@ Settings.tvAPI = [{
     url: 'https://popcorntime.ws/api/eztv/',
     strictSSL: true
 },{
+    url: 'https://eztvapi.ml/',
+    strictSSL: true
+},{
     url: 'https://popcornwvnbg7jev.onion.to/',
     strictSSL: true
 }];
@@ -108,6 +111,9 @@ Settings.ytsAPI = [{
     strictSSL: true
 },{
     url: 'https://yts.ag/',
+    strictSSL: true
+},{
+    url: 'https://yts.ph/',
     strictSSL: true
 }];
 
