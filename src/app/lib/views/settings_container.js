@@ -129,7 +129,7 @@
 
 	resetMovieAPI: function () {
             var value = [{
-                url: 'http://yify.is/index.php/',
+                url: 'http://yify.is/',
                 strictSSL: true
             }, {
                 url: 'https://yts.ag/',
