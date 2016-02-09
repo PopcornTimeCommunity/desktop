@@ -47,7 +47,7 @@
     "node-tvdb": "1.3.1",
     "node-webkit-fdialogs": "latest",
     "nodecast-js": "^0.1.2",
-    "opensubtitles-api": "^2.3.0",
+    "opensubtitles-ce": "^1.0.0",
     "os-name": "^1.0.3",
     "peerflix": "^0.32.2",
     "q": "2.0.3",
