@@ -1,3 +1,37 @@
+## 0.4.0 Beta - Torrents Time v2.0 ...We Put Security First - 13 Feb 2015
+
+BugFixes: 
+
+- kat.cr search (API fixed)
+- remove strike search (API service closed)
+- added yts API (yts.ph set as default)
+- added eztv API (eztvapi.ml)
+- video2k url fixed
+- github url fixed
+- set 'activateTorrentCollection' to true 
+- set 'translateSynopsis' to false 
+- set 'alwaysOnTop' to false 
+- set 'movies_quality' to false 
+- Hide strike and kat icons (clean up)
+- app crash fixed (if no posters found)
+- updated dependencies
+
+Torrents Time v2 New Features: 
+
+- stream from any browser and website by just clicking the magnet link (disabled by default)
+- add download option 'deleteTmpOnClose' to recommended settings
+- add VLC player option in settings (disabled by default)
+- new virus scan option (enabled by default)
+- new autoplay option, that allows you to stream with just one click (enabled by default)
+- new history option to list all your downloaded torrents (kat.cr) to keep track of them (enabled by default)
+- view megabyte size in torrent files (autoplay must be disabled)
+- allow multiple players at the same time (multiple instances)
+- show info tooltip onhover torrents time v2 settings 
+
+Popcorn Time New Features: 
+
+- new order for Settings (overview and visibility)
+
 ## 0.3.9 Beta - Merry Christmas Eve ♡ I love y'all so much  - 25 Dec 2015
 
 BugFixes: 
