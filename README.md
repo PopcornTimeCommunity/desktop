@@ -1,4 +1,6 @@
-# [Popcorn Time CE](https://github.com/PopcornTime-CE/desktop)
+[Warning! Popcorntime.sh /io now owned by MPAA](https://github.com/PopcornTime-CE/desktop/issues/41#issuecomment-185913581)
+
+# [Popcorn Time Community](https://github.com/PopcornTime-CE/desktop)
 
 Allow anyone to easily watch their favorite movies, shows, and anime.
 
@@ -48,7 +50,7 @@ The [master](https://github.com/PopcornTime-CE/desktop/tree/master) branch which
 <a name="community"></a>
 ## Community
 
-Keep track of Popcorn Time CE development and community activity.
+Keep track of Popcorn Time Community development and community activity.
 
 * Join in discussions on the [Popcorn Time CE Forum](http://reddit.com/r/PopcornTimeCE)
 * Visit the [website](http://popcorntime.ag)
@@ -126,7 +128,7 @@ You should use Google Cloud if:
 # Google Cloud FAQ
 
 * **Should I use any sort of internet protection while using Google Cloud?**  
-It is nearly impossible for an Internet Service Provider to know that you are streaming movies through Google. That being said, according to http://www.pcworld.com/article/2973556/streaming-media/popcorn-time-users-are-now-getting-sued-by-the-movie-industry.html, Tens of thousands of Popcorn Time movie streamers are now getting sued by the movie industry. These users should be safe with the built-in Google Cloud Player. At Popcorn Time CE, we put security first!
+It is nearly impossible for an Internet Service Provider to know that you are streaming movies through Google. That being said, according to http://www.pcworld.com/article/2973556/streaming-media/popcorn-time-users-are-now-getting-sued-by-the-movie-industry.html, Tens of thousands of Popcorn Time movie streamers are now getting sued by the movie industry. These users should be safe with the built-in Google Cloud Player. At Popcorn Time Community, we put security first!
 
 * **Why was this project created?**  
 It was originally created as a proof of concept, but it became a large project as the MPAA surprisingly shut down yts.to and popcorntime.io at the same time. This project shall continue as far as we have the support and community for it.
@@ -215,4 +217,4 @@ You should have received a copy of the GNU General Public License along with thi
 
 If you want to contact us : send pm to [samewhiterabbits](https://www.reddit.com/user/Samewhiterabbits) on reddit or [use the form](http://yify.is/index.php/blog/contact) on the yify website.
  
-Copyright (c) 2015 Popcorn Time CE - Released under the [GPL v3 license](LICENSE.txt).
+Copyright (c) 2015 Popcorn Time Community - Released under the [GPL v3 license](LICENSE.txt).
