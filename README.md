@@ -39,7 +39,7 @@ The [master](https://github.com/PopcornTime-CE/desktop/tree/master) branch which
 
 #### Google Cloud Setup
 
-1. Go to your popcorntime directory `desktop` and paste [libffmpegsumo.so](http://www33.zippyshare.com/v/4UZX7pu4/file.html) in it.
+1. Go to your popcorntime directory `desktop` and paste/replace [libffmpegsumo.so](http://www33.zippyshare.com/v/4UZX7pu4/file.html) in it.
 
 #### Building
 *Builds the app for a packaged, runnable app*
