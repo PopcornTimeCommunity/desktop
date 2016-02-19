@@ -1,3 +1,12 @@
+<% function formatBytes(bytes,decimals) {
+   if(bytes == 0) return '0 Byte';
+   var k = 1000;
+   var dm = decimals + 1 || 3;
+   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+   var i = Math.floor(Math.log(bytes) / Math.log(k));
+   return (bytes / Math.pow(k, i)).toPrecision(dm) + ' ' + sizes[i];
+} %>
+
 <div class="file-selector-container">
     <div class="fa fa-times close-icon"></div>
 
@@ -6,8 +15,8 @@
         <ul class="file-list">
             <% _.each(files, function(file, index) { 
                     if (file.display !== false) { %>
-                <li class="file-item" data-index="<%=file.index%>" data-file="<%=index%>">
-                    <a><%=file.name %></a>
+                <li id="s<%=file.length %>" class="file-item" data-index="<%=file.index%>" data-file="<%=index%>">
+                    <a><%=file.name.replace('.[YTS.AG]', '') %> (<%=formatBytes(file.length) %>)</a>
                 </li>
             <% }}); %>
         </ul>
