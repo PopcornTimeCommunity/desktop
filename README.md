@@ -33,6 +33,7 @@ The [master](https://github.com/PopcornTime-CE/desktop/tree/master) branch which
 *Runs the app without building, useful for testing*
 
 1. `git clone https://github.com/PopcornTime-CE/desktop.git`
+1. `cd desktop`
 1. `npm install`
 1. `npm start`
 
