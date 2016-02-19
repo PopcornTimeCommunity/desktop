@@ -1,6 +1,6 @@
 <%
     if (typeof image === 'undefined') { var image = images.poster; }
-    if (typeof rating === 'object') { var rating = Math.round(rating.percentage) /10; }
+    if (typeof rating === 'object') { var rating = rating.percentage /10; }
 %>
 
 <img class="cover-image" src="images/posterholder.png">
@@ -38,7 +38,7 @@
 	<% if (typeof item_data !== 'undefined' || typeof num_seasons !== 'undefined') {%>
 	<%}else if (typeof torrents !== 'undefined') { %>
 		<% if (google_video !== false) {%>
-        	<img class="seasons quality" <% if(Settings.moviesShowQuality){ %> style="display:block; float:left; margin-right:3px;" <% } %> src="images/icons/googlecloud-favicon.png" width="15" title="Google Cloud" alt="Google Cloud" />
+        	<img class="seasons quality" style="display:block; float:left; margin-right:3px;" src="images/icons/googlecloud-favicon.png" width="15" title="Google Cloud" alt="Google Cloud" />
     	<%} %>
 	<%} %>	
 
