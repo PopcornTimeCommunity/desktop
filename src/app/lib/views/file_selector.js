@@ -33,12 +33,14 @@
         },
 
         onBeforeRender: function () {
-            this.bitsnoopRequest(this.model.get('torrent').infoHash);
+            if(AdvSettings.get('activateFakeSkan')===true) {
+				this.bitsnoopRequest(this.model.get('torrent').infoHash);
+			}
         },
 
         onShow: function () {
             this.isTorrentStored();
-
+			
             Mousetrap.bind(['esc', 'backspace'], function (e) {
                 _this.closeSelector(e);
             });
@@ -46,6 +48,27 @@
             App.Device.Collection.setDevice(Settings.chosenPlayer);
             App.Device.ChooserView('#player-chooser2').render();
             this.$('#watch-now').text('');
+			
+			// get all a in file-selector and click the one with highest size
+			var li = document.getElementsByTagName("li");
+			var length = li.length;
+			// variable for the highest one
+			var highest = 0;
+			// loop over to find the highest ID by looking at the property parsed as an int
+			for(var i = 0; i < length; i++) {
+				var id= parseInt(li[i].id.substring(1, li[i].id.length), 10);
+				if(id > highest) {
+					highest = id;
+				}
+			}
+			
+			if (AdvSettings.get('autoStoreTorrents')===true && !this.isTorrentStored()){
+				this.storeTorrent();
+			}
+
+			if(AdvSettings.get('activateAutoplay')===true){
+				$('#s'+highest).click();
+			}
         },
 
         bitsnoopRequest: function (hash) {
@@ -93,17 +116,23 @@
             } else if (Settings.droppedMagnet && Settings.droppedMagnet.indexOf('\&dn=') === -1) {
                 $('.store-torrent').text(i18n.__('Cannot be stored'));
                 $('.store-torrent').addClass('disabled').prop('disabled', true);
+                //alert('Magnet lacks Display Name, unable to store it');
                 win.warn('Magnet lacks Display Name, unable to store it');
                 return false;
             }
             var file, _file;
             if (Settings.droppedTorrent) {
                 file = Settings.droppedTorrent;
-            } else if (Settings.droppedMagnet && !Settings.droppedStoredMagnet) {
+				//alert("droppedTorrent: "+file);
+            } else if (!Settings.droppedStoredMagnet) {
+				//else if (Settings.droppedMagnet && !Settings.droppedStoredMagnet) {
                 _file = Settings.droppedMagnet,
                     file = formatMagnet(_file);
-            } else if (Settings.droppedMagnet && Settings.droppedStoredMagnet) {
+					//alert("droppedMagnet, droppedStoredMagnet=false: "+file);
+            } else if (Settings.droppedStoredMagnet) {
+				//else if (Settings.droppedMagnet && Settings.droppedStoredMagnet) {
                 file = Settings.droppedStoredMagnet;
+				//alert("droppedMagnet, droppedStoredMagnet=true: "+file);
             }
 
             // check if torrent stored
@@ -128,12 +157,14 @@
                 if (this.isTorrentStored()) {
                     fs.unlinkSync(target + file); // remove the torrent
                     win.debug('Torrent Collection: deleted', file);
+                    //alert('Torrent Collection: deleted', file);
                 } else {
                     if (!fs.existsSync(target)) {
                         fs.mkdir(target); // create directory if needed
                     }
                     fs.writeFileSync(target + file, fs.readFileSync(source + file)); // save torrent
                     win.debug('Torrent Collection: added', file);
+                    //alert('Torrent Collection: added', file);
                 }
             } else if (Settings.droppedMagnet) {
                 _file = Settings.droppedMagnet,
@@ -145,12 +176,14 @@
                     }
                     fs.unlinkSync(target + file); // remove the magnet
                     win.debug('Torrent Collection: deleted', file);
+                    //alert('Torrent Collection: deleted', file);
                 } else {
                     if (!fs.existsSync(target)) {
                         fs.mkdir(target); // create directory if needed
                     }
                     fs.writeFileSync(target + file, _file); // save magnet link inside readable file
                     win.debug('Torrent Collection: added', file);
+                    //alert('Torrent Collection: added', file);
                 }
             }
             this.isTorrentStored(); // trigger button change
