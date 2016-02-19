@@ -174,7 +174,7 @@
                     $('.onlinesearch-info').show();
                 });
 
-            } else {
+            } /*else { //strike has stopped its service
                 
                 var strike = require('strike-api');
                 if (category === 'tv') {
@@ -233,7 +233,7 @@
                     $('.notorrents-info,.torrents-info').hide();
                     $('.onlinesearch-info').show();
                 });
-            }
+            }*/
         },
 
         onlineAddItem: function (item) {
