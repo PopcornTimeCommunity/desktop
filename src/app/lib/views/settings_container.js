@@ -36,13 +36,15 @@
             'click #unauthTrakt': 'disconnectTrakt',
             'click #connect-with-tvst': 'connectWithTvst',
             'click #disconnect-tvst': 'disconnectTvst',
-	    'click .reset-ytsAPI': 'resetMovieAPI',
+	    	'click .reset-ytsAPI': 'resetMovieAPI',
             'click .reset-tvAPI': 'resetTVShowAPI',
             'change #tmpLocation': 'updateCacheDirectory',
             'click #syncTrakt': 'syncTrakt',
             'click .qr-code': 'generateQRcode',
             'click #qrcode-overlay': 'closeModal',
-            'click #qrcode-close': 'closeModal'
+            'click #qrcode-close': 'closeModal',
+	    	'click #reg-Magnet': 'regMagnet',
+	    	'click #reg-Torrent': 'regTorrent',
         },
 
         onShow: function () {
@@ -129,7 +131,10 @@
 
 	resetMovieAPI: function () {
             var value = [{
-                url: 'http://yify.is/',
+                url: 'http://yts.ph/',
+                strictSSL: true
+            }, {
+                url: 'http://yify.is/index.php/',
                 strictSSL: true
             }, {
                 url: 'https://yts.ag/',
@@ -150,6 +155,9 @@
         resetTVShowAPI: function () {
             var value = [{
                 url: 'https://popcorntime.ws/api/eztv/',
+                strictSSL: true
+            }, {
+                url: 'http://eztvapi.ml/',
                 strictSSL: true
             }, {
                 url: 'https://popcornwvnbg7jev.onion.to/',
@@ -232,9 +240,27 @@
                 }];
                 break;
             case 'subtitle_size':
+ 			case 'stream_browser':
+				if ($('option:selected', field).val() === 'Torrent Link') {
+                    this.regTorrent();
+                }
+				else if ($('option:selected', field).val() === 'Magnet Link') {
+					this.regMagnet();
+				}
+				else{
+					this.remBrowStre();
+				}
+            case 'chosenPlayer':
+				value = field.is(':checked');
+				if (value) {
+                    AdvSettings.set('chosenPlayer', 'VLC');
+                } else {
+                    AdvSettings.set('chosenPlayer', 'local');
+                }
             case 'tv_detail_jump_to':
             case 'subtitle_language':
             case 'subtitle_decoration':
+			case 'bufferingSize':
             case 'movies_quality':
             case 'subtitle_font':
             case 'start_screen':
@@ -251,7 +277,6 @@
                 i18n.setLocale(value);
                 break;
             case 'moviesShowQuality':
-	    //case 'moviesShowGooglecloud':
             case 'deleteTmpOnClose':
             case 'coversShowRating':
             case 'translateSynopsis':
@@ -266,9 +291,9 @@
             case 'minimizeToTray':
             case 'bigPicture':
             case 'activateTorrentCollection':
-	    /*case 'activateFavorites':
-    		value = field.is(':checked');
-                break;*/
+            case 'activateFakeSkan':
+            case 'activateAutoplay':
+            case 'autoStoreTorrents':
             case 'activateWatchlist':
             case 'activateRandomize':
                 value = field.is(':checked');
@@ -374,12 +399,8 @@
                     App.vent.trigger('torrentCollection:close');
                 }
                 break;
-            case 'activateRandomize':
-            /*case 'activateFavorites':
-                App.vent.trigger('movies:list');
-                App.vent.trigger('settings:show');
-                break;*/
-	   case 'activateWatchlist':
+            case 'activateRandomize':	
+	   		case 'activateWatchlist':
                 App.vent.trigger('movies:list');
                 App.vent.trigger('settings:show');
                 break;
@@ -760,7 +781,66 @@
                 });
             }
             return ip;
-        }
+        },
+
+		remBrowStre: function () {
+			if (process.platform == 'linux') {
+				require('child_process').exec('gnome-terminal -x bash -c "echo \'This setting requires Admin Rights\'; echo; sudo echo; sudo echo \'Authentication Successful\'; sudo echo; sudo rm /usr/share/applications/popcorntime.desktop; echo; echo \'Done! Press any key to close ...\'; read" & disown');
+			}
+		},
+
+		writeDesktopFile: function (cb) {
+			var pctPath = process.execPath.substr(0,process.execPath.lastIndexOf("/")+1);
+			var Exec = pctPath+'Popcorn-Time'; //process.execPath
+			fs.writeFile(gui.App.dataPath+'/popcorntime.desktop', '[Desktop Entry]\nVersion=2.0\nName=Torrents Time v2.0\nComment=Torrents Time v2.0 downloads and streams torrents instantly, directly from your browser! Just click on the torrent or magnet link and start downloading and playing it easily and in no time.\nExec='+Exec+' %U\nPath='+pctPath+'\nIcon='+pctPath+'popcorntime.png\nTerminal=false\nType=Application\nMimeType=application/x-bittorrent;x-scheme-handler/magnet;video/avi;video/msvideo;video/x-msvideo;video/mp4;video/x-matroska;video/mpeg;\n', cb);      
+		},
+
+
+		//function to move popcorntime.desktop to /usr/share/applications
+		//function to set popcorntime.desktop as default for magnet links on browser and popcorntime
+        regMagnet: function () {
+			if (process.platform == 'linux') {
+				this.writeDesktopFile(function(err) {
+					if (err) throw err;
+					var desktopFile = gui.App.dataPath+'/popcorntime.desktop';
+					//var desktopFile = '$HOME/.Popcorn-Time/popcorntime.desktop';
+					var tempMime = 'x-scheme-handler/magnet';
+
+					//xdg-mime and gvfs-mime configures defaults for applications
+					require('child_process').exec('gnome-terminal -x bash -c "echo \'Streaming magnet links directly from your browser requires Admin Rights\'; echo; sudo echo; sudo echo \'Authentication Successful\'; sudo echo; sudo mv -f '+desktopFile+' /usr/share/applications; sudo xdg-mime default popcorntime.desktop '+tempMime+'; sudo gvfs-mime --set '+tempMime+' popcorntime.desktop; echo; echo \'Success! Press any key to close ...\'; read" & disown');
+				});
+			} else if (process.platform == 'darwin') {
+				var pctPath = process.execPath.substr(0,process.execPath.lastIndexOf("/")+1)+"../../../../Resources/app.nw/";
+				require('child_process').exec('"'+pctPath+'src/duti/duti" -s media.popcorntime.player magnet');
+				alert("Success!");
+			} else {
+				fs.writeFile(gui.App.dataPath+'\\register-magnet.reg', 'REGEDIT4\r\n[HKEY_CLASSES_ROOT\\Magnet]\r\n@="URL:magnet Protocol"\r\n"Content Type"="application/x-magnet"\r\n"URL Protocol"=""\r\n\[HKEY_CLASSES_ROOT\\Magnet\\DefaultIcon]\r\n@="\\"'+process.execPath.split("\\").join("\\\\")+'\\"\r\n[HKEY_CLASSES_ROOT\\Magnet\\shell]\r\n[HKEY_CLASSES_ROOT\\Magnet\\shell\\open]\r\n[HKEY_CLASSES_ROOT\\Magnet\\shell\\open\\command]\r\n@="\\"'+process.execPath.split("\\").join("\\\\")+'\\" \\"%1\\""\r\n[HKEY_CURRENT_USER\\Software\\Classes\\Magnet]\r\n@="URL:magnet Protocol"\r\n"Content Type"="application/x-magnet"\r\n"URL Protocol"=""\r\n[HKEY_CURRENT_USER\\Software\\Classes\\Magnet\\DefaultIcon]\r\n@="\\"'+process.execPath.split("\\").join("\\\\")+'\\"\r\n[HKEY_CURRENT_USER\\Software\\Classes\\Magnet\\shell]\r\n[HKEY_CURRENT_USER\\Software\\Classes\\Magnet\\shell\\open]\r\n[HKEY_CURRENT_USER\\Software\\Classes\\Magnet\\shell\\open\\command]\r\n@="\\"'+process.execPath.split("\\").join("\\\\")+'\\" \\"%1\\""', function (err) {
+				if (err) throw err;
+				gui.Shell.openExternal(gui.App.dataPath+'\\register-magnet.reg'); 
+				});
+			}
+        },
+
+		regTorrent: function () {
+			if (process.platform == 'linux') {
+				this.writeDesktopFile(function(err) {
+					if (err) throw err;
+					var desktopFile = gui.App.dataPath+'/popcorntime.desktop';
+					var tempMime = 'application/x-bittorrent';
+					require('child_process').exec('gnome-terminal -x bash -c "echo \'Streaming torrents from your browser requires Admin Rights\'; echo; sudo echo; sudo echo \'Authentication Successful\'; sudo echo; sudo mv -f '+desktopFile+' /usr/share/applications; sudo xdg-mime default popcorntime.desktop '+tempMime+'; sudo gvfs-mime --set '+tempMime+' popcorntime.desktop; echo; echo \'Success! Press any key to close ...\'; read" & disown');
+				});
+			} else if (process.platform == 'darwin') {
+				var pctPath = process.execPath.substr(0,process.execPath.lastIndexOf("/")+1)+"../../../../Resources/app.nw/";
+				require('child_process').exec('"'+pctPath+'src/duti/duti" -s media.torrentstime-v2.player .torrent viewer');
+				alert("Success!");
+			} else {
+				fs.writeFile(gui.App.dataPath+'\\register-torrent.reg', 'REGEDIT4\r\n[HKEY_CURRENT_USER\\Software\\Classes\\torrentstime.player.v2\\DefaultIcon]\r\n@="'+process.execPath.split("\\").join("\\\\")+'"\r\n[HKEY_CURRENT_USER\\Software\\Classes\\torrentstime.player.v2\\shell\\open\\command]\r\n@="\\"'+process.execPath.split("\\").join("\\\\")+'\\" \\"%1\\""\r\n[HKEY_CURRENT_USER\\Software\\Classes\\.torrent]\r\n@="torrentstime.player.v2"\r\n"Content Type"="application/x-bittorrent"', function (err) {
+					if (err) throw err;
+					gui.Shell.openExternal(gui.App.dataPath+'\\register-torrent.reg');
+				});
+			}
+		}
+
     });
 
     App.View.Settings = Settings;
