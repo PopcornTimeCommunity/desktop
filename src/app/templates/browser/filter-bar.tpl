@@ -1,5 +1,5 @@
 <ul class="nav nav-hor left">
-    <li class="source active showMovies providerinfo" data-toggle="tooltip" data-placement="top" title="YIFY.is"><%= i18n.__("Movies") %></li>
+    <li class="source active showMovies providerinfo" data-toggle="tooltip" data-placement="top" title="YTS.ph"><%= i18n.__("Movies") %></li>
     <li class="source showShows providerinfo" data-toggle="tooltip" data-placement="top" id="TVApi" title="TV API - None"><%= i18n.__("TV Series") %></li>
         <li class="source showAnime providerinfo" data-toggle="tooltip" data-placement="top" title="Haruhichan"><%= i18n.__("Anime") %></li>
 </ul>
@@ -50,7 +50,7 @@
     <li>
         <div class="right search">
             <form>
-                <input id="searchbox" type="text" placeholder="<%= i18n.__("Search") %>">
+                <input id="searchbox" type="text" placeholder="<%= i18n.__("YTS.ph Search") %>">
                 <div class="clear fa fa-times"></div>
             </form>
         </div>
@@ -93,7 +93,7 @@
     <% } else { %>
     <li id="torrent_col" style="display:none">
     <% } %>
-        <i id="filterbar-torrent-collection" class="fa fa-folder-open torrent-collection tooltipped" data-toggle="tooltip" data-placement="bottom" title="<%= i18n.__("Torrent Collection") %>"></i>
+        <i id="filterbar-torrent-collection" class="fa fa-folder-open torrent-collection" title="<%= i18n.__("This feature has a built-in kat.cr search, which allows you to stream any movies, series or anime torrents with automatic subtitle support. The casting option integrates features including Chromecast, Airplay and DLNA. This library also provides an Anti-Virus Scanner and a 'History' feature, that keeps track of all your downloaded KAT torrents") %>"></i>
     </li>
 
     <!-- About -->
