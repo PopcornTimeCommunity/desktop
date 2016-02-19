@@ -14,6 +14,7 @@
   "scripts": {
     "start": "gulp run"
   },
+  "single-instance": false,
   "window": {
     "title": "Popcorn Time CE",
     "icon": "src/app/images/icon.png",
