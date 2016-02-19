@@ -9,7 +9,7 @@ var Settings = {};
 
 // User interface
 Settings.language = '';
-Settings.translateSynopsis = true;
+Settings.translateSynopsis = false;
 Settings.coversShowRating = true;
 Settings.watchedCovers = 'fade';
 Settings.showAdvancedSettings = false;
@@ -37,9 +37,8 @@ Settings.lastTab = '';
 // Quality
 Settings.shows_default_quality = '720p';
 Settings.movies_default_quality = '720p';
-Settings.moviesShowQuality = true;
+Settings.moviesShowQuality = false;
 Settings.movies_quality = 'all';
-//Settings.moviesShowGooglecloud = true;
 
 // Subtitles
 Settings.subtitle_language = 'en';
@@ -79,11 +78,14 @@ Settings.minimizeToTray = false;
 Settings.bigPicture = false;
 
 // Features
-Settings.activateTorrentCollection = false;
+Settings.activateTorrentCollection = true;
+Settings.activateFakeSkan = true;
+Settings.activateAutoplay = true;
+Settings.autoStoreTorrents = true;
 Settings.activateWatchlist = false;
 //Settings.activateFavorites = true;
-Settings.activateVpn = false;
-Settings.activateRandomize = false;
+//Settings.activateVpn = false;
+//Settings.activateRandomize = false;
 Settings.onlineSearchEngine = 'KAT';
 
 // Ratio
@@ -96,10 +98,10 @@ Settings.vpnUsername = '';
 Settings.vpnPassword = '';
 
 Settings.tvAPI = [{
-    url: 'https://popcorntime.ws/api/eztv/',
+    url: 'https://eztvapi.ml/',
     strictSSL: true
 },{
-    url: 'https://eztvapi.ml/',
+    url: 'https://popcorntime.ws/api/eztv/',
     strictSSL: true
 },{
     url: 'https://popcornwvnbg7jev.onion.to/',
@@ -107,25 +109,34 @@ Settings.tvAPI = [{
 }];
 
 Settings.ytsAPI = [{
+    url: 'http://yts.ph/',
+    strictSSL: true
+},{
     url: 'http://yify.is/',
     strictSSL: true
 },{
     url: 'https://yts.ag/',
     strictSSL: true
-},{
-    url: 'https://yts.ph/',
-    strictSSL: true
 }];
 
+
+
 Settings.updateEndpoint = {
-    url: 'https://popcornbxexxf3bu.onion.to/',
+    url: 'https://popcorntime.re/',
     index: 0,
     proxies: [{
-        url: 'https://popcornqbt6ktnfs.onion.to/',
-        //fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
+        url: 'https://popcorntime.re/',
+        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
     }, {
-        url: 'https://popcornd6v5duho3.onion.to/',
-        //fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
+        url: 'https://popcorntime.io/',
+        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C'
+    }, {
+        url: 'https://popcorntime.cc/',
+        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C'
+    }, {
+        url: 'http://popcorntime.ag/',
+        ssl: false,
+        fingerprint: /301/
     }]
 };
 
