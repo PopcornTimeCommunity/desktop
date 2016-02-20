@@ -91,25 +91,11 @@ Release Updates | Usually 1 day late | [YIFY-dependent](http://yify.is/index.php
 
 &nbsp;
 
-# Download Links
-
-* Windows XP and above [PopcornTimeCEYIFY.msi](http://www92.zippyshare.com/v/pG67rYsS/file.html)  
-
-* Mac OSX 10.7 and above [PopcornTimeCEYIFY.dmg](http://www92.zippyshare.com/v/b2rRlNMh/file.html)  
-
-* Linux 32-bit [PopcornTimeCEYIFY-32.tar.xz  ](http://www92.zippyshare.com/v/PkEB1dm7/file.html)  
-
-* Linux 64-bit [PopcornTimeCEYIFY-64.tar.xz](http://www92.zippyshare.com/v/kaEgF1Qv/file.html)  
-
 Official Download Sites:
 
 * http://popcorntime.ag
 
-* http://popcorn-time.is
-
-* http://yify.is/index.php/blog/view/54
-
-* http://video2k.is/index.php/blog/view/55
+* https://www.reddit.com/r/PopcornTimeCE/comments/3xa881/downloads/
 
 &nbsp;
 
