@@ -97,8 +97,6 @@ Official Download Sites:
 
 * https://www.reddit.com/r/PopcornTimeCE/comments/3xa881/downloads/
 
-&nbsp;
-
 # Who should use Google Cloud?
 
 You should use Google Cloud if:
@@ -120,57 +118,6 @@ It is nearly impossible for an Internet Service Provider to know that you are st
 
 * **Why was this project created?**  
 It was originally created as a proof of concept, but it became a large project as the MPAA surprisingly shut down yts.to and popcorntime.io at the same time. This project shall continue as far as we have the support and community for it.
-
-&nbsp;
-
-# 0.3.9 Beta - Merry Christmas Eve ♡ I love y'all so much  - 25 Dec 2015
-
-*New Features:* 
-
-- Google Cloud Player (possibly bad quality but very fast speed, no ISP monitor & unlimited download bandwidth)  
-http://imgur.com/S8jszul
-- Subtitles for Google Cloud Player
-- Interrupting movie (on Google Cloud Player) and watch again with last view 
-- Show Google Cloud icon on list
-- Added an option to disable Coogle Cloud icon in settings
-- Save choosen player (also for Google Cloud Player)
-- Option to change movie API endpoint in settings (forget the YIFY API patcher *it's useless*)  
-http://imgur.com/gallery/uzjZDB3
-- Get Provider info in movie details (more control over sources)
-- Sort by Last Added & Google Cloud  
-http://imgur.com/xmzJ1Ax
-- Sort by Views
-- Sort by Downloads
-- Sort by Likes
-- Display crew info with director and cast in movie details
-- New recommended settings (lightweight - less is more)
-- New style for Settings (heading on top) and much better order (overview and visibility)
-- Multiple UI improvment (subtitles floating, overview height, etc.)
-- 
-*BugFixes:* 
-
-- Fix the bookmarking cache (favorites work again)
-- IMDB Synopsis API (80 % of movies were not showing synopsis)
-- Set TV/Movie API urls to yify.is/index.php/ (restore to defaults icon in settings)
-- eztv api added 
-- Remove option to select randomize feature in settings page
-- Delete randomize function in provider settings
-- Set randomize to false in settings file
-- Remove option to select vpn feature in settings page
-- Set vpn to false in settings file
-- Remove sort by trending score option from sorters
-- Remove sort by popularity option from sorters
-- Hide runtime info if false
-- Hide 'report an issue' link (.io git url)
-- Chage default sorting to 'latest added' on movies (sort by popularity not working)
-- Seach by multiple keyword
-- Replace 'No description available' text with synopsis
-- Change default movie API to yify.is/index.php/
-- Genre array bug fix in endpoint api/v2/list_movies.json
-- Fixed youtube trailer url
-- Sort by year (and last added)
-- Added CE suffix
-- Updated dependencies
 
 ## Versioning
 
