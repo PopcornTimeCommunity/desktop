@@ -199,7 +199,7 @@
                     genre: this.model.get('genre'),
                     synopsis: this.model.get('synopsis'),
                     runtime: this.model.get('runtime'),
-                    year: this.model.get('year'),
+		    year: this.model.get('year'),
                     health: this.model.get('health'),
                     subtitle: this.model.get('subtitle'),
                     backdrop: this.model.get('backdrop'),
@@ -208,6 +208,9 @@
                     provider: this.model.get('provider'),
                     watched: this.model.get('watched'),
                     bookmarked: true,
+			google_video: this.model.get('google_video'),
+			directors: this.model.get('directors'),
+			cast: this.model.get('cast'),
                 });
 
                 App.vent.trigger('movie:showDetail', SelectedMovie);
@@ -388,6 +391,9 @@
                             rating: this.model.get('rating'),
                             trailer: this.model.get('trailer'),
                             provider: this.model.get('provider'),
+				google_video: this.model.get('google_video'),
+				directors: this.model.get('directors'),
+				cast: this.model.get('cast'),
                         };
 
                         Database.addMovie(movie)
