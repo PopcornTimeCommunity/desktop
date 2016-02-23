@@ -54,7 +54,7 @@ The [master](https://github.com/PopcornTime-CE/desktop/tree/master) branch which
 
 Keep track of Popcorn Time Community development and community activity.
 
-* Join in discussions on the [Popcorn Time CE Forum](http://reddit.com/r/PopcornTimeCE)
+* Join in discussions on the [Popcorn Time Subreddit](http://reddit.com/r/PopcornTimeCE)
 * Visit the [website](http://popcorntime.ag)
 
 # What is the Google Cloud Player?
