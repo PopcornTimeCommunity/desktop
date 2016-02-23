@@ -56,10 +56,10 @@ for(var i = 0; i < genre.length; i++){ genre[i] = i18n.__(genre[i]); };
         <div class="overview" style="font-size:14px;">
 		<%= synopsis %>
 
-		<%  if (Settings.ytsAPI[0].url == 'http://yify.is/index.php/') { %>
-		<div style="margin-top:8px;"><div id="directors" style="color:#ccc; float:left; margin-right:5px;">Director:</div> <%= directors.join(" / ") %></div>
+		<%  if (Settings.ytsAPI[0].url == 'http://yts.ph/') { %>
+			<div style="margin-top:8px;"><div id="directors" style="color:#ccc; float:left; margin-right:5px;">Director:</div> <%= directors.join(" / ") %></div>
 
-		<div style="margin-top:8px;"><div id="cast" style="color:#ccc; float:left; margin-right:5px;">Cast:</div> <%= cast.join(" / ") %></div>
+			<div style="margin-top:8px;"><div id="cast" style="color:#ccc; float:left; margin-right:5px;">Cast:</div> <%= cast.join(" / ") %></div>
 		<% }; %>	
 
 		<div style="margin-top:20px; color:#666; font-size:11px;">
