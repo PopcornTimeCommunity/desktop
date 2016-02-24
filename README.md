@@ -1,4 +1,4 @@
-[Warning! Popcorntime.sh /io now owned by MPAA](https://github.com/PopcornTime-CE/desktop/issues/41#issuecomment-185913581)
+[Warning! Popcorntime.sh /io now owned by MPAA](https://www.reddit.com/r/PopcornTimeCE/comments/46acve/warning_popcorntimech_owned_by_mpaa_to_track/)
 
 # [Popcorn Time Community](https://github.com/PopcornTime-CE/desktop)
 
