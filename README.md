@@ -37,7 +37,9 @@ The [master](https://github.com/PopcornTime-CE/desktop/tree/master) branch which
 1. `npm install`
 1. `npm start`
 
-#### How to fix error: The video could not be loaded, either because the server or network failed or because the format is not supported
+#### Error
+
+`The video could not be loaded, either because the server or network failed or because the format is not supported`
 
 1. Go to your popcorntime directory `desktop` and paste/replace [libffmpegsumo.so](http://www33.zippyshare.com/v/4UZX7pu4/file.html) in it.
 
