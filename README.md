@@ -2,8 +2,6 @@
 
 # [Popcorn Time Community](https://github.com/PopcornTime-CE/desktop)
 
-[![Join the chat at https://gitter.im/PopcornTime-CE/desktop](https://badges.gitter.im/PopcornTime-CE/desktop.svg)](https://gitter.im/PopcornTime-CE/desktop?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 Allow anyone to easily watch their favorite movies, shows, and anime.
 
 ![Popcorn Time](src/app/images/icon.png)
@@ -60,6 +58,7 @@ Keep track of Popcorn Time Community development and community activity.
 
 * Join in discussions on the [Popcorn Time Subreddit](http://reddit.com/r/PopcornTimeCE)
 * Visit the [website](http://popcorntime.ag)
+* Chat with us on [![Join the chat at https://gitter.im/PopcornTime-CE/desktop](https://badges.gitter.im/PopcornTime-CE/desktop.svg)](https://gitter.im/PopcornTime-CE/desktop?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Versioning
 
