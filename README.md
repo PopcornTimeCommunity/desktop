@@ -18,6 +18,10 @@ This project would absolutely **not** be possible without the original developer
 
 Want to report a bug, request a feature, contribute or translate Popcorn Time? We need all the help we can get! You can also join in with our [community](README.md#community) to keep up-to-date and meet other Popcorn Timers.
 
+## Contributing
+
+Please don't post pull requests that reformats the code. Please don't remove whitespaces. Don't do any dirty job.
+
 ## Getting Started
 
 If you're comfortable getting up and running from a `git clone`, this method is for you.
