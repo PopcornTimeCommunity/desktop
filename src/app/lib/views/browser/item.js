@@ -90,7 +90,11 @@
         },
 
         onDestroy: function () {
-            this.ui.coverImage.off('load');
+            try {
+                this.ui.coverImage.off('load');
+            } catch (err) {
+                win.error(err);
+            }
         },
 
         hoverItem: function (e) {
