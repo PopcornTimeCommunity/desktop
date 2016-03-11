@@ -1,4 +1,4 @@
-## Patience is a fruit of the Spirit - 13 Feb 2015
+## 0.4.0 Beta - Patience is a fruit of the Spirit - 13 Feb 2015
 
 BugFixes: 
 
