@@ -1,4 +1,4 @@
-## 0.4.0 Beta - Torrents Time v2.0 ...We Put Security First - 13 Feb 2015
+## Patience is a fruit of the Spirit - 13 Feb 2015
 
 BugFixes: 
 
@@ -16,7 +16,7 @@ BugFixes:
 - app crash fixed (if no posters found)
 - updated dependencies
 
-Torrents Time v2 New Features: 
+New Features: 
 
 - stream from any browser and website by just clicking the magnet link (disabled by default)
 - add download option 'deleteTmpOnClose' to recommended settings
@@ -27,9 +27,6 @@ Torrents Time v2 New Features:
 - view megabyte size in torrent files (autoplay must be disabled)
 - allow multiple players at the same time (multiple instances)
 - show info tooltip onhover torrents time v2 settings 
-
-Popcorn Time New Features: 
-
 - new order for Settings (overview and visibility)
 
 ## 0.3.9 Beta - Merry Christmas Eve ♡ I love y'all so much  - 25 Dec 2015
