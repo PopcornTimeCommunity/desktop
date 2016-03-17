@@ -1,7 +1,14 @@
-## 0.4.0 Beta - Patience is a fruit of the Spirit - 13 Feb 2015
+## 0.4.0-4 Beta - Patience is a fruit of the Spirit - 13 Feb 2015
 
 BugFixes: 
 
+- fix chromecast
+- fixed bookmark crash
+- fixed crew info
+- fixed opensubtitles module on MAC
+- fixed series issue on MAC
+- rename application to Popcorn Time Community 
+- rename github organization to PopcornTimeCommunity
 - kat.cr search (API fixed)
 - remove strike search (API service closed)
 - added yts API (yts.ph set as default)
@@ -26,7 +33,7 @@ New Features:
 - new history option to list all your downloaded torrents (kat.cr) to keep track of them (enabled by default)
 - view megabyte size in torrent files (autoplay must be disabled)
 - allow multiple players at the same time (multiple instances)
-- show info tooltip onhover torrents time v2 settings 
+- show info tooltip onhover settings 
 - new order for Settings (overview and visibility)
 
 ## 0.3.9 Beta - Merry Christmas Eve ♡ I love y'all so much  - 25 Dec 2015
@@ -36,7 +43,7 @@ BugFixes:
 - Fix the bookmarking cache (favorites work again)
 - IMDB Synopsis API (80 % of movies were not showing synopsis)
 - Set TV/Movie API urls to yify.is/index.php/ (restore to defaults icon in settings)
-- Added eztv API  
+- Added eztv API
 - Remove option to select randomize feature in settings page
 - Delete randomize function in provider settings
 - Set randomize to false in settings file
