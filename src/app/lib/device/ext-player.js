@@ -128,8 +128,8 @@
         },
         'mpv': {
             type: 'mpv',
-            switches: '--no-terminal',
-            subswitch: '--sub-file=',
+            switches: '',
+            subswitch: '--sub=',
             fs: '--fs'
         },
         'MPC-HC': {
