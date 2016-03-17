@@ -1,4 +1,4 @@
-[Warning! Popcorntime.sh /io Officialy Hijacked by MPAA](http://popcorntime.ag/official-statement.html)
+[Warning! Popcorntime.sh threatens your computer privacy.](http://popcorntime.ag/official-statement.html#Malware2)
 
 # [Popcorn Time Community](https://github.com/PopcornTime-CE/desktop)
 
