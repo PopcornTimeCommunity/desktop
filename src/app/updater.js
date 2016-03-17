@@ -14,8 +14,7 @@
         spawn = require('child_process').spawn;
 
     var CHANNELS = ['stable', 'beta', 'nightly'],
-        FILENAME = 'package.nw.new',
-        VERIFY_PUBKEY =
+        /*VERIFY_PUBKEY =
         '-----BEGIN PUBLIC KEY-----\n' +
         'MIIBtjCCASsGByqGSM44BAEwggEeAoGBAPNM5SX+yR8MJNrX9uCQIiy0t3IsyNHs\n' +
         'HWA180wDDd3S+DzQgIzDXBqlYVmcovclX+1wafshVDw3xFTJGuKuva7JS3yKnjds\n' +
@@ -27,7 +26,8 @@
         'JgeCrPkH6GBa9azUsZ+3MA98b46yhWO2QuRwmFQwPiME+Brim3tHlSuXbL1e5qKf\n' +
         'GOm3OxA3zKXG4cjy6TyEKajYlT45Q+tgt1L1HuGAJjWFRSA0PP9ctC6nH+2N3HmW\n' +
         'RTcms0CPio56gg==\n' +
-        '-----END PUBLIC KEY-----\n';
+        '-----END PUBLIC KEY-----\n',*/
+		FILENAME = 'package.nw.new';
 
 
     function forcedBind(func, thisVar) {
@@ -48,7 +48,9 @@
             channel: 'beta'
         });
 
-        this.outputDir = App.settings.os === 'linux' ? process.execPath : process.cwd();
+        //this.outputDir = App.settings.os === 'linux' ? process.execPath : process.cwd();
+		this.outputDir = process.execPath;
+
         this.updateData = null;
     }
 
@@ -120,7 +122,7 @@
         return defer.promise;
     };
 
-    Updater.prototype.verify = function (source) {
+    /*Updater.prototype.verify = function (source) {
         var defer = Q.defer();
         var self = this;
         win.debug('Verifying update authenticity with SDA-SHA1 signature...');
@@ -144,11 +146,15 @@
             }
         });
         return defer.promise;
-    };
+    };*/
 
     function installWindows(downloadPath, updateData) {
         var defer = Q.defer();
         var pack = new AdmZip(downloadPath);
+		var outputDir = path.dirname(downloadPath);
+		
+console.log("downloadPath: "+downloadPath);
+console.log("outputDir: "+outputDir);
 
         if (updateData.extended) {
 
@@ -194,9 +200,14 @@
 
             // Extended: false || undefined
             var installDir = path.dirname(downloadPath);
+			
+console.log("installDir: "+installDir);
 
             win.debug('Extracting update files...');
             pack.extractAllToAsync(installDir, true, function (err) {
+			
+console.log("logit 3");
+
                 if (err) {
                     defer.reject(err);
                 } else {
@@ -220,9 +231,13 @@
         var defer = Q.defer();
 
         win.debug('Extracting update...');
+//Invalid or unsupported zip format. No END header found
         var outputDir = path.dirname(downloadPath),
             packageFile = path.join(outputDir, 'package.nw'),
             pack = new AdmZip(downloadPath);
+
+console.log("downloadPath: "+downloadPath);
+console.log("outputDir: "+outputDir);
 
         if (updateData.extended) {
 
@@ -264,14 +279,18 @@
             });
 
         } else {
-
             // Extended: false
             var installDir = path.dirname(downloadPath);
+			
+console.log("installDir: "+installDir);
 
             pack.extractAllToAsync(installDir, true, function (err) {
+//error: Failed to create socket for crash dumping.
+console.log("logit 3");
                 if (err) {
                     defer.reject(err);
                 } else {
+console.log("unlink "+downloadPath);
                     fs.unlink(downloadPath, function (err) {
                         if (err) {
                             defer.reject(err);
@@ -336,9 +355,10 @@
         } else {
 
             // Extended: false
-            var outputDir = path.dirname(downloadPath);
+            //var outputDir = path.dirname(downloadPath);
+			var installDir = process.cwd();
 
-            pack.extractAllToAsync(outputDir, true, function (err) {
+            pack.extractAllToAsync(installDir, true, function (err) {
                 if (err) {
                     defer.reject(err);
                 } else {
@@ -357,7 +377,33 @@
         return defer.promise;
     }
 
-    Updater.prototype.install = function (downloadPath) {
+    /*Updater.prototype.install = function (downloadPath) {
+        var os = App.settings.os;
+        if (os === 'windows' || os === 'linux' || os === 'mac') {
+			var defer = Q.defer(),
+			outputDir = path.dirname(downloadPath),
+			installDir = path.dirname(downloadPath);
+			//console.log("downloadPath: "+downloadPath);
+			//console.log("outputDir: "+outputDir);
+			//console.log("installDir: "+installDir);
+			fs.unlink(installDir+'/package.nw', function (err) {
+				if (err) {
+					defer.reject(err);
+				} else {
+					win.debug('Deleted old package.nw!');
+					fs.rename(downloadPath, installDir+'/package.nw', function(err) {
+						if ( err ) console.log('ERROR: ' + err);
+					});
+					win.debug('Renamed downloaded package.nw.new to package.nw');
+					defer.resolve();
+				}
+			});
+			return defer.promise;
+        } else {
+            return Q.reject('Unsupported OS');
+        }
+    };*/
+	Updater.prototype.install = function (downloadPath) {
         var os = App.settings.os;
         var promise;
         if (os === 'windows') {
@@ -376,23 +422,23 @@
     Updater.prototype.displayNotification = function () {
         var self = this;
 
-        function onChangelogClick() {
+        /*function onChangelogClick() {
             var $changelog = $('#changelog-container').html(_.template($('#changelog-tpl').html())(self.updateData));
             $changelog.find('.btn-close').on('click', function () {
                 $changelog.hide();
             });
             $changelog.show();
-        }
+        }*/
 
         App.vent.trigger('notification:show', new App.Model.Notification({
             title: this.updateData.title + ' Installed',
             body: this.updateData.description,
             showRestart: true,
             type: 'info',
-            buttons: [{
+            /*buttons: [{
                 title: 'Changelog',
                 action: onChangelogClick
-            }]
+            }]*/
         }));
     };
 
@@ -402,7 +448,7 @@
         if (this.updateData) {
             // If we have already checked for updates...
             return this.download(this.updateData.updateUrl, outputFile)
-                .then(forcedBind(this.verify, this))
+                //.then(forcedBind(this.verify, this))
                 .then(forcedBind(this.install, this))
                 .then(forcedBind(this.displayNotification, this));
         } else {
@@ -411,7 +457,7 @@
             return this.check().then(function (updateAvailable) {
                 if (updateAvailable) {
                     return self.download(self.updateData.updateUrl, outputFile)
-                        .then(forcedBind(self.verify, self))
+                        //.then(forcedBind(self.verify, self))
                         .then(forcedBind(self.install, self))
                         .then(forcedBind(self.displayNotification, self));
                 } else {
