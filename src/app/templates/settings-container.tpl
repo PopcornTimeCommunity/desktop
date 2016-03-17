@@ -10,7 +10,7 @@
                 <i class="fa fa-question-circle help tooltipped" data-toggle="tooltip" data-placement="bottom" title="<%= i18n.__("Help Section") %>"></i>
                 <input id="show-advanced-settings" class="settings-checkbox" name="showAdvancedSettings" type="checkbox" <%=(Settings.showAdvancedSettings? "checked":"")%>>
                 <label class="settings-label" for="show-advanced-settings"><%= i18n.__("Show advanced settings") %></label>
-            </span>
+            </span>t
         </div>
     </section>
 
@@ -307,8 +307,8 @@
     </section>-->
 
     <section id="cache">
-        <div class="content"><div class="title"><!--<%= i18n.__("Playback") %>-->Torrents Time v2</div>
-            <span title='Just click any magnet or .torrent link from your browser to start Torrents Time v2'>
+        <div class="content"><div class="title"><%= i18n.__("Playback") %></div>
+            <span title='Just click any magnet or .torrent link from your browser to start Popcorn Time'>
                 <div class="dropdown buffering-size">
                     <p><%= i18n.__("Stream from Browser") %></p>
                     <%
