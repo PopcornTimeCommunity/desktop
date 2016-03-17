@@ -30,7 +30,7 @@
 
 		<a href='http://facebook.com/PopcornTimeCE' data-toggle="tooltip" data-placement="top" title="facebook.com/PopcornTimeCE" class='links facebook_icon'></span></a>
 
-		<a href='http://github.com/PopcornTime-CE' data-toggle="tooltip" data-placement="top" title="github.com/PopcornTime-CE" class='links github_icon'></span></a>
+		<a href='http://github.com/PopcornTimeCommunity' data-toggle="tooltip" data-placement="top" title="github.com/PopcornTime-CE" class='links github_icon'></span></a>
 
 		<a href='http://reddit.com/r/PopcornTimeCE' data-toggle="tooltip" data-placement="top" title="reddit.com/PopcornTimeCE" class='links forum_icon'></span></a>
         </div>
