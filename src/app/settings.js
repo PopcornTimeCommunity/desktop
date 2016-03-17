@@ -119,24 +119,15 @@ Settings.ytsAPI = [{
     strictSSL: true
 }];
 
-
-
 Settings.updateEndpoint = {
-    url: 'https://popcorntime.re/',
+    url: 'http://popcorntime.ag/',
     index: 0,
     proxies: [{
-        url: 'https://popcorntime.re/',
-        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
-    }, {
-        url: 'https://popcorntime.io/',
-        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C'
-    }, {
-        url: 'https://popcorntime.cc/',
-        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C'
-    }, {
         url: 'http://popcorntime.ag/',
-        ssl: false,
-        fingerprint: /301/
+        //fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
+    }, {
+        url: 'http://popcorn-time.is/',
+        //fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
     }]
 };
 
@@ -276,15 +267,15 @@ var AdvSettings = {
                     clearTimeout(timeout);
                     res.removeAllListeners('error');
                     // Doesn't match the expected response
-                    if (!_.isRegExp(endpoint.fingerprint) || !endpoint.fingerprint.test(body.toString('utf8'))) {
+                    /*if (!_.isRegExp(endpoint.fingerprint) || !endpoint.fingerprint.test(body.toString('utf8'))) {
                         win.warn('[%s] Endpoint fingerprint %s does not match %s',
                             url.hostname,
                             endpoint.fingerprint,
                             body.toString('utf8'));
                         tryNextEndpoint();
-                    } else {
+                    } else {*/
                         defer.resolve();
-                    }
+                    //}
                 }).once('error', function (e) {
                     win.warn('[%s] Endpoint failed [%s]',
                         url.hostname,
@@ -303,7 +294,7 @@ var AdvSettings = {
             }, function () {
                 this.setTimeout(0);
                 this.removeAllListeners('error');
-                if (!this.authorized ||
+                /*if (!this.authorized ||
                     this.authorizationError ||
                     this.getPeerCertificate().fingerprint !== endpoint.fingerprint) {
                     // "These are not the certificates you're looking for..."
@@ -313,9 +304,9 @@ var AdvSettings = {
                         endpoint.fingerprint,
                         this.getPeerCertificate().fingerprint);
                     tryNextEndpoint();
-                } else {
+                } else {*/
                     defer.resolve();
-                }
+                //}
                 this.end();
             }).once('error', function (e) {
                 win.warn('[%s] Endpoint failed [%s]',
