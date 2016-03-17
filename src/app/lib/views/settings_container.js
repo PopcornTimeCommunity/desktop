@@ -792,7 +792,7 @@
 		writeDesktopFile: function (cb) {
 			var pctPath = process.execPath.substr(0,process.execPath.lastIndexOf("/")+1);
 			var Exec = pctPath+'Popcorn-Time'; //process.execPath
-			fs.writeFile(gui.App.dataPath+'/popcorntime.desktop', '[Desktop Entry]\nVersion=2.0\nName=Torrents Time v2.0\nComment=Torrents Time v2.0 downloads and streams torrents instantly, directly from your browser! Just click on the torrent or magnet link and start downloading and playing it easily and in no time.\nExec='+Exec+' %U\nPath='+pctPath+'\nIcon='+pctPath+'popcorntime.png\nTerminal=false\nType=Application\nMimeType=application/x-bittorrent;x-scheme-handler/magnet;video/avi;video/msvideo;video/x-msvideo;video/mp4;video/x-matroska;video/mpeg;\n', cb);      
+			fs.writeFile(gui.App.dataPath+'/popcorntime.desktop', '[Desktop Entry]\nVersion=2.0\nName=PopcornTime Player\nComment=Popcorn Time CE downloads and streams torrents instantly, directly from your browser! Just click on the torrent or magnet link and start downloading and playing it easily and in no time.\nExec='+Exec+' %U\nPath='+pctPath+'\nIcon='+pctPath+'popcorntime.png\nTerminal=false\nType=Application\nMimeType=application/x-bittorrent;x-scheme-handler/magnet;video/avi;video/msvideo;video/x-msvideo;video/mp4;video/x-matroska;video/mpeg;\n', cb);      
 		},
 
 
@@ -831,10 +831,10 @@
 				});
 			} else if (process.platform == 'darwin') {
 				var pctPath = process.execPath.substr(0,process.execPath.lastIndexOf("/")+1)+"../../../../Resources/app.nw/";
-				require('child_process').exec('"'+pctPath+'src/duti/duti" -s media.torrentstime-v2.player .torrent viewer');
+				require('child_process').exec('"'+pctPath+'src/duti/duti" -s media.PopcornTimeCE.player .torrent viewer');
 				alert("Success!");
 			} else {
-				fs.writeFile(gui.App.dataPath+'\\register-torrent.reg', 'REGEDIT4\r\n[HKEY_CURRENT_USER\\Software\\Classes\\torrentstime.player.v2\\DefaultIcon]\r\n@="'+process.execPath.split("\\").join("\\\\")+'"\r\n[HKEY_CURRENT_USER\\Software\\Classes\\torrentstime.player.v2\\shell\\open\\command]\r\n@="\\"'+process.execPath.split("\\").join("\\\\")+'\\" \\"%1\\""\r\n[HKEY_CURRENT_USER\\Software\\Classes\\.torrent]\r\n@="torrentstime.player.v2"\r\n"Content Type"="application/x-bittorrent"', function (err) {
+				fs.writeFile(gui.App.dataPath+'\\register-torrent.reg', 'REGEDIT4\r\n[HKEY_CURRENT_USER\\Software\\Classes\\PopcornTimeCE.player\\DefaultIcon]\r\n@="'+process.execPath.split("\\").join("\\\\")+'"\r\n[HKEY_CURRENT_USER\\Software\\Classes\\PopcornTimeCE.player\\shell\\open\\command]\r\n@="\\"'+process.execPath.split("\\").join("\\\\")+'\\" \\"%1\\""\r\n[HKEY_CURRENT_USER\\Software\\Classes\\.torrent]\r\n@="PopcornTimeCE.player"\r\n"Content Type"="application/x-bittorrent"', function (err) {
 					if (err) throw err;
 					gui.Shell.openExternal(gui.App.dataPath+'\\register-torrent.reg');
 				});
