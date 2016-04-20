@@ -34,7 +34,13 @@
 
         <div class="torrents-info">
             <ul class="file-list">
-                <% _.each(fs.readdirSync(require('nw.gui').App.dataPath + '/TorrentCollection/'), function(file, index) { %>
+                <% _.each(fs.readdirSync(require('nw.gui').App.dataPath + '/TorrentCollection/').map(function(v) { 
+                  return { name:v,
+                           time:fs.statSync(require('nw.gui').App.dataPath + '/TorrentCollection/' + v).mtime.getTime()
+                         }; 
+               })
+               .sort(function(a, b) { return b.time - a.time; })
+               .map(function(v) { return v.name; }), function(file, index) { %>
                     <li class="file-item" data-index="<%=file.index%>" data-file="<%=index%>">
                         <a><%=file%></a>
 
