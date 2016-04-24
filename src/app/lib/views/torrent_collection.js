@@ -336,13 +336,17 @@
             e.stopPropagation();
 
             var magnetLink,
-                gui = require('nw.gui');
+                torrentInfo,
+                gui = require('nw.gui'),
+                parseTorrent = require('parse-torrent');
 
             if ($(e.currentTarget.parentNode).context.className === 'file-item') {
                 // stored
                 var _file = $(e.currentTarget.parentNode).context.innerText,
                     file = _file.substring(0, _file.length - 2); // avoid ENOENT
-                magnetLink = fs.readFileSync(collection + file, 'utf8');
+                
+                torrentInfo = parseTorrent(fs.readFileSync(collection + file));
+                magnetLink = parseTorrent.toMagnetURI(torrentInfo);
             } else {
                 // search result
                 magnetLink = $(e.currentTarget.parentNode).context.attributes['data-file'].value;

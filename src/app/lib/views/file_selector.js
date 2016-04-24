@@ -174,7 +174,7 @@
                     // if (Settings.droppedStoredMagnet) {
                     //     torrent_name = Settings.droppedStoredMagnet;
                     // }
-                    fs.unlinkSync(target + torrent_name + '.magnet.torrent'); // remove the magnet
+                    fs.unlinkSync(target + torrent_name + '.torrent'); // remove the magnet
                     win.debug('Torrent Collection: deleted', torrent_name);
                     //alert('Torrent Collection: deleted', torrent_name);
                 } else {
@@ -182,7 +182,7 @@
                         fs.mkdir(target); // create directory if needed
                     }
 
-                    fs.writeFileSync(target + torrent_name + '.magnet.torrent', fs.readFileSync(source + cached_torrent_hashname + '.torrent')); // save torrent
+                    fs.writeFileSync(target + torrent_name + '.torrent', fs.readFileSync(source + cached_torrent_hashname + '.torrent')); // save torrent
                     win.debug('Torrent Collection: added', torrent_name);
                     //alert('Torrent Collection: added', torrent_name);
                 }
