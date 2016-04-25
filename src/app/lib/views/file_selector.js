@@ -127,7 +127,7 @@
             } else if (!Settings.droppedStoredMagnet) {
 				//else if (Settings.droppedMagnet && !Settings.droppedStoredMagnet) {
                 _file = Settings.droppedMagnet,
-                    file = formatMagnet(_file);
+                    file = formatMagnet(_file) + '.torrent';
 					//alert("droppedMagnet, droppedStoredMagnet=false: "+file);
             } else if (Settings.droppedStoredMagnet) {
 				//else if (Settings.droppedMagnet && Settings.droppedStoredMagnet) {
