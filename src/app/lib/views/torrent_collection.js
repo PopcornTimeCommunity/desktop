@@ -345,8 +345,12 @@
                 var _file = $(e.currentTarget.parentNode).context.innerText,
                     file = _file.substring(0, _file.length - 2); // avoid ENOENT
                 
-                torrentInfo = parseTorrent(fs.readFileSync(collection + file));
-                magnetLink = parseTorrent.toMagnetURI(torrentInfo);
+                if (file.indexOf('.torrent') !== -1) {
+                    torrentInfo = parseTorrent(fs.readFileSync(collection + file));
+                    magnetLink = parseTorrent.toMagnetURI(torrentInfo);
+                } else { // Only for compatability
+                    magnetLink = fs.readFileSync(collection + file, 'utf8');
+                }
             } else {
                 // search result
                 magnetLink = $(e.currentTarget.parentNode).context.attributes['data-file'].value;
