@@ -146,45 +146,44 @@
         },
 
         storeTorrent: function () {
+            var torrent_display_name, torrent_file_name, cached_torrent_hashname;
+
             var source = require('os').tmpDir() + '/Popcorn-Time/TorrentCache/',
                 target = require('nw.gui').App.dataPath + '/TorrentCollection/';
 
             if (Settings.droppedTorrent) {
-                var torrent_name = Settings.droppedTorrent;
-                var cached_torrent_hashname = Common.md5(path.basename(torrent_name));
+                torrent_file_name = Settings.droppedTorrent;
+                cached_torrent_hashname = Common.md5(path.basename(torrent_file_name));
 
                 if (this.isTorrentStored()) {
-                    fs.unlinkSync(target + torrent_name); // remove the torrent
-                    win.debug('Torrent Collection: deleted', torrent_name);
-                    //alert('Torrent Collection: deleted', torrent_name);
+                    fs.unlinkSync(target + torrent_file_name); // remove the torrent
+                    win.debug('Torrent Collection: deleted', torrent_file_name);
+                    //alert('Torrent Collection: deleted', torrent_file_name);
                 } else {
                     if (!fs.existsSync(target)) {
                         fs.mkdir(target); // create directory if needed
                     }
-                    fs.writeFileSync(target + torrent_name, fs.readFileSync(source + cached_torrent_hashname + '.torrent')); // save torrent
-                    win.debug('Torrent Collection: added', torrent_name);
-                    //alert('Torrent Collection: added', torrent_name);
+                    fs.writeFileSync(target + torrent_file_name, fs.readFileSync(source + cached_torrent_hashname + '.torrent')); // save torrent
+                    win.debug('Torrent Collection: added', torrent_file_name);
+                    //alert('Torrent Collection: added', torrent_file_name);
                 }
             } else if (Settings.droppedMagnet) {
-                var magnet_link = Settings.droppedMagnet;
-                var torrent_name = formatMagnet(magnet_link);
-                var cached_torrent_hashname = Common.md5(path.basename(magnet_link));
+                torrent_display_name = formatMagnet(Settings.droppedMagnet);
+                torrent_file_name = Settings.droppedStoredMagnet ? Settings.droppedStoredMagnet : torrent_display_name;
+                cached_torrent_hashname = Common.md5(path.basename(Settings.droppedMagnet));
 
-                if (this.isTorrentStored()) {
-                    // if (Settings.droppedStoredMagnet) {
-                    //     torrent_name = Settings.droppedStoredMagnet;
-                    // }
-                    fs.unlinkSync(target + torrent_name + '.torrent'); // remove the magnet
-                    win.debug('Torrent Collection: deleted', torrent_name);
-                    //alert('Torrent Collection: deleted', torrent_name);
+                if (this.isTorrentStored()) { // this is only for compatability, since we don't have magnet links stored anymore
+                    fs.unlinkSync(target + torrent_file_name); // remove the magnet
+                    win.debug('Torrent Collection: deleted', torrent_file_name);
+                    //alert('Torrent Collection: deleted', torrent_file_name);
                 } else {
                     if (!fs.existsSync(target)) {
                         fs.mkdir(target); // create directory if needed
                     }
 
-                    fs.writeFileSync(target + torrent_name + '.torrent', fs.readFileSync(source + cached_torrent_hashname + '.torrent')); // save torrent
-                    win.debug('Torrent Collection: added', torrent_name);
-                    //alert('Torrent Collection: added', torrent_name);
+                    fs.writeFileSync(target + torrent_file_name + '.torrent', fs.readFileSync(source + cached_torrent_hashname + '.torrent')); // save torrent
+                    win.debug('Torrent Collection: added', torrent_file_name);
+                    //alert('Torrent Collection: added', torrent_file_name);
                 }
             }
             this.isTorrentStored(); // trigger button change
