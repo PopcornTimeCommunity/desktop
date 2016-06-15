@@ -1,4 +1,20 @@
-## 0.4.0-4 Beta - Patience is a fruit of the Spirit - 13 Feb 2015
+## 0.4.1-1 Beta - Give me some Nachos - 5 June 2016
+
+New Features: 
+
+- add Nacho Link to player list
+- add subtitle support for Nacho Links
+- add poster support for Nacho Links
+- add enryption support for Nacho Links
+- add Nacho Link support for http://yts.ph
+
+BugFixes: 
+
+- fix favorites in 0.4.1 version 
+- set 'chosenPlayer' to html5 by default
+- set 'chosenPlayer' to local if magnet link is clicked
+
+## 0.4.0-5 Beta - Patience is a fruit of the Spirit - 13 Feb 2015
 
 BugFixes: 
 
