@@ -1,16 +1,16 @@
 {
   "name": "Popcorn-Time-CE",
   "homepage": "http://popcorntime.ag",
-  "bugs": "https://github.com/PopcornTime-CE/desktop/issues",
+  "bugs": "https://github.com/PopcornTimeCommunity/desktop/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PopcornTime-CE/desktop.git"
+    "url": "https://github.com/PopcornTimeCommunity/desktop.git"
   },
   "license": "GPL-3.0",
   "main": "app://host/src/app/index.html",
-  "version": "0.4.0-4",
+  "version": "0.4.1-1",
   "node-remote": "client.vpn.ht",
-  "releaseName": "Patience is a fruit of the Spirit",
+  "releaseName": "Give me some Nachos",
   "scripts": {
     "start": "gulp run"
   },
