@@ -1762,6 +1762,20 @@ body,
   font-size: 25px;
   text-transform: uppercase;
 }
+#disclaimer-container .disclaimer .disclaimer-state .disclaimer-content .register-text {
+  font-size: 14px;
+  margin: 20px;
+  overflow: auto;
+  height: 60%;
+  text-align: left;
+  width: 100%;
+  background: rgba(0,0,0,0.3);
+  padding: 7px;
+  overflow-x: hidden;
+  overflow-y: overlay;
+  -webkit-overflow-scrolling: touch;
+	line-height: normal;
+}
 #disclaimer-container .disclaimer .disclaimer-state .disclaimer-content .disclaimer-text {
   font-size: 14px;
   margin: 20px;
