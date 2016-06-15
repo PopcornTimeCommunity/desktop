@@ -25,7 +25,7 @@ Settings.postersJump = [134, 154, 174, 194, 214, 234, 254, 274, 294];
 //Playback
 Settings.alwaysFullscreen = false;
 Settings.playNextEpisodeAuto = true;
-Settings.chosenPlayer = 'local';
+Settings.chosenPlayer = 'html5';
 
 // Advanced UI
 Settings.alwaysOnTop = false;
@@ -142,6 +142,7 @@ Settings.defaultHeight = Math.round(window.screen.availHeight * 0.8);
 Settings.playerSubPosition = '0px';
 Settings.playerVolume = '1';
 Settings.tv_detail_jump_to = 'next';
+Settings.rememberRegister = true;
 
 
 var ScreenResolution = {
