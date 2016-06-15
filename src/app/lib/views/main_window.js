@@ -17,6 +17,7 @@
             Settings: '#settings-container',
             InitModal: '#initializing',
             Disclaimer: '#disclaimer-container',
+            Register: '#disclaimer-container',
             About: '#about-container',
             Keyboard: '#keyboard-container',
             Help: '#help-container',
@@ -84,6 +85,10 @@
             // Add event to show disclaimer
             App.vent.on('disclaimer:show', _.bind(this.showDisclaimer, this));
             App.vent.on('disclaimer:close', _.bind(this.Disclaimer.destroy, this.Disclaimer));
+
+			// Add event to show register
+            App.vent.on('register:show', _.bind(this.showRegister, this));
+            App.vent.on('register:close', _.bind(this.Register.destroy, this.Register));
 
             // Add event to show about
             App.vent.on('about:show', _.bind(this.showAbout, this));
@@ -186,6 +191,11 @@
                     // we check if the disclaimer is accepted
                     if (!AdvSettings.get('disclaimerAccepted')) {
                         that.showDisclaimer();
+                    }
+
+					// we check if the register is accepted
+                    if (AdvSettings.get('rememberRegister')) {// || !AdvSettings.get('registerTorrents')
+                        that.showRegister();
                     }
 
                     that.InitModal.destroy();
@@ -328,6 +338,10 @@
 
         showDisclaimer: function (e) {
             this.Disclaimer.show(new App.View.DisclaimerModal());
+        },
+
+		showRegister: function (e) {
+            this.Register.show(new App.View.RegisterModal());
         },
 
         showAbout: function (e) {
