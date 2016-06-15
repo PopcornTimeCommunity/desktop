@@ -114,6 +114,8 @@
         download: function (data) {
             if (data.path && data.url) {
                 win.debug('Subtitles download url:', data.url);
+				console.log('save subtitles to AdvSettings '+data.url);
+				AdvSettings.set('LastSubtitle', data.url);
                 var fileFolder = path.dirname(data.path);
 
                 // Fix cases of OpenSubtitles appending data after file extension.
