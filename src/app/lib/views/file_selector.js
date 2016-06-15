@@ -66,6 +66,11 @@
 				this.storeTorrent();
 			}
 
+			//XXX: Workaround by nasabeyonds
+			if (AdvSettings.get('chosenPlayer')=='html5'){
+				AdvSettings.set('chosenPlayer', 'local');
+			}
+
 			if(AdvSettings.get('activateAutoplay')===true){
 				$('#s'+highest).click();
 			}
