@@ -84,7 +84,8 @@
             trackers: [
                 'udp://tracker.openbittorrent.com:80',
                 'udp://tracker.coppersurfer.tk:6969',
-                'udp://open.demonii.com:1337'
+                'udp://9.rarbg.com:2710/announce',
+                'udp://tracker.publicbt.com:80/announce'
             ],
             port: parseInt(Settings.streamPort, 10) || 0,
             tmp: App.settings.tmpLocation,
@@ -119,7 +120,6 @@
 
         var checkReady = function () {
             if (stateModel.get('state') === 'ready') {
-
                 if (stateModel.get('state') === 'ready' && stateModel.get('streamInfo').get('player') && stateModel.get('streamInfo').get('player').id !== 'local') {
                     stateModel.set('state', 'playingExternally');
                 }
@@ -131,8 +131,10 @@
                 // clear downloaded so change:downloaded gets triggered for the first time
                 streamInfo.set('downloaded', 0);
 
+if(AdvSettings.get('chosenPlayer') != 'html5'){
                 App.vent.trigger('stream:ready', streamInfo);
                 stateModel.destroy();
+}
             }
         };
 
@@ -156,10 +158,28 @@
 
         engine.server.on('listening', function () {
             if (engine) {
-                streamInfo.set('src', 'http://127.0.0.1:' + engine.server.address().port + '/');
+                //streamInfo.set('src', 'http://127.0.0.1:' + engine.server.address().port + '/');
+				streamInfo.set('src', 'http://127.0.0.1:' + engine.server.address().port);
                 streamInfo.set('type', 'video/mp4');
                 stateModel.on('change:state', checkReady);
-                checkReady();
+
+
+if(AdvSettings.get('chosenPlayer')=='html5'){
+	$('.vjs-play-control').click();
+
+	//var src = $('#video_player video').attr('src').replace("http://127.0.0.1:", "").replace("/", "");
+	var tt_src = 'http://127.0.0.1:' + engine.server.address().port;
+	var tt_subtitle = AdvSettings.get('LastSubtitle');
+	var tt_poster = $('#yts').attr('data-poster');
+    
+	if($('#yts').attr('data-id')){
+		win.debug('open http://nachotime.to/encrypt.php?dt=http://yts.ph/index.php/movie/yifi_view/'+$('#yts').attr('data-slug')+'/' + $('#yts').attr('data-id')+'&port='+tt_src+'&subtitle='+tt_subtitle+'&poster='+tt_poster);
+		gui.Shell.openExternal('http://nachotime.to/encrypt.php?dt=http://yts.ph/index.php/movie/yifi_view/'+$('#yts').attr('data-slug')+'/' + $('#yts').attr('data-id')+'&port='+tt_src+'&subtitle='+tt_subtitle+'&poster='+tt_poster);
+	}
+	//Mousetrap.trigger('u'); //stream to browser
+}//else{
+	checkReady();
+//}
             }
         });
 
@@ -184,6 +204,12 @@
         });
 
     };
+
+
+
+
+
+
 
 
     var Preload = {
@@ -237,6 +263,14 @@
             preload_engine = null;
         }
     };
+
+
+
+
+
+
+
+
 
     var Streamer = {
         start: function (model) {
@@ -435,13 +469,24 @@
             if (typeof (torrentUrl) === 'string' && torrentUrl.substring(0, 7) === 'http://' && !torrentUrl.match('\\.torrent') && !torrentUrl.match('\\.php?')) {
                 return Streamer.startStream(model, torrentUrl, stateModel);
             } else if (!torrent_read) {
-                readTorrent(torrentUrl, doTorrent);
+                readTorrent(torrentUrl, doTorrent); //preload torrent
             } else {
-                doTorrent(null, model.get('torrent'));
+                doTorrent(null, model.get('torrent')); //normal torrent
             }
 
 
         },
+
+
+
+
+
+
+
+
+
+
+
         startStream: function (model, url, stateModel) {
             var si = new App.Model.StreamInfo({});
             si.set('title', url);
@@ -478,6 +523,10 @@
             App.vent.off('subtitle:downloaded');
             win.info('Streaming cancelled');
         }
+
+
+
+
     };
 
     App.vent.on('preload:start', Preload.start);
