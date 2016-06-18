@@ -71,7 +71,7 @@ Settings.dhtLimit = 500;
 Settings.streamPort = 0; // 0 = Random
 Settings.tmpLocation = path.join(os.tmpDir(), 'Popcorn-Time');
 Settings.databaseLocation = path.join(data_path, 'data');
-Settings.deleteTmpOnClose = true;
+Settings.deleteTmpOnClose = false;
 Settings.automaticUpdating = true;
 Settings.events = false;
 Settings.minimizeToTray = false;
@@ -80,7 +80,7 @@ Settings.bigPicture = false;
 // Features
 Settings.activateTorrentCollection = true;
 Settings.activateFakeSkan = true;
-Settings.activateAutoplay = true;
+Settings.activateAutoplay = false;
 Settings.autoStoreTorrents = true;
 Settings.activateWatchlist = false;
 //Settings.activateFavorites = true;
