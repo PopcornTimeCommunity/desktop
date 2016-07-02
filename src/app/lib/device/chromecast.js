@@ -26,6 +26,7 @@
             var subtitle = streamModel.get('subFile');
             var cover = streamModel.get('cover');
             var url = streamModel.get('src');
+            var title = streamModel.get('title').substring(0,50);
             this.attributes.url = url;
             var media;
 
@@ -38,7 +39,7 @@
                         language: 'en-US'
                     }],
                     cover: {
-                        title: streamModel.get('title'),
+                        title: title,
                         url: streamModel.get('cover')
                     },
                     subtitles_style: {
@@ -59,7 +60,7 @@
                 media = {
                     url: url,
                     cover: {
-                        title: streamModel.get('title'),
+                        title: title,
                         url: streamModel.get('cover')
                     }
                 };
