@@ -20,12 +20,12 @@
             'click .favourites-toggle': 'toggleFavourite',
             'click .watched-toggle': 'toggleWatched',
             'click .movie-imdb-link': 'openIMDb',
-	    	'click .movie-yify-link': 'openYify',
-		'click .movie-video2k-link': 'openVideo2k',
-		'click .movie-imdbid-link': 'openIMDb',
-		'click .movie-yifysubtitles-link': 'openYifysubtitles',
-		'click .movie-youtube-link': 'openYoutube',
-		'click .movie-googlevideo-link': 'openGooglevideo',
+            'click .movie-yify-link': 'openYify',
+            'click .movie-video2k-link': 'openVideo2k',
+            'click .movie-imdbid-link': 'openIMDb',
+            'click .movie-yifysubtitles-link': 'openYifysubtitles',
+            'click .movie-youtube-link': 'openYoutube',
+            'click .movie-googlevideo-link': 'openGooglevideo',
             'mousedown .magnet-link': 'openMagnet',
             'click .sub-dropdown': 'toggleDropdown',
             'click .sub-flag-icon': 'closeDropdown',
@@ -79,24 +79,24 @@
                 document.getElementsByName('switch')[0].checked = true;
             }
 
-	    if (!this.model.get('runtime')) {
+            if (!this.model.get('runtime')) {
                 $('#runtime').hide();
             }
-	    if (!this.model.get('synopsis')) {
+            if (!this.model.get('synopsis')) {
                 $('#synopsis').hide();
             }
-	    if (!this.model.get('directors') || this.model.get('directors')=='') {
+            if (!this.model.get('directors') || this.model.get('directors') == '') {
                 $('#directors').hide();
             }
-	    if (!this.model.get('cast') || this.model.get('cast')=='') {
+            if (!this.model.get('cast') || this.model.get('cast') == '') {
                 $('#cast').hide();
             }
             if (!this.model.get('trailer')) {
                 $('#watch-trailer').hide();
             }
-	    if (!this.model.get('google_video')) {
+            if (!this.model.get('google_video')) {
                 $('#watch-googlevideo').hide();
-		$('.movie-googlevideo-link').hide();
+                $('.movie-googlevideo-link').hide();
             }
 
             this.renderHealth();
@@ -168,17 +168,17 @@
 
             this.initKeyboardShortcuts();
 
-	    if(AdvSettings.get('chosenPlayer')=='googlecloud' && !this.model.get('google_video')){
-            	App.Device.Collection.setDevice('local');
-	    }else{
-            	App.Device.Collection.setDevice(Settings.chosenPlayer);
-	    }
+            if (AdvSettings.get('chosenPlayer') == 'googlecloud' && !this.model.get('google_video')) {
+                App.Device.Collection.setDevice('local');
+            } else {
+                App.Device.Collection.setDevice(Settings.chosenPlayer);
+            }
             App.Device.ChooserView('#player-chooser').render();
-	    /*if(this.model.get('google_video')){
+            /*if(this.model.get('google_video')){
 		$('#showDropdown').click();
 	    }*/
-	    if (!this.model.get('google_video')) {
-		$('#player-googlecloud').hide();
+            if (!this.model.get('google_video')) {
+                $('#player-googlecloud').hide();
             }
         },
 
@@ -239,39 +239,39 @@
         },
 
         startStreaming: function () {
-	    var player = $('.imgplayerchoice').attr('src');
-            if (!player.match(/[0-9]+.[0-9]+.[0-9]+.[0-9]/ig) && 
-		player=='images/icons/googlecloud-icon.png' && this.model.get('google_video')) {
-		    var google_video = new Backbone.Model({
-		        src: this.model.get('google_video'),
-		        type: 'video/mp4', 
-			techOrder: ['html5', 'flash'],
-			quality: this.model.get('quality'), //quality: 'quality unknown', //quality: false,
-			subtitle: this.model.get('subtitle'), //subtitle: null,
-			defaultSubtitle: this.subtitle_selected,
-		        title: this.model.get('title')
-		    });
-		    var tmpPlayer = App.Device.Collection.selected.attributes.id;
-		    App.Device.Collection.setDevice('local');
-		    App.vent.trigger('stream:ready', google_video);
-		    App.Device.Collection.setDevice(tmpPlayer);
+            var player = $('.imgplayerchoice').attr('src');
+            if (!player.match(/[0-9]+.[0-9]+.[0-9]+.[0-9]/ig) &&
+                player == 'images/icons/googlecloud-icon.png' && this.model.get('google_video')) {
+                var google_video = new Backbone.Model({
+                    src: this.model.get('google_video'),
+                    type: 'video/mp4',
+                    techOrder: ['html5', 'flash'],
+                    quality: this.model.get('quality'), //quality: 'quality unknown', //quality: false,
+                    subtitle: this.model.get('subtitle'), //subtitle: null,
+                    defaultSubtitle: this.subtitle_selected,
+                    title: this.model.get('title')
+                });
+                var tmpPlayer = App.Device.Collection.selected.attributes.id;
+                App.Device.Collection.setDevice('local');
+                App.vent.trigger('stream:ready', google_video);
+                App.Device.Collection.setDevice(tmpPlayer);
             } else {
-		    var torrentStart = new Backbone.Model({
-		        imdb_id: this.model.get('imdb_id'),
-		        torrent: this.model.get('torrents')[this.model.get('quality')].magnet,
-		        backdrop: this.model.get('backdrop'),
-		        subtitle: this.model.get('subtitle'),
-		        defaultSubtitle: this.subtitle_selected,
-		        title: this.model.get('title'),
-		        quality: this.model.get('quality'),
-		        type: 'movie',
-		        device: App.Device.Collection.selected,
-		        cover: this.model.get('cover')
-		    });
-		    App.vent.trigger('stream:start', torrentStart);
-	    }
+                var torrentStart = new Backbone.Model({
+                    imdb_id: this.model.get('imdb_id'),
+                    torrent: this.model.get('torrents')[this.model.get('quality')].magnet,
+                    backdrop: this.model.get('backdrop'),
+                    subtitle: this.model.get('subtitle'),
+                    defaultSubtitle: this.subtitle_selected,
+                    title: this.model.get('title'),
+                    quality: this.model.get('quality'),
+                    type: 'movie',
+                    device: App.Device.Collection.selected,
+                    cover: this.model.get('cover')
+                });
+                App.vent.trigger('stream:start', torrentStart);
+            }
 
-		
+
         },
 
         toggleDropdown: function (e) {
@@ -298,7 +298,7 @@
             }
         },
 
-	playTrailer: function () {
+        playTrailer: function () {
 
             var trailer = new Backbone.Model({
                 src: this.model.get('trailer'),
@@ -348,7 +348,7 @@
                 .html(torrent.seed + ' ' + i18n.__('Seeds') + ',  ' + torrent.peer + ' ' + i18n.__('Peers'))
                 .tooltip('fixTitle');
 
-	    $('.health-icon').tooltip({
+            $('.health-icon').tooltip({
                     html: true
                 })
                 .removeClass('Bad Medium Good Excellent')
@@ -405,9 +405,9 @@
                     trailer: this.model.get('trailer'),
                     provider: this.model.get('provider'),
                     watched: this.model.get('watched'),
-			google_video: this.model.get('google_video'),
-			directors: this.model.get('directors'),
-			cast: this.model.get('cast'),
+                    google_video: this.model.get('google_video'),
+                    directors: this.model.get('directors'),
+                    cast: this.model.get('cast'),
                 };
 
                 Database.addMovie(movie)
@@ -443,15 +443,20 @@
 
         openIMDb: function () {
             gui.Shell.openExternal('http://www.imdb.com/title/' + this.model.get('imdb_id'));
-        },openYifysubtitles: function () {
+        },
+        openYifysubtitles: function () {
             gui.Shell.openExternal('http://www.yifysubtitles.com/movie-imdb/' + this.model.get('imdb_id'));
-        },openYify: function () {
-            gui.Shell.openExternal('http://yify.is/index.php/movie/yifi_view/'+this.model.get('slug')+'/' + this.model.get('id'));
-        },openVideo2k: function () {
-            gui.Shell.openExternal('http://video2k.is/index.php/movie/watch/'+this.model.get('slug')+'/' + this.model.get('id'));
-        },openGooglevideo: function () {
+        },
+        openYify: function () {
+            gui.Shell.openExternal('http://yify.is/index.php/movie/yifi_view/' + this.model.get('slug') + '/' + this.model.get('id'));
+        },
+        openVideo2k: function () {
+            gui.Shell.openExternal('http://video2k.is/index.php/movie/watch/' + this.model.get('slug') + '/' + this.model.get('id'));
+        },
+        openGooglevideo: function () {
             gui.Shell.openExternal(this.model.get('google_video'));
-        },openYoutube: function () {
+        },
+        openYoutube: function () {
             gui.Shell.openExternal(this.model.get('trailer'));
         },
 
@@ -488,21 +493,23 @@
             }
         },
 
-        selectPlayer: function (e) {//onclick li player
+        selectPlayer: function (e) { //onclick li player
+            //Determine chosenPlayer settings based on Player id
             var player = $(e.currentTarget).parent('li').attr('id').replace('player-', '');
-	    //this.model.set('device', player);
+            win.info('Initial Device set to: ' + player);
             if (!player.match(/[0-9]+.[0-9]+.[0-9]+.[0-9]/ig)) {
-		//set player to 'local' if Settings.chosenPlayer='googlecloud' and no google_video found 
-		if(AdvSettings.get('chosenPlayer')=='googlecloud' && !this.model.get('google_video')){
-			AdvSettings.set('chosenPlayer', 'local');
-			this.model.set('device', 'local');
-		}
-		else{
-			AdvSettings.set('chosenPlayer', player);
-			this.model.set('device', player);
-            	}
+                win.debug('Player set to: ' + player);
+                AdvSettings.set('chosenPlayer', player);
+                if (AdvSettings.get('chosenPlayer') == 'googlecloud' && !this.model.get('google_video')) {
+                    win.debug('Google Cloud set Player and Device to: local');
+                    AdvSettings.set('chosenPlayer', 'local');
+                    this.model.set('device', 'local');
+                }
+            } else {
+                win.debug('Device set to: '+player+' Player set to:'+player);
+                this.model.set('device', player);
+                AdvSettings.set('chosenPlayer', player);
             }
         }
-
     });
 })(window.App);
