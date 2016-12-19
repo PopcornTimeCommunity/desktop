@@ -211,6 +211,7 @@
 
             var deferred = Q.defer(),
                 error = false,
+                parseTorrent = require('parse-torrent'),
                 engine = peerflix(torrent, {
                     list: true
                 }); // just list files, this won't start the torrent server
@@ -243,14 +244,14 @@
                 var resolvedTorrentPath = engine.path;
                 clearTimeout(currentTID);
                 if (resolvedTorrentPath) {
-                    // copy resolved path to cache so it will be awailable next time
-                    Common.copyFile(resolvedTorrentPath + '.torrent', filePath, function (err) {
-                        if (err) {
-                            error = err;
-                        }
-                        resolve();
-                        destroyEngine();
-                    });
+
+                    var torrentInfo = engine.torrent;
+                    torrentInfo.announce = _.union(engine.torrent.announce, parseTorrent(torrent).announce);
+
+                    fs.writeFileSync(filePath, parseTorrent.toTorrentFile(torrentInfo)); // save torrent
+
+                    resolve();
+                    destroyEngine();
                 } else {
                     error = 'TorrentCache.handlemagnet() engine returned no file';
                     destroyEngine();

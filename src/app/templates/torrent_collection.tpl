@@ -34,15 +34,10 @@
 
         <div class="torrents-info">
             <ul class="file-list">
-                <% _.each(fs.readdirSync(require('nw.gui').App.dataPath + '/TorrentCollection/'), function(file, index) { %>
+                <% _.each(files, function(file, index) { %>
                     <li class="file-item" data-index="<%=file.index%>" data-file="<%=index%>">
                         <a><%=file%></a>
-
-                   <% if (file.indexOf('.torrent') !== -1) { %>
-                        <div class="item-icon torrent-icon"></div>
-                   <% } else { %>
                         <div class="item-icon magnet-icon tooltipped" data-toogle="tooltip" data-placement="right" title="<%=i18n.__("Magnet link") %>"></div>
-                    <% } %>
                         <i class="fa fa-trash-o item-delete tooltipped" data-toggle="tooltip" data-placement="left" title="<%= i18n.__("Remove this torrent") %>"></i>
                         <i class="fa fa-pencil item-rename tooltipped" data-toggle="tooltip" data-placement="left" title="<%= i18n.__("Rename this torrent") %>"></i>
                         </a>

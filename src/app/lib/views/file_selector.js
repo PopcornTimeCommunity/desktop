@@ -132,7 +132,7 @@
             } else if (!Settings.droppedStoredMagnet) {
 				//else if (Settings.droppedMagnet && !Settings.droppedStoredMagnet) {
                 _file = Settings.droppedMagnet,
-                    file = formatMagnet(_file);
+                    file = formatMagnet(_file) + '.torrent';
 					//alert("droppedMagnet, droppedStoredMagnet=false: "+file);
             } else if (Settings.droppedStoredMagnet) {
 				//else if (Settings.droppedMagnet && Settings.droppedStoredMagnet) {
@@ -151,44 +151,44 @@
         },
 
         storeTorrent: function () {
-            var source = App.settings.tmpLocation + '/',
-                target = require('nw.gui').App.dataPath + '/TorrentCollection/',
-                file,
-                _file;
+            var torrent_display_name, torrent_file_name, cached_torrent_hashname;
+
+            var source = require('os').tmpDir() + '/Popcorn-Time/TorrentCache/',
+                target = require('nw.gui').App.dataPath + '/TorrentCollection/';
 
             if (Settings.droppedTorrent) {
-                file = Settings.droppedTorrent;
+                torrent_file_name = Settings.droppedTorrent;
+                cached_torrent_hashname = Common.md5(path.basename(torrent_file_name));
 
                 if (this.isTorrentStored()) {
-                    fs.unlinkSync(target + file); // remove the torrent
-                    win.debug('Torrent Collection: deleted', file);
-                    //alert('Torrent Collection: deleted', file);
+                    fs.unlinkSync(target + torrent_file_name); // remove the torrent
+                    win.debug('Torrent Collection: deleted', torrent_file_name);
+                    //alert('Torrent Collection: deleted', torrent_file_name);
                 } else {
                     if (!fs.existsSync(target)) {
                         fs.mkdir(target); // create directory if needed
                     }
-                    fs.writeFileSync(target + file, fs.readFileSync(source + file)); // save torrent
-                    win.debug('Torrent Collection: added', file);
-                    //alert('Torrent Collection: added', file);
+                    fs.writeFileSync(target + torrent_file_name, fs.readFileSync(source + cached_torrent_hashname + '.torrent')); // save torrent
+                    win.debug('Torrent Collection: added', torrent_file_name);
+                    //alert('Torrent Collection: added', torrent_file_name);
                 }
             } else if (Settings.droppedMagnet) {
-                _file = Settings.droppedMagnet,
-                    file = formatMagnet(_file);
+                torrent_display_name = formatMagnet(Settings.droppedMagnet);
+                torrent_file_name = Settings.droppedStoredMagnet ? Settings.droppedStoredMagnet : torrent_display_name;
+                cached_torrent_hashname = Common.md5(path.basename(Settings.droppedMagnet));
 
-                if (this.isTorrentStored()) {
-                    if (Settings.droppedStoredMagnet) {
-                        file = Settings.droppedStoredMagnet;
-                    }
-                    fs.unlinkSync(target + file); // remove the magnet
-                    win.debug('Torrent Collection: deleted', file);
-                    //alert('Torrent Collection: deleted', file);
+                if (this.isTorrentStored()) { // this is only for compatability, since we don't have magnet links stored anymore
+                    fs.unlinkSync(target + torrent_file_name); // remove the magnet
+                    win.debug('Torrent Collection: deleted', torrent_file_name);
+                    //alert('Torrent Collection: deleted', torrent_file_name);
                 } else {
                     if (!fs.existsSync(target)) {
                         fs.mkdir(target); // create directory if needed
                     }
-                    fs.writeFileSync(target + file, _file); // save magnet link inside readable file
-                    win.debug('Torrent Collection: added', file);
-                    //alert('Torrent Collection: added', file);
+
+                    fs.writeFileSync(target + torrent_file_name + '.torrent', fs.readFileSync(source + cached_torrent_hashname + '.torrent')); // save torrent
+                    win.debug('Torrent Collection: added', torrent_file_name);
+                    //alert('Torrent Collection: added', torrent_file_name);
                 }
             }
             this.isTorrentStored(); // trigger button change

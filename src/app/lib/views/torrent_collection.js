@@ -5,6 +5,16 @@
         collection = path.join(require('nw.gui').App.dataPath + '/TorrentCollection/'),
         files;
 
+    var readCollection = function (dir) {
+        return fs.readdirSync(dir).map(function(v) { 
+                      return { name:v,
+                               time:fs.statSync(dir + v).mtime.getTime()
+                             }; 
+                   })
+                   .sort(function(a, b) { return b.time - a.time; })
+                   .map(function(v) { return v.name; });
+    }
+
     var TorrentCollection = Backbone.Marionette.ItemView.extend({
         template: '#torrent-collection-tpl',
         className: 'torrent-collection',
@@ -31,7 +41,8 @@
                 fs.mkdirSync(collection);
                 win.debug('TorrentCollection: data directory created');
             }
-            this.files = fs.readdirSync(collection);
+            this.model = new Backbone.Model();
+            this.model.attributes.files = readCollection(collection);
             this.searchEngine = Settings.onlineSearchEngine;
         },
 
@@ -50,7 +61,7 @@
             $('.engine-icon').removeClass('active');
             $('#' + this.searchEngine.toLowerCase() + '-icon').addClass('active');
             $('#online-input').focus();
-            if (this.files[0]) {
+            if (this.model.attributes.files[0]) {
                 $('.notorrents-info').css('display', 'none');
                 $('.collection-actions').css('display', 'block');
                 $('.torrents-info').css('display', 'block');
@@ -325,13 +336,21 @@
             e.stopPropagation();
 
             var magnetLink,
-                gui = require('nw.gui');
+                torrentInfo,
+                gui = require('nw.gui'),
+                parseTorrent = require('parse-torrent');
 
             if ($(e.currentTarget.parentNode).context.className === 'file-item') {
                 // stored
                 var _file = $(e.currentTarget.parentNode).context.innerText,
                     file = _file.substring(0, _file.length - 2); // avoid ENOENT
-                magnetLink = fs.readFileSync(collection + file, 'utf8');
+                
+                if (file.indexOf('.torrent') !== -1) {
+                    torrentInfo = parseTorrent(fs.readFileSync(collection + file));
+                    magnetLink = parseTorrent.toMagnetURI(torrentInfo);
+                } else { // Only for compatability
+                    magnetLink = fs.readFileSync(collection + file, 'utf8');
+                }
             } else {
                 // search result
                 magnetLink = $(e.currentTarget.parentNode).context.attributes['data-file'].value;
@@ -358,7 +377,7 @@
             win.debug('Torrent Collection: deleted', file);
 
             // update collection
-            this.files = fs.readdirSync(collection);
+            this.model.attributes.files = readCollection(collection);
             this.render();
         },
 
@@ -398,7 +417,7 @@
             }
 
             // update collection
-            this.files = fs.readdirSync(collection);
+            this.model.attributes.files = readCollection(collection);
             this.render();
         },
 
