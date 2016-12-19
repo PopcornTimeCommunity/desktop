@@ -6,8 +6,10 @@
 
     var Chromecast = App.Device.Generic.extend({
         defaults: {
+            id: 'chromecast',
             type: 'chromecast',
-            typeFamily: 'external'
+            typeFamily: 'external',
+            name: 'Chromecast',
         },
 
         _makeID: function (baseID) {
@@ -159,6 +161,7 @@
         }
     });
 
+    win.info('Scanning: Local Network for Chromecast devices');
     var browser = new chromecast.Browser();
 
     browser.on('deviceOn', function (device) {
