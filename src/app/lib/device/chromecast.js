@@ -117,8 +117,8 @@
 
         seekPercentage: function (percentage) {
             win.info('Chromecast: seek percentage %s%', percentage.toFixed(2));
-            var newCurrentTime = this.get('loadedMedia').duration / 100 * percentage;
-            this.seekTo(newCurrentTime.toFixed());
+            var seekTime = (this.get('loadedMedia').duration / 100 * percentage) - this.get('playerCurrentTime');
+            this.seek(seekTime);
         },
 
         forward: function () {
@@ -152,6 +152,10 @@
             if (collection.selected.id === this.id) {
                 App.vent.trigger('device:status', status);
             }
+            //Update Player Current Time
+            if(status !== undefined){
+                this.set('playerCurrentTime',status.currentTime.toFixed(0));
+            }      
         }
     });
 
