@@ -499,7 +499,7 @@
             win.info('Initial Device set to: ' + player);
             if (!player.match(/[0-9]+.[0-9]+.[0-9]+.[0-9]/ig)) {
                 win.debug('Player set to: ' + player);
-                AdvSettings.set('chosenPlayer', player);
+                //AdvSettings.set('chosenPlayer', player);
                 if (AdvSettings.get('chosenPlayer') == 'googlecloud' && !this.model.get('google_video')) {
                     win.debug('Google Cloud set Player and Device to: local');
                     AdvSettings.set('chosenPlayer', 'local');
