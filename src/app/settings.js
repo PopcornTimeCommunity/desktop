@@ -98,13 +98,19 @@ Settings.vpnUsername = '';
 Settings.vpnPassword = '';
 
 Settings.tvAPI = [{
+    url: 'http://eztv.is/api/',
+    strictSSL: true
+},{
+    url: 'https://api-fetch.website/tv/',
+    strictSSL: true
+},{
     url: 'https://eztvapi.ml/',
     strictSSL: true
 },{
     url: 'https://popcorntime.ws/api/eztv/',
     strictSSL: true
 },{
-    url: 'https://popcornwvnbg7jev.onion.to/',
+    url: 'https://popcorntimece.ch/api/eztv/',
     strictSSL: true
 }];
 
