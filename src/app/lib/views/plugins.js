@@ -75,7 +75,7 @@
             case 'pluginGoogleDrive':
 			case 'pluginVLC':
             case 'pluginFakeSkan':
-            case 'pluginNachoLink':
+            case 'pluginHTML5':
 				value = field.is(':checked');
 				if(value)
 					AdvSettings.set('chosenPlayer', 'html5');
