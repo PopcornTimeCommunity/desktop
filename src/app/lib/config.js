@@ -39,7 +39,7 @@
             'year',
             //'title',
             'rating',
-	    	'views',
+	    	//'views',
 		'downloads',
 		'likes',
 		
