@@ -47,6 +47,17 @@
 
             App.Device.Collection.setDevice(Settings.chosenPlayer);
             App.Device.ChooserView('#player-chooser2').render();
+
+			if (AdvSettings.get('pluginGoogleDrive')===false) {
+				$('#player-googledrive').hide();
+            }
+			if (AdvSettings.get('pluginNachoLink')===false) {
+				$('#player-html5').hide();
+            }
+			if (AdvSettings.get('pluginVLC')===false) {
+				$('#player-VLC').hide();
+            }
+
             this.$('#watch-now').text('');
 			
 			// get all a in file-selector and click the one with highest size
@@ -64,11 +75,6 @@
 			
 			if (!this.isTorrentStored()){
 				this.storeTorrent();
-			}
-
-			//XXX: Workaround by nasabeyonds
-			if (AdvSettings.get('chosenPlayer')=='html5'){
-				AdvSettings.set('chosenPlayer', 'local');
 			}
 
 			if(AdvSettings.get('activateAutoplay')===true){
