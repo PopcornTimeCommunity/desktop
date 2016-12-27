@@ -61,16 +61,6 @@ for(var i = 0; i < genre.length; i++){ genre[i] = i18n.__(genre[i]); };
 
 			<div style="margin-top:8px;"><div id="cast" style="color:#ccc; float:left; margin-right:5px;">Cast:</div> <%= cast.join(" / ") %></div>
 		<% }; %>	
-
-		<div style="margin-top:20px; color:#666; font-size:11px;">
-		<div id="resources" style="float:left; margin-right:5px;">Provider: </div>
-		<div id="yts" class="movie-yify-link provider" data-placement="top" data-id="<%= id %>" data-slug="<%= slug %>" data-poster="<%= cover %>" title="yts.ph">yts / </div>
-		<div class="movie-video2k-link provider" data-placement="top" title="video2k.is">video2k / </div>
-		<div class="movie-imdbid-link provider" data-placement="top" title="imdb.com">imdb / </div>
-		<div class="movie-yifysubtitles-link provider" data-placement="top" title="yifysubtitles.com">yifysubtitles / </div>
-		<div class="movie-googlevideo-link provider" data-placement="top" title="cloud src">googlecloud / </div>
-		<div class="movie-youtube-link provider" data-placement="top" title="youtube.com">youtube</div>
-		</div>
 	</div>
     </div>
 
