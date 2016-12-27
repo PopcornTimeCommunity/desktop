@@ -251,12 +251,6 @@
 					this.remBrowStre();
 				}
             case 'chosenPlayer':
-				value = field.is(':checked');
-				if (value) {
-                    AdvSettings.set('chosenPlayer', 'VLC');
-                } else {
-                    AdvSettings.set('chosenPlayer', 'local');
-                }
             case 'tv_detail_jump_to':
             case 'subtitle_language':
             case 'subtitle_decoration':
@@ -291,10 +285,7 @@
             case 'minimizeToTray':
             case 'bigPicture':
             case 'activateTorrentCollection':
-            case 'activateFakeSkan':
             case 'activateAutoplay':
-            case 'autoStoreTorrents':
-            case 'activateWatchlist':
             case 'activateRandomize':
                 value = field.is(':checked');
                 break;
@@ -400,10 +391,6 @@
                 }
                 break;
             case 'activateRandomize':	
-	   		case 'activateWatchlist':
-                App.vent.trigger('movies:list');
-                App.vent.trigger('settings:show');
-                break;
             case 'movies_quality':
             case 'translateSynopsis':
                 App.Providers.delete('Yts');
