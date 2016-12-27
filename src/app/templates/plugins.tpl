@@ -66,8 +66,8 @@
 	<section>
         <div class="content">
 			<span style="height:25px;">
-                <input class="settings-checkbox" name="pluginNachoLink" id="pluginNachoLink" type="checkbox" <%=(Settings.pluginNachoLink == true? "checked='checked'":"")%>>
-                <label class="settings-label" for="pluginNachoLink"><%= i18n.__("HTML5 Video Player") %></label>
+                <input class="settings-checkbox" name="pluginHTML5" id="pluginHTML5" type="checkbox" <%=(Settings.pluginHTML5 == true? "checked='checked'":"")%>>
+                <label class="settings-label" for="pluginHTML5"><%= i18n.__("HTML5 Video Player") %></label>
             </span>
             <div style="margin-left:25px;">
                 <span style="overflow:hidden; height:auto; padding-bottom:10px; line-height:normal;">
