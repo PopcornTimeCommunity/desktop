@@ -31,6 +31,7 @@
             'click #filterbar-favorites': 'showFavorites',
             'click #filterbar-watchlist': 'showWatchlist',
             'click #filterbar-torrent-collection': 'showTorrentCollection',
+            'click .plugins': 'showPlugins',
             'click .triggerUpdate': 'updateDB',
             'click .vpn-connect': 'vpnConnect'
         },
@@ -300,6 +301,10 @@
                 App.vent.trigger('torrentCollection:close');
                 this.setactive(App.currentview);
             }
+        },
+
+		showPlugins: function (e) {
+            App.vent.trigger('plugins:show');
         },
 
         showShows: function (e) {
