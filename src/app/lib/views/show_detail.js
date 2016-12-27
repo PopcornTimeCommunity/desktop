@@ -223,6 +223,14 @@
 
             App.Device.Collection.setDevice(Settings.chosenPlayer);
             App.Device.ChooserView('#player-chooser').render();
+
+			$('#player-googlecloud').hide();
+			if (AdvSettings.get('pluginNachoLink')===false) {
+				$('#player-html5').hide();
+            }
+			if (AdvSettings.get('pluginVLC')===false) {
+				$('#player-VLC').hide();
+            }
         },
 
         selectNextEpisode: function () {
