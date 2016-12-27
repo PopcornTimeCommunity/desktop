@@ -5360,6 +5360,12 @@ body,
   -webkit-background-size: contain;
   background-size: contain;
 }
+.torrent-collection-container .content .onlinesearch .engine-selector div#rarbg-icon {
+  -webkit-filter: brightness(1);
+  background: url("../images/icons/rarbg.png");
+  -webkit-background-size: contain;
+  background-size: contain;
+}
 .torrent-collection-container .content .onlinesearch .engine-selector div.active {
   opacity: 1;
 }
