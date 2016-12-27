@@ -16,7 +16,7 @@
             <% _.each(files, function(file, index) { 
                     if (file.display !== false) { %>
                 <li id="s<%=file.length %>" class="file-item" data-index="<%=file.index%>" data-file="<%=index%>">
-                    <a><%=file.name.replace('.[YTS.AG]', '') %> (<%=formatBytes(file.length) %>)</a>
+                    <a><%=file.name %> (<%=formatBytes(file.length) %>)</a>
                 </li>
             <% }}); %>
         </ul>
