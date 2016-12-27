@@ -33,7 +33,7 @@
         },
 
         onBeforeRender: function () {
-            if(AdvSettings.get('activateFakeSkan')===true) {
+            if(AdvSettings.get('pluginFakeSkan')===true) {
 				this.bitsnoopRequest(this.model.get('torrent').infoHash);
 			}
         },
@@ -48,13 +48,13 @@
             App.Device.Collection.setDevice(Settings.chosenPlayer);
             App.Device.ChooserView('#player-chooser2').render();
 
-	$('#player-googlecloud').hide();
-	if (AdvSettings.get('pluginNachoLink')===false) {
-		$('#player-html5').hide();
-        }
-	if (AdvSettings.get('pluginVLC')===false) {
-		$('#player-VLC').hide();
-        }
+			$('#player-googlecloud').hide();
+			if (AdvSettings.get('pluginHTML5')===false) {
+				$('#player-html5').hide();
+            }
+			if (AdvSettings.get('pluginVLC')===false) {
+				$('#player-VLC').hide();
+            }
 
             this.$('#watch-now').text('');
 			
