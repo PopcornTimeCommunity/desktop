@@ -167,15 +167,7 @@ if(AdvSettings.get('chosenPlayer') != 'html5'){
 if(AdvSettings.get('chosenPlayer')=='html5'){
 	$('.vjs-play-control').click();
 
-	//var src = $('#video_player video').attr('src').replace("http://127.0.0.1:", "").replace("/", "");
-	var tt_src = 'http://127.0.0.1:' + engine.server.address().port;
-	var tt_subtitle = AdvSettings.get('LastSubtitle');
-	var tt_poster = $('#yts').attr('data-poster');
-    
-	if($('#yts').attr('data-id')){
-		win.debug('open http://nachotime.to/encrypt.php?dt=http://yts.ph/index.php/movie/yifi_view/'+$('#yts').attr('data-slug')+'/' + $('#yts').attr('data-id')+'&port='+tt_src+'&subtitle='+tt_subtitle+'&poster='+tt_poster);
-		gui.Shell.openExternal('http://nachotime.to/encrypt.php?dt=http://yts.ph/index.php/movie/yifi_view/'+$('#yts').attr('data-slug')+'/' + $('#yts').attr('data-id')+'&port='+tt_src+'&subtitle='+tt_subtitle+'&poster='+tt_poster);
-	}
+	gui.Shell.openExternal('http://127.0.0.1:' + engine.server.address().port);
 	//Mousetrap.trigger('u'); //stream to browser
 }//else{
 	checkReady();
