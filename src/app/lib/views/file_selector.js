@@ -48,15 +48,13 @@
             App.Device.Collection.setDevice(Settings.chosenPlayer);
             App.Device.ChooserView('#player-chooser2').render();
 
-			if (AdvSettings.get('pluginGoogleDrive')===false) {
-				$('#player-googledrive').hide();
-            }
-			if (AdvSettings.get('pluginNachoLink')===false) {
-				$('#player-html5').hide();
-            }
-			if (AdvSettings.get('pluginVLC')===false) {
-				$('#player-VLC').hide();
-            }
+	$('#player-googlecloud').hide();
+	if (AdvSettings.get('pluginNachoLink')===false) {
+		$('#player-html5').hide();
+        }
+	if (AdvSettings.get('pluginVLC')===false) {
+		$('#player-VLC').hide();
+        }
 
             this.$('#watch-now').text('');
 			
