@@ -20,12 +20,6 @@
             'click .favourites-toggle': 'toggleFavourite',
             'click .watched-toggle': 'toggleWatched',
             'click .movie-imdb-link': 'openIMDb',
-            'click .movie-yify-link': 'openYify',
-            'click .movie-video2k-link': 'openVideo2k',
-            'click .movie-imdbid-link': 'openIMDb',
-            'click .movie-yifysubtitles-link': 'openYifysubtitles',
-            'click .movie-youtube-link': 'openYoutube',
-            'click .movie-googlevideo-link': 'openGooglevideo',
             'mousedown .magnet-link': 'openMagnet',
             'click .sub-dropdown': 'toggleDropdown',
             'click .sub-flag-icon': 'closeDropdown',
@@ -439,25 +433,6 @@
             }
 
             $('li[data-imdb-id="' + this.model.get('imdb_id') + '"] .actions-watched').click();
-        },
-
-        openIMDb: function () {
-            gui.Shell.openExternal('http://www.imdb.com/title/' + this.model.get('imdb_id'));
-        },
-        openYifysubtitles: function () {
-            gui.Shell.openExternal('http://www.yifysubtitles.com/movie-imdb/' + this.model.get('imdb_id'));
-        },
-        openYify: function () {
-            gui.Shell.openExternal('http://yify.is/index.php/movie/yifi_view/' + this.model.get('slug') + '/' + this.model.get('id'));
-        },
-        openVideo2k: function () {
-            gui.Shell.openExternal('http://video2k.is/index.php/movie/watch/' + this.model.get('slug') + '/' + this.model.get('id'));
-        },
-        openGooglevideo: function () {
-            gui.Shell.openExternal(this.model.get('google_video'));
-        },
-        openYoutube: function () {
-            gui.Shell.openExternal(this.model.get('trailer'));
         },
 
         openMagnet: function (e) {
