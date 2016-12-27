@@ -308,7 +308,7 @@
 
     <section id="cache">
         <div class="content"><div class="title"><%= i18n.__("Playback") %></div>
-            <span title='Just click any magnet or .torrent link from your browser to start Torrents Time v2'>
+            <span title='Just click any magnet or .torrent link from your browser to start Popcorn Time'>
                 <div class="dropdown buffering-size">
                     <p><%= i18n.__("Stream from Browser") %></p>
                     <%
