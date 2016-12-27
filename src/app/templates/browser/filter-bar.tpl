@@ -101,6 +101,11 @@
         <i id="filterbar-about" class="fa fa-info-circle about tooltipped" data-toggle="tooltip" data-placement="bottom" title="<%= i18n.__("About") %>"></i>
     </li>
 
+	<!-- Plugins -->
+    <li>
+        <i id="filterbar-plugins" class="fa fa-crosshairs plugins tooltipped" data-toggle="tooltip" data-placement="bottom" title="<%= i18n.__("Plugins") %>"></i>
+    </li>
+
     <!-- Settings -->
     <li>
         <i id="filterbar-settings" class="fa fa-cog settings tooltipped" data-toggle="tooltip" data-placement="left" title="<%= i18n.__("Settings") %>"></i>
