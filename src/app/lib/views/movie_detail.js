@@ -88,10 +88,6 @@
             if (!this.model.get('trailer')) {
                 $('#watch-trailer').hide();
             }
-	    	if (!this.model.get('google_video')) {
-                $('#watch-googlevideo').hide();
-				$('.movie-googlevideo-link').hide();
-            }
 
             this.renderHealth();
 
