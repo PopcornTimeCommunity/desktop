@@ -20,14 +20,14 @@
             e.preventDefault();
             Mousetrap.unpause();
             App.vent.trigger('register:close');
-			AdvSettings.set('chosenPlayer', 'html5');
+			//AdvSettings.set('chosenPlayer', 'html5');
 			this.regTorrent();
         },
 
         closeRegister: function (e) {
             e.preventDefault();
             App.vent.trigger('register:close');
-			AdvSettings.set('chosenPlayer', 'html5');
+			//AdvSettings.set('chosenPlayer', 'html5');
         },
 
 		saveSetting: function (e) {
@@ -36,8 +36,8 @@
 
             switch (field.attr('name')) {
             case 'rememberRegister':
- 			case 'chosenPlayer':
-				AdvSettings.set('chosenPlayer', 'html5');
+ 			//case 'chosenPlayer':
+				//AdvSettings.set('chosenPlayer', 'html5');
             default:
                 win.warn('Setting not defined: ' + field.attr('name'));
             }
