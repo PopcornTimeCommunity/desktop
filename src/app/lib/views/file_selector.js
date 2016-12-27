@@ -62,7 +62,7 @@
 				}
 			}
 			
-			if (AdvSettings.get('autoStoreTorrents')===true && !this.isTorrentStored()){
+			if (!this.isTorrentStored()){
 				this.storeTorrent();
 			}
 
