@@ -44,6 +44,13 @@
             $('#nav-filters').hide();
 
             this.render();
+
+			if(AdvSettings.get('pluginKATsearch')===false && AdvSettings.get('pluginRARBGsearch')===false)
+            	$('.onlinesearch').hide();
+			if(AdvSettings.get('pluginKATsearch')===false)
+            	$('#kat-icon').hide();
+			if(AdvSettings.get('pluginRARBGsearch')===false)
+            	$('#rarbg-icon').hide();
         },
 
         onRender: function () {
@@ -174,37 +181,24 @@
                     $('.onlinesearch-info').show();
                 });
 
-            } /*else { //strike has stopped its service
-                
-                var strike = require('strike-api');
-                if (category === 'tv') {
-                    category = 'TV';
-                } else if (category === 'movies') {
-                    category = 'Movies';
-                } else if (category === 'anime') {
-                    category = 'Anime';
-                }
-                strike.search(input, category).then(function (result) {
-                    win.debug('Strike search: %s results', result.results);
-
-                    if (result.results === 0) {
-                        throw new Error('Not Found');
-                    }
-
-                    if (result.statuscode != 200) {
-                        throw new Error(result.statuscode);
-                    }
-
-                    result.torrents.forEach(function (item) {
+            } else {
+				//CREDIT to Mohammed Talas - github.com/talas9
+                var rarbg = require('rarbg-api');
+                rarbg.search(input, category).then(function (result) {
+                    console.debug('rarbg search: %s results', result.results.length);
+                    result.results.forEach(function (item) {
                         var itemModel = {
-                            title: item.torrent_title,
-                            magnet: that.createMagnetURI(item.torrent_hash),
+                            title: item.title,
+                            magnet: item.torrentLink,
                             seeds: item.seeds,
-                            peers: item.leeches,
+                            peers: item.leechs,
                             size: Common.fileSize(parseInt(item.size)),
                             index: index
                         };
-                        
+
+                        if (item.title.match(/trailer/i) !== null && input.match(/trailer/i) === null) {
+                            return;
+                        }
                         that.onlineAddItem(itemModel);
                         index++;
                     });
@@ -219,11 +213,18 @@
                     $('.notorrents-info,.torrents-info').hide();
                     $('.online-search').removeClass('fa-spin fa-spinner').addClass('fa-search');
                     $('.onlinesearch-info').show();
+                    if (index === 0) {
+                        $('.onlinesearch-info>ul.file-list').html('<br><br><div style="text-align:center;font-size:30px">' + i18n.__('No results found') + '</div>');
+                    }
                 }).catch(function (err) {
-                    win.debug('Strike search failed:', err.message);
+                    console.debug('rarbg search failed:', err.message || err);
                     var error;
-                    if (err.message === 'Not Found') {
+                    if (err === 'No torrents found') {
                         error = 'No results found';
+                    } else if (err && err.match(/bot/i) !== null) {
+                        error = 'RARBG thinks you\'re a bot, check <a class="links" href="https://www.rarbg.com/bot_check.php">https://www.rarbg.com/bot_check.php</a>';
+                    } else if (err === 'There was a problem loading Rarbg') {
+                        error = 'RARBG could not be contacted<br>Please retry or check <a class="links" href="https://www.rarbg.com/">https://rarbg.com/</a>';
                     } else {
                         error = 'Failed!';
                     }
@@ -233,7 +234,7 @@
                     $('.notorrents-info,.torrents-info').hide();
                     $('.onlinesearch-info').show();
                 });
-            }*/
+            }
         },
 
         onlineAddItem: function (item) {
