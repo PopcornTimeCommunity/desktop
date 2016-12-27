@@ -225,7 +225,7 @@
             App.Device.ChooserView('#player-chooser').render();
 
 			$('#player-googlecloud').hide();
-			if (AdvSettings.get('pluginNachoLink')===false) {
+			if (AdvSettings.get('pluginHTML5')===false) {
 				$('#player-html5').hide();
             }
 			if (AdvSettings.get('pluginVLC')===false) {
