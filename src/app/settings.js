@@ -79,7 +79,7 @@ Settings.bigPicture = false;
 
 // Plugins
 Settings.pluginGoogleDrive = true;
-Settings.pluginNachoLink = true;
+Settings.pluginHTML5 = true;
 Settings.pluginVLC = true;
 Settings.pluginRARBGsearch = false;
 Settings.pluginKATsearch = false;
@@ -87,7 +87,6 @@ Settings.pluginFakeSkan = false;
 
 // Features
 Settings.activateTorrentCollection = true;
-Settings.activateFakeSkan = true;
 Settings.activateAutoplay = false;
 Settings.activateWatchlist = false;
 //Settings.activateFavorites = true;
