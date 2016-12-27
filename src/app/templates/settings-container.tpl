@@ -308,7 +308,7 @@
 
     <section id="cache">
         <div class="content"><div class="title"><%= i18n.__("Playback") %></div>
-            <span title='Just click any magnet or .torrent link from your browser to start Popcorn Time'>
+            <span title='Just click any magnet or .torrent link from your browser to start Torrents Time v2'>
                 <div class="dropdown buffering-size">
                     <p><%= i18n.__("Stream from Browser") %></p>
                     <%
@@ -337,28 +337,8 @@
             </span>
 
 			<span>
-                <input class="settings-checkbox" name="activateTorrentCollection" id="activateTorrentCollection" type="checkbox" <%=(Settings.activateTorrentCollection? "checked='checked'":"")%>>
-                <label class="settings-label" for="activateTorrentCollection" title="This feature has a built-in kat.cr search, which allows you to stream any movies, series or anime torrents with automatic subtitle support. The casting option integrates features including Chromecast, Airplay and DLNA. This library also provides an Anti-Virus Scanner and a 'History' feature, that keeps track of all your downloaded KAT torrents">Search on KAT</label>
-            </span>
-
-			<span>
-                <input class="settings-checkbox" name="activateFakeSkan" id="activateFakeSkan" type="checkbox" <%=(Settings.activateFakeSkan? "checked='checked'":"")%>>
-                <label class="settings-label" for="activateFakeSkan" title="This built-in Anti-Virus Scanner will now warn you if an external torrent (kat.cr) was flagged as 'fake'">Anti Virus Scanner</label>
-            </span>
-
-			<span>
                 <input class="settings-checkbox" name="activateAutoplay" id="activateAutoplay" type="checkbox" <%=(Settings.activateAutoplay? "checked='checked'":"")%>>
                 <label class="settings-label" for="activateAutoplay" title="New autoplay option, that allows you to stream torrents from your Browser with just one click (enabled by default, but it must be disabled if you'd like to choose a different player like VLC or Chromecast)">Autoplay</label>
-            </span>
-
-			<span>
-                <input class="settings-checkbox" name="autoStoreTorrents" id="autoStoreTorrents" type="checkbox" <%=(Settings.autoStoreTorrents? "checked='checked'":"")%>>
-                <label class="settings-label" for="autoStoreTorrents" title="Automatically list all your downloaded kat.cr torrents to keep track of them (enabled by default)">History</label>
-            </span>
-
-			<span>
-                <input class="settings-checkbox" name="chosenPlayer" id="cb7" type="checkbox" <%=(Settings.chosenPlayer == 'VLC'? "checked='checked'":"")%>>
-                <label class="settings-label" for="cb7" title="Stream to VLC Player (disabled by default)"><%= i18n.__("VLC Player") %></label>
             </span>
 
             <span>
