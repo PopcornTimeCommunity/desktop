@@ -12,7 +12,7 @@
 	    id: 'html5',
 	    type: 'html5', //icon
 	    typeFamily: 'internal',
-	    name: 'Nacho Link'
+	    name: 'HTML5 Video'
 	}));
     //}
 	
