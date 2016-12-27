@@ -22,6 +22,7 @@
             Keyboard: '#keyboard-container',
             Help: '#help-container',
             TorrentCollection: '#torrent-collection-container',
+			Plugins: '#settings-container',
             Issue: '#issue-container',
             Notification: '#notification'
         },
@@ -115,6 +116,10 @@
             // Torrent collection
             App.vent.on('torrentCollection:show', _.bind(this.showTorrentCollection, this));
             App.vent.on('torrentCollection:close', _.bind(this.TorrentCollection.destroy, this.TorrentCollection));
+
+            // Plugins
+            App.vent.on('plugins:show', _.bind(this.showPlugins, this));
+            App.vent.on('plugins:close', _.bind(this.Plugins.destroy, this.Plugins));
 
             // Tv Shows
             App.vent.on('show:showDetail', _.bind(this.showShowDetail, this));
@@ -350,6 +355,10 @@
 
         showTorrentCollection: function (e) {
             this.TorrentCollection.show(new App.View.TorrentCollection());
+        },
+
+		showPlugins: function (e) {
+            this.Plugins.show(new App.View.Plugins());
         },
 
         showKeyboard: function (e) {
