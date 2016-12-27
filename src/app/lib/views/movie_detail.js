@@ -88,10 +88,6 @@
             if (!this.model.get('trailer')) {
                 $('#watch-trailer').hide();
             }
-            if (!this.model.get('google_video')) {
-                $('#watch-googlevideo').hide();
-                $('.movie-googlevideo-link').hide();
-            }
 
             this.renderHealth();
 
@@ -168,11 +164,15 @@
                 App.Device.Collection.setDevice(Settings.chosenPlayer);
             }
             App.Device.ChooserView('#player-chooser').render();
-            /*if(this.model.get('google_video')){
-		$('#showDropdown').click();
-	    }*/
-            if (!this.model.get('google_video')) {
+           
+	if (!this.model.get('google_video') || AdvSettings.get('pluginGoogleDrive') === false) {
                 $('#player-googlecloud').hide();
+            }
+	if (AdvSettings.get('pluginNachoLink') === false) {
+                $('#player-html5').hide();
+            }
+	if (AdvSettings.get('pluginVLC') === false) {
+                $('#player-VLC').hide();
             }
         },
 
