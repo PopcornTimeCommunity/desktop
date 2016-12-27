@@ -81,7 +81,7 @@ Settings.bigPicture = false;
 Settings.pluginGoogleDrive = true;
 Settings.pluginHTML5 = true;
 Settings.pluginVLC = true;
-Settings.pluginRARBGsearch = false;
+Settings.pluginRARBGsearch = true;
 Settings.pluginKATsearch = false;
 Settings.pluginFakeSkan = false;
 
