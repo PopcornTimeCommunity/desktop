@@ -5,17 +5,18 @@ New Features:
 - sort by trending
 - sort by popularity
 - rarbg search in 'torrent collection'
-- add small plugin system for kat, rarbg, vlc, google drive, html5 video, virus scanner, trakt
-- add html5 video player for tv shows and 'torrent collection'
-- new settings page
+- small plugin system for kat, rarbg, vlc, google drive, html5 video, virus scanner, trakt
+- html5 video player for tv shows and 'torrent collection'
+- new order for Settings (overview and visibility)
 
 BugFixes: 
 
-- performance improvement: redirect html5 video player to direct stream url 127.0.0.1:port 
-- remove: 'filter by views', 'filter by last added & google cloud', 'provider links'
+- get direct stream url 127.0.0.1:port while using html5 video player
+- remove 'filter by views', 'filter by last added & google cloud', 'provider links'
 - set rarbg as online search engine in settings.js
+- fix chromecast scrollbar
 
-## 0.4.1-1 Beta - Give me some Nachos - 5 June 2016
+## 0.4.1-4 Beta - Give me some Nachos - 5 June 2016
 
 New Features: 
 
@@ -27,6 +28,11 @@ New Features:
 
 BugFixes: 
 
+- fix tv api to eztv.is
+- fix fast forward while chromecasting
+- fix cancel button while streaming to nacholink
+- set "deleteTmpOnClose" to false
+- set "activateAutoplay" to false, in order to select chromecast
 - fix favorites in 0.4.1 version 
 - set 'chosenPlayer' to html5 by default
 - set 'chosenPlayer' to local if magnet link is clicked
