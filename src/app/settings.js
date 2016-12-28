@@ -82,7 +82,7 @@ Settings.pluginGoogleDrive = true;
 Settings.pluginHTML5 = true;
 Settings.pluginVLC = true;
 Settings.pluginRARBGsearch = true;
-Settings.pluginKATsearch = false;
+Settings.pluginKATsearch = true;
 Settings.pluginFakeSkan = false;
 
 // Features
@@ -92,7 +92,7 @@ Settings.activateWatchlist = false;
 //Settings.activateFavorites = true;
 //Settings.activateVpn = false;
 //Settings.activateRandomize = false;
-Settings.onlineSearchEngine = 'KAT';
+Settings.onlineSearchEngine = 'RARBG';
 
 // Ratio
 Settings.totalDownloaded = 0;
