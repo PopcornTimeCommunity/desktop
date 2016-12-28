@@ -13,6 +13,7 @@ BugFixes:
 
 - performance improvement: redirect html5 video player to direct stream url 127.0.0.1:port 
 - remove: 'filter by views', 'filter by last added & google cloud', 'provider links'
+- set rarbg as online search engine in settings.js
 
 ## 0.4.1-1 Beta - Give me some Nachos - 5 June 2016
 
