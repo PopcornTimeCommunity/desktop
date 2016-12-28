@@ -10,7 +10,7 @@
   "main": "app://host/src/app/index.html",
   "version": "0.4.1-5",
   "node-remote": "*://*",
-  "releaseName": "Give me some Nachos",
+  "releaseName": "New Year's Eve in front of the door",
   "scripts": {
     "start": "gulp run"
   },
