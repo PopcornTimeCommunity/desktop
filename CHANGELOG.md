@@ -1,3 +1,19 @@
+## 0.4.1-5 Beta - New Year's Eve in front of the door - 28 December 2016
+
+New Features: 
+
+- sort by trending
+- sort by popularity
+- rarbg search in 'torrent collection'
+- add small plugin system for kat, rarbg, vlc, google drive, html5 video, virus scanner, trakt
+- add html5 video player for tv shows and 'torrent collection'
+- new settings page
+
+BugFixes: 
+
+- performance improvement: redirect html5 video player to direct stream url 127.0.0.1:port 
+- remove: 'filter by views', 'filter by last added & google cloud', 'provider links'
+
 ## 0.4.1-1 Beta - Give me some Nachos - 5 June 2016
 
 New Features: 
