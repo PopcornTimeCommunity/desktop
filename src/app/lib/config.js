@@ -32,7 +32,7 @@
         ],
 
         sorters: [
-            //'trending',
+            'trending',
             'last added',
 	    	//'last added & google cloud',
 	    //'popularity',
