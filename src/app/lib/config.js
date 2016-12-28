@@ -33,16 +33,12 @@
 
         sorters: [
             'trending',
+            'popularity',
             'last added',
-	    	//'last added & google cloud',
-	    //'popularity',
             'year',
-            //'title',
             'rating',
-	    	//'views',
-		'downloads',
-		'likes',
-		
+            'downloads',
+            'likes'
         ],
 
         sorters_tv: [
