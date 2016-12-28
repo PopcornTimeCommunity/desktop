@@ -92,7 +92,7 @@
             params.order_by = 'asc';
         }
 
-        if (filters.sorter && filters.sorter !== 'popularity') {
+        if (filters.sorter) {
             switch (filters.sorter) {
                 case 'last added':
                     params.sort_by = 'date_added';
