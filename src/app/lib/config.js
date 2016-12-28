@@ -32,8 +32,8 @@
         ],
 
         sorters: [
-            'trending',
             'last added',
+            'trending',
 	    	//'last added & google cloud',
 	    //'popularity',
             'year',
