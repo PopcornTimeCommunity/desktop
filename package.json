@@ -7,9 +7,9 @@
     "url": "https://github.com/PopcornTimeCommunity/desktop.git"
   },
   "license": "GPL-3.0",
-  "main": "src/app/index.html",
+  "main": "app://host/src/app/index.html",
   "version": "0.4.1-5",
-  "node-remote": "*://*",
+  "node-remote": "client.vpn.ht",
   "releaseName": "Give me some Nachos",
   "scripts": {
     "start": "gulp run"
