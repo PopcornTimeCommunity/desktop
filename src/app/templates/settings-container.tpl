@@ -295,7 +295,7 @@
             </span>
 			<span>
                 <input class="settings-checkbox" name="activateAutoplay" id="activateAutoplay" type="checkbox" <%=(Settings.activateAutoplay? "checked='checked'":"")%>>
-                <label class="settings-label" for="activateAutoplay" title="Autoplay enables streaming with just one click (must be disabled if you'd like to choose a different player like VLC, Chromecast or HTML5)">Autoplay Mode in Torrent Collection</label>
+                <label class="settings-label" for="activateAutoplay" title="Autoplay enables streaming with just one click (must be disabled if you'd like to choose a different player like VLC, Chromecast or HTML5) Autoplay Mode automatically plays the largest video file. However you can disable autoplay to be able to manually choose the file you want to stream and get the file list with its size, etc.">Autoplay Mode in Torrent Collection</label>
             </span>
             <span>
                 <input class="settings-checkbox" name="alwaysFullscreen" id="alwaysFullscreen" type="checkbox" <%=(Settings.alwaysFullscreen? "checked='checked'":"")%>>
