@@ -2,7 +2,7 @@
     <div class="fa fa-times close-icon"></div>
     <div class="overlay-content"></div>
     <div class="margintop"></div>
-    <img class="icon-title" src="/src/app/images/popcorn-time-logo.svg">
+    <img class="icon-title" src="images/popcorn-time-logo.svg">
     <div class="content">
 
         <div class="title-version">
@@ -42,6 +42,6 @@
     </div>
     <div class="changelog-overlay">
         <div class="title"><%=i18n.__("Changelog")%></div>
-        <div class="changelog-text"></div>    
+        <div class="changelog-text"></div>
     </div>
 </div>
