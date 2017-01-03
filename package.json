@@ -7,7 +7,7 @@
     "url": "https://github.com/PopcornTimeCommunity/desktop.git"
   },
   "license": "GPL-3.0",
-  "main": "app://host/src/app/index.html",
+  "main": "src/app/index.html",
   "version": "0.4.1-5",
   "node-remote": "*://*",
   "releaseName": "New Year's Eve in front of the door",
