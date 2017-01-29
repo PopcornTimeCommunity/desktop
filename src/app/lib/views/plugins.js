@@ -1,4 +1,4 @@
-(function (App) {
+(function(App) {
     'use strict';
     var that;
 
@@ -10,17 +10,17 @@
             success_alert: '.success_alert'
         },
 
-		events: {
+        events: {
             'click .close-icon': 'closePlugins',
             'change select,input': 'saveSetting',
-			'click #authTrakt': 'connectTrakt',
+            'click #authTrakt': 'connectTrakt',
             'click #unauthTrakt': 'disconnectTrakt',
             'click #connect-with-tvst': 'connectWithTvst',
             'click #disconnect-tvst': 'disconnectTvst',
             'click #syncTrakt': 'syncTrakt'
         },
 
- 		onShow: function () {
+        onShow: function() {
             that = this;
 
             $('.filter-bar').hide();
@@ -33,23 +33,23 @@
                 }
             });
 
-            Mousetrap.bind('backspace', function (e) {
+            Mousetrap.bind('backspace', function(e) {
                 App.vent.trigger('plugins:close');
             });
         },
 
-        onDestroy: function () {
+        onDestroy: function() {
             Mousetrap.unbind(['esc', 'backspace']);
             $('.filter-bar').show();
             $('#header').removeClass('header-shadow');
             $('#movie-detail').show();
         },
 
-        closePlugins: function () {
+        closePlugins: function() {
             App.vent.trigger('plugins:close');
         },
 
-        saveSetting: function (e) {
+        saveSetting: function(e) {
             var value = false,
                 apiDataChanged = false,
                 tmpLocationChanged = false,
@@ -57,33 +57,33 @@
                 data = {};
 
             switch (field.attr('name')) {
-            case 'activateWatchlist':
-            case 'pluginRARBGsearch':
-				value = field.is(':checked');
-				if(value)
-		            AdvSettings.set('onlineSearchEngine', 'RARBG');
-				else
-		            AdvSettings.set('onlineSearchEngine', 'KAT');
-                break;
-            case 'pluginKATsearch':
-				value = field.is(':checked');
-				if(value)
-		            AdvSettings.set('onlineSearchEngine', 'KAT');
-				else
-		            AdvSettings.set('onlineSearchEngine', 'RARBG');
-                break;
-            case 'pluginGoogleDrive':
-			case 'pluginVLC':
-            case 'pluginFakeSkan':
-            case 'pluginHTML5':
-				value = field.is(':checked');
-				if(value)
-					AdvSettings.set('chosenPlayer', 'html5');
-				else
-					AdvSettings.set('chosenPlayer', 'local');
-                break;
-            default:
-                win.warn('Setting not defined: ' + field.attr('name'));
+                case 'activateWatchlist':
+                case 'pluginRARBGsearch':
+                    value = field.is(':checked');
+                    if (value)
+                        AdvSettings.set('onlineSearchEngine', 'RARBG');
+                    else
+                        AdvSettings.set('onlineSearchEngine', 'KAT');
+                    break;
+                case 'pluginKATsearch':
+                    value = field.is(':checked');
+                    if (value)
+                        AdvSettings.set('onlineSearchEngine', 'KAT');
+                    else
+                        AdvSettings.set('onlineSearchEngine', 'RARBG');
+                    break;
+                case 'pluginGoogleDrive':
+                case 'pluginVLC':
+                case 'pluginFakeSkan':
+                case 'pluginHTML5':
+                    value = field.is(':checked');
+                    if (value)
+                        AdvSettings.set('chosenPlayer', 'html5');
+                    else
+                        AdvSettings.set('chosenPlayer', 'local');
+                    break;
+                default:
+                    win.warn('Setting not defined: ' + field.attr('name'));
             }
             win.info('Setting changed: ' + field.attr('name') + ' - ' + value);
 
@@ -104,32 +104,32 @@
             App.db.writeSetting({
                 key: field.attr('name'),
                 value: value
-            }).then(function () {
+            }).then(function() {
                 that.ui.success_alert.show().delay(3000).fadeOut(400);
             });
 
             that.syncSetting(field.attr('name'), value);
         },
 
-        syncSetting: function (setting, value) {
+        syncSetting: function(setting, value) {
             switch (setting) {
-	   		case 'pluginRARBGsearch':
-                App.vent.trigger('plugins:show');
-				that.alertMessageSuccess(true);
-                break;	   		
-			case 'pluginKATsearch':
-                App.vent.trigger('plugins:show');
-				that.alertMessageSuccess(true);
-                break;			
-			case 'activateWatchlist':
-                App.vent.trigger('plugins:show');
-				that.alertMessageSuccess(true);
-                break;
-            default:
+                case 'pluginRARBGsearch':
+                    App.vent.trigger('plugins:show');
+                    that.alertMessageSuccess(true);
+                    break;
+                case 'pluginKATsearch':
+                    App.vent.trigger('plugins:show');
+                    that.alertMessageSuccess(true);
+                    break;
+                case 'activateWatchlist':
+                    App.vent.trigger('plugins:show');
+                    that.alertMessageSuccess(true);
+                    break;
+                default:
             }
         },
 
-        connectTrakt: function (e) {
+        connectTrakt: function(e) {
             if (AdvSettings.get('traktTokenRefresh') !== '') {
                 return;
             }
@@ -138,7 +138,7 @@
             $('.loading-spinner').show();
 
             App.Trakt.oauth.authenticate()
-                .then(function (valid) {
+                .then(function(valid) {
                     if (valid) {
                         $('.loading-spinner').hide();
                         that.render();
@@ -146,54 +146,59 @@
                         $('.loading-spinner').hide();
                         $('#authTrakt > i').css('visibility', 'visible');
                     }
-                }).catch(function (err) {
+                }).catch(function(err) {
                     win.debug('Trakt', err);
                     $('#authTrakt > i').css('visibility', 'visible');
                     $('.loading-spinner').hide();
                 });
         },
 
-        disconnectTrakt: function (e) {
-            App.settings['traktToken'] = '';
-            App.settings['traktTokenRefresh'] = '';
-            App.settings['traktTokenTTL'] = '';
-            App.Trakt.authenticated = false;
+        disconnectTrakt: function(e) {
+            win.debug("Trakt Disconnect Account - Plugins");
+            App.Trakt.oauth.revokeAccess()
+                .then(function(value) {
+                    App.settings['traktToken'] = '';
+                    App.settings['traktTokenRefresh'] = '';
+                    App.settings['traktTokenTTL'] = '';
 
-            App.db.writeSetting({
-                key: 'traktToken',
-                value: ''
-            }).then(function () {
-                return App.db.writeSetting({
-                    key: 'traktTokenRefresh',
-                    value: ''
-                });
-            }).then(function () {
-                return App.db.writeSetting({
-                    key: 'traktTokenTTL',
-                    value: ''
-                });
-            }).then(function () {
-                that.ui.success_alert.show().delay(3000).fadeOut(400);
-            });
+                    App.Trakt.authenticated = false;
 
-            _.defer(function () {
-                App.Trakt = App.Providers.get('Trakttv');
-                that.render();
-            });
+                    App.db.writeSetting({
+                        key: 'traktToken',
+                        value: ''
+                    }).then(function() {
+                        return App.db.writeSetting({
+                            key: 'traktTokenRefresh',
+                            value: ''
+                        });
+                    }).then(function() {
+                        return App.db.writeSetting({
+                            key: 'traktTokenTTL',
+                            value: ''
+                        });
+                    }).then(function() {
+                        that.ui.success_alert.show().delay(3000).fadeOut(400);
+                    });
+
+                    _.defer(function() {
+                        App.Trakt = App.Providers.get('Trakttv');
+                        that.render();
+                    });
+                });
         },
 
-        connectWithTvst: function () {
+        connectWithTvst: function() {
             var self = this;
 
             $('#connect-with-tvst > i').css('visibility', 'hidden');
             $('.tvst-loading-spinner').show();
 
-            App.vent.on('system:tvstAuthenticated', function () {
+            App.vent.on('system:tvstAuthenticated', function() {
                 window.loginWindow.close();
                 $('.tvst-loading-spinner').hide();
                 self.render();
             });
-            App.TVShowTime.authenticate(function (activateUri) {
+            App.TVShowTime.authenticate(function(activateUri) {
                 var gui = require('nw.gui');
                 gui.App.addOriginAccessWhitelistEntry(activateUri, 'app', 'host', true);
                 window.loginWindow = gui.Window.open(activateUri, {
@@ -207,7 +212,7 @@
                     height: 600
                 });
 
-                window.loginWindow.on('closed', function () {
+                window.loginWindow.on('closed', function() {
                     $('.tvst-loading-spinner').hide();
                     $('#connect-with-tvst > i').css('visibility', 'visible');
                 });
@@ -215,14 +220,14 @@
             });
         },
 
-        disconnectTvst: function () {
+        disconnectTvst: function() {
             var self = this;
-            App.TVShowTime.disconnect(function () {
+            App.TVShowTime.disconnect(function() {
                 self.render();
             });
         },
 
-        syncTrakt: function () {
+        syncTrakt: function() {
             var oldHTML = document.getElementById('syncTrakt').innerHTML;
             $('#syncTrakt')
                 .text(i18n.__('Syncing...'))
@@ -232,16 +237,16 @@
             Database.deleteWatched(); // Reset before sync
 
             App.Trakt.syncTrakt.all()
-                .then(function () {
+                .then(function() {
                     App.Providers.get('Watchlist').fetchWatchlist();
                 })
-                .then(function () {
+                .then(function() {
                     $('#syncTrakt')
                         .text(i18n.__('Done'))
                         .removeClass('disabled')
                         .addClass('ok')
                         .delay(3000)
-                        .queue(function () {
+                        .queue(function() {
                             $('#syncTrakt')
                                 .removeClass('ok')
                                 .prop('disabled', false);
@@ -249,14 +254,14 @@
                             $('#syncTrakt').dequeue();
                         });
                 })
-                .catch(function (err) {
+                .catch(function(err) {
                     win.error('App.Trakt.syncTrakt.all()', err);
                     $('#syncTrakt')
                         .text(i18n.__('Error'))
                         .removeClass('disabled')
                         .addClass('warning')
                         .delay(3000)
-                        .queue(function () {
+                        .queue(function() {
                             $('#syncTrakt')
                                 .removeClass('warning')
                                 .prop('disabled', false);
@@ -266,7 +271,7 @@
                 });
         },
 
-        alertMessageSuccess: function (btnRestart, btn, btnText, successDesc) {
+        alertMessageSuccess: function(btnRestart, btn, btnText, successDesc) {
             var notificationModel = new App.Model.Notification({
                 title: i18n.__('Success'),
                 body: successDesc,
@@ -278,7 +283,7 @@
                 notificationModel.set('body', i18n.__('Please restart your application'));
             } else {
                 // Hide notification after 3 seconds
-                setTimeout(function () {
+                setTimeout(function() {
                     btn.text(btnText).removeClass('confirm warning disabled').prop('disabled', false);
                     App.vent.trigger('notification:close');
                 }, 3000);
@@ -291,7 +296,7 @@
 
 
 
-	});
+    });
 
     App.View.Plugins = Plugins;
 })(window.App);
