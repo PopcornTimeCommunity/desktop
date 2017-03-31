@@ -1,4 +1,4 @@
-[Warning! Popcorntime.sh threatens your computer privacy.](http://popcorntime.ag/official-statement.html#Malware2)
+[Warning! Popcorntime.sh threatens your computer privacy.](http://popcorn-time.is/official-statement.html#Malware2)
 
 # [Popcorn Time Community](https://github.com/PopcornTime-CE/desktop)
 
@@ -8,7 +8,7 @@ Allow anyone to easily watch their favorite movies, shows, and anime.
 
 ![Popcorn Time](src/app/images/icon.png)
 
-Visit the project's website at <http://popcorntime.ag>.
+Visit the project's website at <http://popcorn-time.is>.
 
 This project would absolutely **not** be possible without the original developer's hard work into making Popcorn Time what it is today. All credit should go to them, we're just trying to help the community :)
 
@@ -63,7 +63,7 @@ The [master](https://github.com/PopcornTime-CE/desktop/tree/master) branch which
 Keep track of Popcorn Time Community development and community activity.
 
 * Join in discussions on the [Popcorn Time Subreddit](http://reddit.com/r/PopcornTimeCE)
-* Visit the [website](http://popcorntime.ag)
+* Visit the [website](http://popcorn-time.is)
 * Chat with us on [![Join the chat at https://gitter.im/PopcornTime-CE/desktop](https://badges.gitter.im/PopcornTime-CE/desktop.svg)](https://gitter.im/PopcornTime-CE/desktop)
 
 ## Versioning
