@@ -1,4 +1,4 @@
-[Warning! Popcorntime.sh threatens your computer privacy.](https://popcorntime.is/official-statement.html#Malware2)
+[Warning! Popcorntime.sh threatens your computer privacy.](http://popcorn-time.is/official-statement.html#Malware2)
 
 # [Popcorn Time Community](https://github.com/PopcornTime-CE/desktop)
 
