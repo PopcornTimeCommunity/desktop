@@ -1,3 +1,18 @@
+## 0.4.2 - Popcorn Time Lightweight - 23 October 2018
+
+New Features: 
+
+- new lightweight design to reduce the number of bugs
+- sort by subtitles
+- autoplay mode
+- add vodlocker API to get more releases
+
+BugFixes: 
+
+- subtitle bug
+- movies not opening bug
+- temporarly remove TV & Anime section (API down)
+
 ## 0.4.1-5 Beta - New Year's Eve in front of the door - 28 December 2016
 
 New Features: 
@@ -11,7 +26,7 @@ New Features:
 
 BugFixes: 
 
-- get direct stream url 127.0.0.1:port while using html5 video player
+- get direct stream url 127.0.0.1:port while using html5 video player (performance improvement)
 - remove 'filter by views', 'filter by last added & google cloud', 'provider links'
 - set rarbg as online search engine in settings.js
 - fix chromecast scrollbar
