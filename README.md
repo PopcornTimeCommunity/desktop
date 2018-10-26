@@ -1,4 +1,4 @@
-[Warning! Popcorntime.sh threatens your computer privacy.](http://popcorn-time.is/official-statement.html#Malware2)
+[Warning! Popcorntime.sh threatens your computer privacy.](https://popcorntime.is/official-statement.html#Malware2)
 
 # [Popcorn Time Community](https://github.com/PopcornTime-CE/desktop)
 
@@ -8,7 +8,7 @@ Allow anyone to easily watch their favorite movies, shows, and anime.
 
 ![Popcorn Time](src/app/images/icon.png)
 
-Visit the project's website at <http://popcorn-time.is>.
+Visit the project's website at <https://popcorntime.is>.
 
 This project would absolutely **not** be possible without the original developer's hard work into making Popcorn Time what it is today. All credit should go to them, we're just trying to help the community :)
 
