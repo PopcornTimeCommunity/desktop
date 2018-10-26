@@ -132,13 +132,13 @@ Settings.ytsAPI = [{
 }];
 
 Settings.updateEndpoint = {
-    url: 'http://popcorntime.ag/',
+    url: 'http://popcorn-time.is/',
     index: 0,
     proxies: [{
-        url: 'http://popcorntime.ag/',
+        url: 'http://popcorn-time.is/',
         //fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
     }, {
-        url: 'http://popcorn-time.is/',
+        url: 'https://popcorntime.is/',
         //fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
     }]
 };
