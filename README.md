@@ -1,6 +1,6 @@
 [Warning! Popcorntime.sh threatens your computer privacy.](http://popcorn-time.is/official-statement.html#Malware2)
 
-# [Popcorn Time Community](https://github.com/PopcornTime-CE/desktop)
+# [Popcorn Time Lightweight](https://github.com/PopcornTime-CE/desktop)
 
 [![Join the chat at https://gitter.im/PopcornTime-CE/desktop](https://badges.gitter.im/PopcornTime-CE/desktop.svg)](https://gitter.im/PopcornTime-CE/desktop?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
