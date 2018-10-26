@@ -1,6 +1,6 @@
 {
-  "name": "Popcorn-Time-CE",
-  "homepage": "http://popcorntime.ag",
+  "name": "Popcorn-Time-Lightweight",
+  "homepage": "https://popcorntime.is",
   "bugs": "https://github.com/PopcornTimeCommunity/desktop/issues",
   "repository": {
     "type": "git",
@@ -10,16 +10,16 @@
   "main": "src/app/index.html",
   "version": "0.4.1-5",
   "node-remote": "*://*",
-  "releaseName": "New Year's Eve in front of the door",
+  "releaseName": "Popcorn Time Lightweight",
   "scripts": {
     "start": "gulp run"
   },
   "single-instance": false,
   "window": {
-    "title": "Popcorn Time CE",
+    "title": "Popcorn Time Lightweight",
     "icon": "src/app/images/icon.png",
     "toolbar": false,
-    "frame": false,
+    "frame": true,
     "min_width": 960,
     "min_height": 520,
     "resizable": true,
